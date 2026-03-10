@@ -53,12 +53,14 @@
       </div>
     </div>
 
+    <!-- Hero -->
     <section class="project-page-hero">
       <div class="container">
         <span class="eyebrow">Web Development</span>
         <h1>Pixel-Art Food <span class="italic-cherry">Log Widget</span></h1>
         <div class="project-page-meta">
           <span class="project-page-year">2025</span>
+          <span class="skill-pill">Tauri</span>
           <span class="skill-pill">HTML</span>
           <span class="skill-pill">CSS</span>
           <span class="skill-pill">JavaScript</span>
@@ -66,59 +68,94 @@
       </div>
     </section>
 
+    <!-- Overview -->
     <section class="section-grey">
       <div class="container">
         <h2 class="resume-section-title">Overview</h2>
-        <div class="project-body">
-          <p>
-            Created a simple pixel-art desktop food logging widget using HTML, CSS, and JavaScript.
-            The widget was built as a personal tool to make food and symptom tracking quick,
-            low-friction, and actually pleasant to use day-to-day.
-          </p>
-          <p>
-            The design uses a pixel-art visual style to make the interface feel approachable and
-            distinct from clinical health tracking apps. Everything runs entirely in the browser
-            with no backend or server required.
-          </p>
-        </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">Widget interface screenshot</div>
-          <p class="project-img-caption">Food log widget interface</p>
+        <div class="project-split">
+          <div class="project-body">
+            <p>
+              Built as a gift for Ethan, this pixel-art desktop food logging widget was designed to
+              make daily meal and symptom tracking quick, low-friction, and actually pleasant to use.
+              The app runs as a native desktop application using the Tauri framework, which wraps
+              vanilla HTML, CSS, and JavaScript in a lightweight native shell — no Electron, no
+              heavy runtime, just a small self-contained executable.
+            </p>
+            <p>
+              The pixel-art visual style was chosen deliberately to make the interface feel
+              approachable and distinct from clinical health apps. Everything runs entirely
+              client-side with no backend, no accounts, and no data leaving the device.
+            </p>
+            <a href="https://github.com/teodoramilos/food-log-widget" target="_blank" rel="noopener" class="btn btn-primary" style="display:inline-block; margin-top:20px;">View on GitHub</a>
+          </div>
+          <div>
+            <img src="images/projects/food-log-1.png" alt="Food log widget — main interface" style="width:100%; display:block;" />
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- Features -->
     <section class="section-white">
       <div class="container">
         <h2 class="resume-section-title">Features</h2>
         <div class="project-body">
           <ul class="timeline-bullets" style="margin-top: 0;">
             <li>Log meals across four categories: breakfast, lunch, dinner, and snacks</li>
-            <li>Check off common food triggers from a curated list</li>
-            <li>Complete a symptom checklist to record how you felt after eating</li>
-            <li>Export a CSV file containing all logged entries for review or analysis</li>
+            <li>Check off common food triggers from a curated list to track potential dietary sensitivities</li>
+            <li>Complete a symptom checklist after each meal to record how you felt</li>
+            <li>Export a CSV file of all logged entries for review, analysis, or sharing with a healthcare provider</li>
+            <li>Fully offline and private — no internet connection required, no data sent anywhere</li>
           </ul>
         </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">Meal logging / trigger checklist screenshot</div>
-          <p class="project-img-caption">Meal entry and food trigger checklist</p>
+
+        <!-- 2x2 screenshot grid -->
+        <div class="project-three-img" style="grid-template-columns: 1fr 1fr; margin-top: 40px;">
+          <div>
+            <img src="images/projects/food-log-1.png" alt="Food log widget — meal logging view" style="width:100%; display:block;" />
+          </div>
+          <div>
+            <img src="images/projects/food-log-2.png" alt="Food log widget — food trigger checklist" style="width:100%; display:block;" />
+          </div>
+          <div>
+            <img src="images/projects/food-log-3.png" alt="Food log widget — symptom checklist" style="width:100%; display:block;" />
+          </div>
+          <div>
+            <img src="images/projects/food-log-4.png" alt="Food log widget — CSV export view" style="width:100%; display:block;" />
+          </div>
         </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">Symptom checklist and CSV export screenshot</div>
-          <p class="project-img-caption">Symptom checklist and CSV export</p>
+        <p class="project-img-caption" style="margin-top:14px;">App screenshots</p>
+
+      </div>
+    </section>
+
+    <!-- Technologies -->
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Technologies</h2>
+        <div class="project-body">
+          <ul class="timeline-bullets" style="margin-top: 0;">
+            <li><strong>Tauri</strong> — Rust-based framework that packages web technologies into a native desktop app with a minimal footprint</li>
+            <li><strong>Vanilla HTML, CSS &amp; JavaScript</strong> — No frontend frameworks; all UI logic written by hand</li>
+            <li><strong>Pixel fonts &amp; sprite art</strong> — Custom pixel-art aesthetic throughout the interface</li>
+            <li><strong>Blob API</strong> — Used for client-side CSV file generation and download without a server</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <section class="section-grey">
+    <!-- Tools -->
+    <section class="section-white">
       <div class="container">
         <h2 class="resume-section-title">Tools and Technologies</h2>
         <div class="skills-grid">
+          <span class="skill-pill">Tauri</span>
           <span class="skill-pill">HTML</span>
           <span class="skill-pill">CSS</span>
           <span class="skill-pill">JavaScript</span>
-          <span class="skill-pill">CSV Export</span>
           <span class="skill-pill">Pixel Art Design</span>
+          <span class="skill-pill">CSV Export</span>
+          <span class="skill-pill">Blob API</span>
         </div>
       </div>
     </section>
