@@ -207,35 +207,32 @@ p:last-child {
 .site-footer {
   background: var(--grey);
   border-top: 1px solid var(--border);
-  padding: 32px 0;
+  padding: 40px 0;
 }
 
 .site-footer .container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  gap: 20px;
 }
 
-.footer-copy {
-  font-size: 0.82rem;
-  letter-spacing: 0.06em;
-  color: var(--mid);
+.footer-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--dark);
 }
 
-.footer-links {
+.footer-linkedin {
   display: flex;
-  gap: 2rem;
-}
-
-.footer-links a {
-  font-size: 0.73rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  align-items: center;
   color: var(--mid);
   transition: color var(--ease);
 }
 
-.footer-links a:hover {
+.footer-linkedin:hover {
   color: var(--cherry);
 }
 
