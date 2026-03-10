@@ -11,7 +11,6 @@
 </head>
 <body>
 
-  <!-- Navigation -->
   <nav class="site-nav">
     <div class="container">
       <a href="index.html" class="nav-logo">TM</a>
@@ -28,24 +27,22 @@
     </div>
   </nav>
 
-  <!-- Main -->
   <main>
 
-    <div class="page-hero">
+    <!-- Heading + download (white) -->
+    <section class="section-white">
       <div class="container">
-        <span class="eyebrow">Experience &amp; Education</span>
+        <span class="eyebrow">Experience and Education</span>
         <h1>My <span class="italic-cherry">Resume</span></h1>
+        <div class="resume-download-bar">
+          <a href="resume.pdf" download class="btn btn-primary">Download PDF</a>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div class="container">
-
-      <div class="resume-download">
-        <a href="resume.pdf" download class="btn btn-primary">Download PDF &darr;</a>
-      </div>
-
-      <!-- Experience -->
-      <div class="resume-section">
+    <!-- Experience (grey) -->
+    <section class="section-grey">
+      <div class="container">
         <h2 class="resume-section-title">Experience</h2>
         <div class="timeline">
 
@@ -53,17 +50,16 @@
             <div class="timeline-header">
               <div>
                 <span class="timeline-title">Electrical Engineer</span>
-                &nbsp;&mdash;&nbsp;
-                <span class="timeline-place">Company Name</span>
+                <span class="timeline-place">Company Name, Boston MA</span>
               </div>
-              <span class="timeline-date">Jan 2023 &ndash; Present</span>
+              <span class="timeline-date">Jan 2023 to Present</span>
             </div>
             <p class="timeline-desc">
-              Placeholder description — involved in the design, review, and coordination of
-              electrical systems for commercial and industrial projects. Prepared drawings,
-              specifications, and technical reports in support of the project delivery team.
-              Collaborated with cross-disciplinary teams to ensure designs met regulatory
-              and client requirements.
+              Involved in the design, review, and coordination of electrical systems for
+              commercial and industrial projects. Prepared drawings, specifications, and
+              technical reports in support of the project delivery team. Collaborated
+              with architects, mechanical engineers, and structural consultants to ensure
+              designs met all regulatory and client requirements on time and within scope.
             </p>
           </div>
 
@@ -71,48 +67,52 @@
             <div class="timeline-header">
               <div>
                 <span class="timeline-title">Graduate Electrical Engineer</span>
-                &nbsp;&mdash;&nbsp;
-                <span class="timeline-place">Previous Company</span>
+                <span class="timeline-place">Previous Company, Boston MA</span>
               </div>
-              <span class="timeline-date">Feb 2021 &ndash; Dec 2022</span>
+              <span class="timeline-date">Feb 2021 to Dec 2022</span>
             </div>
             <p class="timeline-desc">
-              Placeholder description — assisted senior engineers with power systems studies,
-              load schedule development, and drawing production. Gained exposure to electrical
-              design software and on-site inspections. Supported the preparation of tender
-              documentation and project deliverables.
+              Assisted senior engineers with power systems studies, load schedule
+              development, and electrical drawing production. Gained hands-on exposure
+              to industry design software and participated in on-site construction
+              inspections. Supported the preparation of tender documentation and
+              contributed to project deliverables across multiple concurrent projects.
             </p>
           </div>
 
         </div>
       </div>
+    </section>
 
-      <!-- Education -->
-      <div class="resume-section">
+    <!-- Education (white) -->
+    <section class="section-white">
+      <div class="container">
         <h2 class="resume-section-title">Education</h2>
         <div class="timeline">
 
           <div class="timeline-item">
             <div class="timeline-header">
               <div>
-                <span class="timeline-title">Bachelor of Engineering (Electrical)</span>
-                &nbsp;&mdash;&nbsp;
-                <span class="timeline-place">University Name</span>
+                <span class="timeline-title">Bachelor of Engineering, Electrical</span>
+                <span class="timeline-place">University Name, Boston MA</span>
               </div>
-              <span class="timeline-date">2017 &ndash; 2021</span>
+              <span class="timeline-date">2017 to 2021</span>
             </div>
             <p class="timeline-desc">
-              Placeholder — relevant coursework: power systems, circuit theory, control
-              systems, electromagnetics, signals and systems. Final year project in
-              electrical design.
+              Relevant coursework included power systems, circuit theory, control systems,
+              electromagnetics, and signals and systems. Final year project focused on
+              electrical design for a renewable energy integration study. Graduated with
+              distinction.
             </p>
           </div>
 
         </div>
       </div>
+    </section>
 
-      <!-- Skills -->
-      <div class="resume-section">
+    <!-- Skills (grey) -->
+    <section class="section-grey">
+      <div class="container">
         <h2 class="resume-section-title">Skills</h2>
         <div class="skills-grid">
           <span class="skill-pill">AutoCAD Electrical</span>
@@ -122,21 +122,21 @@
           <span class="skill-pill">Altium Designer</span>
           <span class="skill-pill">LTspice</span>
           <span class="skill-pill">KiCad</span>
-          <span class="skill-pill">MS Office Suite</span>
           <span class="skill-pill">Python</span>
+          <span class="skill-pill">MS Office Suite</span>
           <span class="skill-pill">Load Calculations</span>
           <span class="skill-pill">Single-Line Diagrams</span>
-          <span class="skill-pill">Power Factor Correction</span>
           <span class="skill-pill">Cable Sizing</span>
-          <span class="skill-pill">AS/NZS Standards</span>
+          <span class="skill-pill">Power Factor Correction</span>
           <span class="skill-pill">Technical Report Writing</span>
+          <span class="skill-pill">AS/NZS Standards</span>
+          <span class="skill-pill">NEC Compliance</span>
         </div>
       </div>
+    </section>
 
-    </div>
   </main>
 
-  <!-- Footer -->
   <footer class="site-footer">
     <div class="container">
       <span class="footer-copy">&copy; 2025 Teodora Milos</span>
@@ -151,8 +151,8 @@
     const toggle = document.querySelector('.nav-toggle');
     const links  = document.querySelector('.nav-links');
     toggle.addEventListener('click', () => {
-      const isOpen = links.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', isOpen);
+      const open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
     });
   </script>
 </body>

@@ -11,7 +11,6 @@
 </head>
 <body>
 
-  <!-- Navigation -->
   <nav class="site-nav">
     <div class="container">
       <a href="index.html" class="nav-logo">TM</a>
@@ -28,79 +27,86 @@
     </div>
   </nav>
 
-  <!-- Main -->
   <main>
 
-    <!-- Page heading -->
-    <div class="page-hero">
+    <!-- Section 1: Intro (white) -->
+    <section class="section-white">
       <div class="container">
-        <span class="eyebrow">About Me</span>
-        <h1>Meet <span class="italic-cherry">Teodora</span></h1>
-      </div>
-    </div>
+        <div class="about-intro-grid">
 
-    <!-- Intro -->
-    <section class="section" style="padding-bottom: 0;">
-      <div class="container">
-        <div class="about-intro">
           <div class="about-intro-text">
+            <span class="eyebrow">About Me</span>
+            <h1>Meet <span class="italic-cherry">Teodora</span></h1>
+
             <p>
-              I'm an electrical engineer with a sharp eye for detail and an even sharper sense
-              of purpose. Currently transitioning into electrical design engineering, I'm drawn
-              to the intersection of technical precision and thoughtful, functional design —
-              where circuits become systems and blueprints become reality.
+              I am an electrical engineer driven by curiosity, precision, and a deep
+              belief that the best technical work is also the most intentional. My path
+              has taken me through power systems, circuit environments, and design
+              challenges that have sharpened the way I think, communicate, and build.
             </p>
             <p>
-              I hold a degree in Electrical Engineering and have spent time working across
-              power systems and technical environments that taught me to think clearly under
-              pressure. I bring the same rigour to everything I do — on the job, at the gym,
-              or in the middle of a concert crowd.
+              Engineering is not just what I do. It is how I see the world. I look at
+              a system and immediately start thinking about how it works, what it
+              connects to, and how it could be better. That instinct shows up in my
+              work and in the way I approach every project from first principles.
             </p>
             <p>
-              Right now, I'm building the next chapter: one CAD drawing, one design project,
-              and one connection at a time.
+              I am based in Boston, MA, and currently focused on growing into electrical
+              design engineering, where technical depth meets the craft of making
+              something truly well made. I am selective, thorough, and always pushing
+              toward the next level of my work.
             </p>
           </div>
-          <div class="img-placeholder about-photo-placeholder">
+
+          <div class="img-placeholder about-photo">
             Photo coming soon
           </div>
+
         </div>
       </div>
     </section>
 
-    <!-- Life Outside the Lab -->
-    <section class="life-outside">
+    <!-- Section 2: Life Outside the Lab (grey) -->
+    <section class="section-grey">
       <div class="container">
-        <div class="section-label">
-          <span class="eyebrow">Life Outside the Lab</span>
-          <h2>Beyond the Blueprints</h2>
-        </div>
+        <span class="eyebrow">More Than Engineering</span>
+        <h2>Life Outside <span class="italic-cherry">the Lab</span></h2>
+
         <div class="hobby-grid">
 
           <div class="hobby-card">
             <div class="img-placeholder hobby-img">Photo coming soon</div>
             <div class="hobby-body">
-              <h3>Live Music &amp; Concerts</h3>
-              <p>There's nothing quite like live music — the energy, the crowd, the way a song hits
-              differently at full volume. Concerts are my reset button.</p>
+              <h3>Live Music and Concerts</h3>
+              <p>
+                There is nothing that recharges me the way live music does.
+                The energy of a great show, the crowd, the sound hitting you
+                at full force. It is one of my favorite ways to be fully present.
+              </p>
             </div>
           </div>
 
           <div class="hobby-card">
             <div class="img-placeholder hobby-img">Photo coming soon</div>
             <div class="hobby-body">
-              <h3>Food &amp; Travel</h3>
-              <p>Exploring new places through food is my favourite way to travel. Give me a local
-              restaurant, a new city, and good company — that's the formula.</p>
+              <h3>Food and Travel</h3>
+              <p>
+                I explore new cities through food. Give me a local restaurant,
+                an unfamiliar neighborhood, and an open afternoon and I am
+                exactly where I want to be.
+              </p>
             </div>
           </div>
 
           <div class="hobby-card">
             <div class="img-placeholder hobby-img">Photo coming soon</div>
             <div class="hobby-body">
-              <h3>Fitness &amp; the Gym</h3>
-              <p>Consistent training taught me discipline that carries into everything else I do.
-              The gym is where I sharpen my focus as much as my strength.</p>
+              <h3>Fitness and the Gym</h3>
+              <p>
+                Consistent training taught me more about discipline than almost
+                anything else. The gym is where I show up for myself, build
+                focus, and stay grounded.
+              </p>
             </div>
           </div>
 
@@ -108,18 +114,23 @@
       </div>
     </section>
 
-    <!-- Pull Quote -->
-    <section class="about-quote">
+    <!-- Section 3: Values statement (white) -->
+    <section class="section-white">
       <div class="container">
-        <blockquote>
-          I'm building a career where precision meets vision.
-        </blockquote>
+        <div class="values-text">
+          <span class="eyebrow">What Drives Me</span>
+          <p>
+            I came into engineering because I wanted to build things that work.
+            Now I am channeling that foundation into electrical design, where
+            technical precision meets real world impact. I am not here to do
+            work that is good enough. I am here to do work that is right.
+          </p>
+        </div>
       </div>
     </section>
 
   </main>
 
-  <!-- Footer -->
   <footer class="site-footer">
     <div class="container">
       <span class="footer-copy">&copy; 2025 Teodora Milos</span>
@@ -134,8 +145,8 @@
     const toggle = document.querySelector('.nav-toggle');
     const links  = document.querySelector('.nav-links');
     toggle.addEventListener('click', () => {
-      const isOpen = links.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', isOpen);
+      const open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
     });
   </script>
 </body>
