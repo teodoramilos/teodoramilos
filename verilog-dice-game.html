@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verilog RTL Dice Game — Teodora Milos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="container">
+      <a href="index.html" class="nav-logo">TM</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="project-back">
+      <div class="container">
+        <a href="projects.html">&larr; Back to Projects</a>
+      </div>
+    </div>
+
+    <section class="project-page-hero">
+      <div class="container">
+        <span class="eyebrow">Digital Design</span>
+        <h1>Verilog RTL <span class="italic-cherry">Dice Game</span></h1>
+        <div class="project-page-meta">
+          <span class="project-page-year">2022</span>
+          <span class="skill-pill">Verilog</span>
+          <span class="skill-pill">Quartus</span>
+          <span class="skill-pill">FPGA</span>
+          <span class="skill-pill">7-Segment Display</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Overview</h2>
+        <div class="project-body">
+          <p>
+            Designed and implemented a fully functional Craps dice game in Verilog using the
+            Quartus design environment. The project covered the full RTL design flow: from
+            architectural planning and HDL coding through simulation, verification, and final
+            integration onto a physical FPGA development board.
+          </p>
+          <p>
+            The game correctly implements the rules of Craps, managing all game state transitions
+            through a verified finite state machine (FSM) and displaying results in real time on
+            the physical board's 7-segment display and LED indicators.
+          </p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">FPGA board running the game / 7-segment display photo</div>
+          <p class="project-img-caption">Craps game running on FPGA with 7-segment display output</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-white">
+      <div class="container">
+        <h2 class="resume-section-title">RTL Architecture</h2>
+        <div class="project-body">
+          <p>
+            The design was structured as a complete RTL data path with a separate FSM controller.
+            The data path included the following components, each implemented as a distinct
+            Verilog module:
+          </p>
+          <ul class="timeline-bullets" style="margin-top: 0;">
+            <li>Pseudo-random dice counters to simulate two fair six-sided dice rolls</li>
+            <li>An adder to compute the total of both dice values</li>
+            <li>A comparator to evaluate game outcomes against win, lose, and point conditions</li>
+            <li>A point register to store and hold the established point value across game rounds</li>
+            <li>Test logic for simulation verification of all data path components</li>
+          </ul>
+          <p style="margin-top: 1.1em;">
+            The FSM controller managed all game state transitions, including come-out roll, point
+            phase, win, and lose states, and coordinated the data path components appropriately
+            in each state.
+          </p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">RTL block diagram / FSM state diagram</div>
+          <p class="project-img-caption">RTL data path and FSM state diagram</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Simulation and Verification</h2>
+        <div class="project-body">
+          <p>
+            Each module was individually simulated and verified using Quartus waveform simulation
+            before integration. Test vectors were written to cover all corner cases in the Craps
+            game logic, including immediate wins, immediate losses, point establishment, and
+            subsequent point resolution.
+          </p>
+          <p>
+            The complete integrated design was verified end-to-end in simulation before being
+            synthesized and programmed onto the FPGA.
+          </p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">Quartus simulation waveform screenshot</div>
+          <p class="project-img-caption">Quartus simulation waveforms showing game state transitions</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-white">
+      <div class="container">
+        <h2 class="resume-section-title">FPGA Integration</h2>
+        <div class="project-body">
+          <p>
+            After simulation, the design was synthesized and programmed onto an FPGA development
+            board. Push-button inputs were connected as the dice roll trigger, with debounce
+            logic implemented in Verilog to prevent contact bounce from causing spurious inputs.
+          </p>
+          <p>
+            The 7-segment display was driven to show the current dice values, and LEDs were used
+            to indicate the current game state and outcome (win or lose).
+          </p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">Close-up of FPGA board push buttons and LED indicators</div>
+          <p class="project-img-caption">Debounced push-button inputs and LED game state indicators</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Tools and Technologies</h2>
+        <div class="skills-grid">
+          <span class="skill-pill">Verilog HDL</span>
+          <span class="skill-pill">Quartus</span>
+          <span class="skill-pill">FPGA</span>
+          <span class="skill-pill">RTL Design</span>
+          <span class="skill-pill">Finite State Machine</span>
+          <span class="skill-pill">7-Segment Display</span>
+          <span class="skill-pill">LED Indicators</span>
+          <span class="skill-pill">Push-Button Debounce</span>
+          <span class="skill-pill">Waveform Simulation</span>
+          <span class="skill-pill">Hardware Synthesis</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span class="footer-copy">&copy; 2025 Teodora Milos</span>
+      <div class="footer-links">
+        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const links  = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autonomous Robot — Teodora Milos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="container">
+      <a href="index.html" class="nav-logo">TM</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="project-back">
+      <div class="container">
+        <a href="projects.html">&larr; Back to Projects</a>
+      </div>
+    </div>
+
+    <section class="project-page-hero">
+      <div class="container">
+        <span class="eyebrow">Robotics</span>
+        <h1>Autonomous <span class="italic-cherry">Robot</span></h1>
+        <div class="project-page-meta">
+          <span class="project-page-year">2022</span>
+          <span class="skill-pill">Raspberry Pi 4</span>
+          <span class="skill-pill">ROS</span>
+          <span class="skill-pill">LTSpice</span>
+          <span class="skill-pill">Fusion 360</span>
+          <span class="skill-pill">Linux</span>
+          <span class="skill-pill">Git</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Overview</h2>
+        <div class="project-body">
+          <p>
+            Worked closely in a trio to design, build, and program an autonomous robot for a
+            third-year Electrical Engineering course. The robot was tasked with navigating an
+            unknown environment, locating and disarming six simulated mines using LEDs, guiding
+            neutralized mines to a disposal area, and avoiding walls and fake wildlife obstacles.
+          </p>
+          <p>
+            The project spanned mechanical design, circuit design, software development, and systems
+            integration. Each team member contributed across disciplines, with a focus on getting
+            all subsystems working together reliably under time pressure.
+          </p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">Robot overview photo</div>
+          <p class="project-img-caption">Completed autonomous robot</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-white">
+      <div class="container">
+        <h2 class="resume-section-title">Navigation and Control</h2>
+        <div class="project-body">
+          <p>
+            The robot used a combination of dead reckoning and waypoint navigation to move through
+            the environment. Dead reckoning calculated estimated position from wheel encoder data,
+            while the Robot Operating System (ROS) provided the framework for managing sensor input,
+            navigation logic, and motor control in real time.
+          </p>
+          <p>
+            All software was developed and tested on Linux, with shell scripting used to automate
+            startup sequences and version control handled through Git. The system architecture was
+            designed to be modular, making it possible to update individual subsystems without
+            breaking the overall behavior.
+          </p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">ROS node graph / software architecture diagram</div>
+          <p class="project-img-caption">ROS node communication diagram</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Hardware and Electronics</h2>
+        <div class="project-body">
+          <p>
+            The hardware platform was built around a Raspberry Pi 4 acting as the central processing
+            unit. Motor driver circuits were designed and simulated in LTSpice before being
+            implemented on the physical robot. The chassis and mounting components were designed using
+            Fusion 360 and either 3D printed or cut from available materials.
+          </p>
+          <p>
+            A dedicated battery system was designed to power the motors and the onboard computer
+            independently, ensuring stable voltage supply to the Raspberry Pi during high-current
+            motor events. All wiring was carefully routed and documented to support debugging
+            and modification during testing.
+          </p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">Circuit/electronics close-up photo</div>
+          <p class="project-img-caption">Motor driver circuit and battery system</p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">CAD model / chassis design in Fusion 360</div>
+          <p class="project-img-caption">Chassis CAD model (Fusion 360)</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-white">
+      <div class="container">
+        <h2 class="resume-section-title">Tools and Technologies</h2>
+        <div class="skills-grid">
+          <span class="skill-pill">Raspberry Pi 4</span>
+          <span class="skill-pill">ROS (Robot Operating System)</span>
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">LTSpice</span>
+          <span class="skill-pill">Fusion 360</span>
+          <span class="skill-pill">Linux</span>
+          <span class="skill-pill">Shell Scripting</span>
+          <span class="skill-pill">Git</span>
+          <span class="skill-pill">Motor Drivers</span>
+          <span class="skill-pill">Wheel Encoders</span>
+          <span class="skill-pill">Dead Reckoning</span>
+          <span class="skill-pill">Waypoint Navigation</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span class="footer-copy">&copy; 2025 Teodora Milos</span>
+      <div class="footer-links">
+        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const links  = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+  </script>
+</body>
+</html>

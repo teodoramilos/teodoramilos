@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Log Widget — Teodora Milos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="container">
+      <a href="index.html" class="nav-logo">TM</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="project-back">
+      <div class="container">
+        <a href="projects.html">&larr; Back to Projects</a>
+      </div>
+    </div>
+
+    <section class="project-page-hero">
+      <div class="container">
+        <span class="eyebrow">Web Development</span>
+        <h1>Pixel-Art Food <span class="italic-cherry">Log Widget</span></h1>
+        <div class="project-page-meta">
+          <span class="project-page-year">2025</span>
+          <span class="skill-pill">HTML</span>
+          <span class="skill-pill">CSS</span>
+          <span class="skill-pill">JavaScript</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Overview</h2>
+        <div class="project-body">
+          <p>
+            Created a simple pixel-art desktop food logging widget using HTML, CSS, and JavaScript.
+            The widget was built as a personal tool to make food and symptom tracking quick,
+            low-friction, and actually pleasant to use day-to-day.
+          </p>
+          <p>
+            The design uses a pixel-art visual style to make the interface feel approachable and
+            distinct from clinical health tracking apps. Everything runs entirely in the browser
+            with no backend or server required.
+          </p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">Widget interface screenshot</div>
+          <p class="project-img-caption">Food log widget interface</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-white">
+      <div class="container">
+        <h2 class="resume-section-title">Features</h2>
+        <div class="project-body">
+          <ul class="timeline-bullets" style="margin-top: 0;">
+            <li>Log meals across four categories: breakfast, lunch, dinner, and snacks</li>
+            <li>Check off common food triggers from a curated list</li>
+            <li>Complete a symptom checklist to record how you felt after eating</li>
+            <li>Export a CSV file containing all logged entries for review or analysis</li>
+          </ul>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">Meal logging / trigger checklist screenshot</div>
+          <p class="project-img-caption">Meal entry and food trigger checklist</p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">Symptom checklist and CSV export screenshot</div>
+          <p class="project-img-caption">Symptom checklist and CSV export</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Tools and Technologies</h2>
+        <div class="skills-grid">
+          <span class="skill-pill">HTML</span>
+          <span class="skill-pill">CSS</span>
+          <span class="skill-pill">JavaScript</span>
+          <span class="skill-pill">CSV Export</span>
+          <span class="skill-pill">Pixel Art Design</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span class="footer-copy">&copy; 2025 Teodora Milos</span>
+      <div class="footer-links">
+        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const links  = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+  </script>
+</body>
+</html>

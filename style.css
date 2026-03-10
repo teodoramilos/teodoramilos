@@ -447,6 +447,7 @@ p:last-child {
 }
 
 .project-card {
+  display: block;
   cursor: pointer;
   background: var(--white);
   border: 1px solid var(--border);
@@ -825,7 +826,91 @@ p:last-child {
 }
 
 /* ============================================================
-   14. CONTACT PAGE
+   14. PROJECT DETAIL PAGES
+   ============================================================ */
+.project-back {
+  padding: 32px 0 0;
+  background: var(--white);
+}
+
+.project-back a {
+  font-family: var(--font-body);
+  font-size: 0.73rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid);
+  transition: color var(--ease);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.project-back a:hover {
+  color: var(--cherry);
+}
+
+.project-page-hero {
+  padding: 32px 0 64px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+
+.project-page-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.project-page-year {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-right: 6px;
+}
+
+.project-img-block {
+  margin: 40px 0 8px;
+}
+
+.project-img-block .img-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.project-img-caption {
+  font-size: 0.8rem;
+  color: var(--mid);
+  text-align: center;
+  margin-top: 12px;
+  margin-bottom: 0;
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+
+.project-body p {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--mid);
+}
+
+.project-body h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--dark);
+  margin-bottom: 12px;
+  margin-top: 40px;
+}
+
+.project-body h3:first-child {
+  margin-top: 0;
+}
+
+/* ============================================================
+   15. CONTACT PAGE
    ============================================================ */
 .contact-layout {
   display: grid;

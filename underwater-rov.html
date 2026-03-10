@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Underwater ROV — Teodora Milos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="container">
+      <a href="index.html" class="nav-logo">TM</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="project-back">
+      <div class="container">
+        <a href="projects.html">&larr; Back to Projects</a>
+      </div>
+    </div>
+
+    <section class="project-page-hero">
+      <div class="container">
+        <span class="eyebrow">Electrical Design</span>
+        <h1>Underwater <span class="italic-cherry">ROV</span></h1>
+        <div class="project-page-meta">
+          <span class="project-page-year">2016 to 2019</span>
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">C</span>
+          <span class="skill-pill">Raspberry Pi 3</span>
+          <span class="skill-pill">Atmega328P</span>
+          <span class="skill-pill">BlueRobotics</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Overview</h2>
+        <div class="project-body">
+          <p>
+            Designed and built an underwater Remotely Operated Vehicle (ROV) that qualified for the
+            Marine Advanced Technology Education (MATE) International ROV Competition. Acting as
+            both team lead and the primary software and hardware developer, I was responsible for the
+            overall system architecture, electronics design, and control software from conception
+            through competition.
+          </p>
+          <p>
+            The ROV was designed to perform a range of underwater tasks specified by the MATE
+            competition brief, including manipulation, inspection, and navigation tasks at depth.
+            The project ran from 2016 to 2019, spanning multiple competition seasons and iterative
+            design improvements.
+          </p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">Full ROV overview photo in or out of water</div>
+          <p class="project-img-caption">Completed ROV at competition</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-white">
+      <div class="container">
+        <h2 class="resume-section-title">Electrical Architecture</h2>
+        <div class="project-body">
+          <p>
+            The full system electrical architecture was designed from scratch, covering power
+            distribution, fuse sizing, ESC-driven thruster control, and watertight enclosure
+            wiring. Particular attention was paid to ensuring watertight integrity at all cable
+            penetrations and connector interfaces, as a single leak would result in a complete
+            electrical failure at depth.
+          </p>
+          <p>
+            Power was managed through a central distribution board with appropriately rated fuses
+            protecting each subsystem. The thrusters were controlled by Electronic Speed Controllers
+            (ESCs) interfaced to the main control board, enabling smooth and precise directional
+            control across all six degrees of freedom.
+          </p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">Electronics enclosure interior / wiring photo</div>
+          <p class="project-img-caption">Internal electronics and wiring harness</p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">Power distribution board / schematic</div>
+          <p class="project-img-caption">Power distribution and fuse layout</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Control System and Software</h2>
+        <div class="project-body">
+          <p>
+            The control system ran on a Raspberry Pi 3 as the main computer, with an Atmega328P
+            microcontroller handling low-level hardware interfaces. Python was used for high-level
+            control logic and operator interface communication, while C was used for time-sensitive
+            microcontroller firmware.
+          </p>
+          <p>
+            Multithreading was employed to manage concurrent control of multiple subsystems,
+            including pitch, roll, yaw, forward/backward, and up/down motion simultaneously.
+            Additional actuators included a claw for manipulation tasks, a winch, a linear actuator,
+            and a mini-ROV deployment mechanism.
+          </p>
+          <p>
+            Cameras and LED lighting were integrated for visibility at depth, and buoyancy tubes
+            were used to fine-tune the ROV's neutral buoyancy at operating depth.
+          </p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">Control software interface / operator station photo</div>
+          <p class="project-img-caption">Operator control station and software interface</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-white">
+      <div class="container">
+        <h2 class="resume-section-title">Competition Results</h2>
+        <div class="project-body">
+          <p>
+            The ROV qualified for and competed in the MATE International ROV Competition, one of
+            the most prestigious student ROV competitions in the world. Representing South Shore
+            Robotics, the team successfully completed the technical documentation, pilot
+            demonstration, and engineering presentation components of the competition.
+          </p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">Competition photo / team photo</div>
+          <p class="project-img-caption">MATE International ROV Competition, 2019</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Tools and Technologies</h2>
+        <div class="skills-grid">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">C</span>
+          <span class="skill-pill">Raspberry Pi 3</span>
+          <span class="skill-pill">Atmega328P</span>
+          <span class="skill-pill">BlueRobotics Thrusters</span>
+          <span class="skill-pill">ESC Motor Control</span>
+          <span class="skill-pill">Multithreading</span>
+          <span class="skill-pill">Linear Actuators</span>
+          <span class="skill-pill">Watertight Enclosures</span>
+          <span class="skill-pill">Power Distribution</span>
+          <span class="skill-pill">Fuse Sizing</span>
+          <span class="skill-pill">Camera Integration</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span class="footer-copy">&copy; 2025 Teodora Milos</span>
+      <div class="footer-links">
+        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const links  = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+  </script>
+</body>
+</html>

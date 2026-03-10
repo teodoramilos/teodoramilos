@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intelligent Irrigation System — Teodora Milos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="container">
+      <a href="index.html" class="nav-logo">TM</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="project-back">
+      <div class="container">
+        <a href="projects.html">&larr; Back to Projects</a>
+      </div>
+    </div>
+
+    <section class="project-page-hero">
+      <div class="container">
+        <span class="eyebrow">Embedded Systems</span>
+        <h1>Novel Intelligent <span class="italic-cherry">Irrigation System</span></h1>
+        <div class="project-page-meta">
+          <span class="project-page-year">2018</span>
+          <span class="skill-pill">Python 3</span>
+          <span class="skill-pill">Raspberry Pi 3</span>
+          <span class="skill-pill">Matlab Simulink</span>
+          <span class="skill-pill">I2C</span>
+          <span class="skill-pill">ADC</span>
+          <span class="skill-pill">GPIO</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Overview</h2>
+        <div class="project-body">
+          <p>
+            Created an award-winning smart irrigation system for the Canada-Wide Science Fair.
+            The system was designed to make precision agriculture accessible for any plant culture
+            by automatically managing watering, fertilization, acidity, and labor based on real-time
+            sensor data.
+          </p>
+          <p>
+            The project won a National Bronze Medal at the Canada-Wide Science Fair in 2018,
+            competing against the top student science projects from across the country.
+          </p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">Full system overview / science fair display photo</div>
+          <p class="project-img-caption">System overview at Canada-Wide Science Fair, 2018</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-white">
+      <div class="container">
+        <h2 class="resume-section-title">System Objectives</h2>
+        <div class="project-body">
+          <p>
+            The system was designed to simultaneously achieve four core agricultural objectives:
+          </p>
+          <ul class="timeline-bullets" style="margin-top: 0;">
+            <li>Conserve water by only irrigating when soil moisture levels indicated a genuine need</li>
+            <li>Reduce fertilizer use through targeted, sensor-triggered nutrient delivery</li>
+            <li>Manage soil and water acidity by monitoring pH and adjusting automatically</li>
+            <li>Minimize labor by automating the full monitoring and response cycle</li>
+          </ul>
+          <p style="margin-top: 1.1em;">
+            All objectives were validated through controlled testing across multiple plant species
+            and growth conditions, demonstrating consistent performance improvements over manual
+            irrigation methods.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Sensor Array and Data Acquisition</h2>
+        <div class="project-body">
+          <p>
+            The system incorporated a multi-sensor array capable of monitoring five environmental
+            parameters simultaneously: temperature, barometric pressure, soil moisture, sunlight
+            intensity, and pH levels. Each sensor communicated via I2C, simplifying the wiring
+            and allowing sensors to share a common bus.
+          </p>
+          <p>
+            Analog sensors were connected through analog-to-digital converters (ADC) to provide
+            digital readings to the Raspberry Pi. GPIO expansion boards extended the available
+            input/output capacity to accommodate the full sensor suite and actuator outputs.
+          </p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">Sensor array / wiring close-up photo</div>
+          <p class="project-img-caption">Sensor array and I2C wiring</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-white">
+      <div class="container">
+        <h2 class="resume-section-title">Control Logic and Software</h2>
+        <div class="project-body">
+          <p>
+            The control software was written in Python 3 running on a Raspberry Pi 3. The system
+            continuously polled all sensors and evaluated readings against configurable thresholds
+            for each plant profile. When a threshold was crossed, the system triggered the
+            appropriate response through relays controlling pumps and solenoid valves.
+          </p>
+          <p>
+            Matlab Simulink was used during the design phase to model the system dynamics and
+            validate control logic before deployment on hardware. This simulation-first approach
+            caught several edge cases early and reduced the physical debugging time significantly.
+          </p>
+          <p>
+            Amplifiers were used to boost sensor signals where necessary to ensure accurate ADC
+            readings across the full measurement range.
+          </p>
+        </div>
+        <div class="project-img-block">
+          <div class="img-placeholder">Simulink model screenshot or software interface</div>
+          <p class="project-img-caption">Matlab Simulink control model</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Tools and Technologies</h2>
+        <div class="skills-grid">
+          <span class="skill-pill">Python 3</span>
+          <span class="skill-pill">Raspberry Pi 3</span>
+          <span class="skill-pill">Matlab Simulink</span>
+          <span class="skill-pill">I2C Communication</span>
+          <span class="skill-pill">Analog to Digital Converters</span>
+          <span class="skill-pill">GPIO Expansion</span>
+          <span class="skill-pill">Relays</span>
+          <span class="skill-pill">Amplifiers</span>
+          <span class="skill-pill">pH Sensors</span>
+          <span class="skill-pill">Moisture Sensors</span>
+          <span class="skill-pill">Barometric Pressure Sensors</span>
+          <span class="skill-pill">Temperature Sensors</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span class="footer-copy">&copy; 2025 Teodora Milos</span>
+      <div class="footer-links">
+        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const links  = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+  </script>
+</body>
+</html>
