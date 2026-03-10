@@ -35,137 +35,267 @@
       </div>
     </div>
 
+    <!-- Hero -->
     <section class="project-page-hero">
       <div class="container">
-        <span class="eyebrow">Electrical Design</span>
+        <span class="eyebrow">Robotics</span>
         <h1>Underwater <span class="italic-cherry">ROV</span></h1>
         <div class="project-page-meta">
-          <span class="project-page-year">2016 to 2019</span>
+          <span class="project-page-year">2017&ndash;2019</span>
           <span class="skill-pill">Python</span>
-          <span class="skill-pill">C</span>
-          <span class="skill-pill">Raspberry Pi 3</span>
-          <span class="skill-pill">Atmega328P</span>
+          <span class="skill-pill">Raspberry Pi 3B+</span>
+          <span class="skill-pill">Arduino</span>
+          <span class="skill-pill">Linux</span>
           <span class="skill-pill">BlueRobotics</span>
+          <span class="skill-pill">Multithreading</span>
         </div>
       </div>
     </section>
 
+    <!-- Intro -->
     <section class="section-grey">
       <div class="container">
-        <h2 class="resume-section-title">Overview</h2>
-        <div class="project-body">
-          <p>
-            Designed and built an underwater Remotely Operated Vehicle (ROV) that qualified for the
-            Marine Advanced Technology Education (MATE) International ROV Competition. Acting as
-            both team lead and the primary software and hardware developer, I was responsible for the
-            overall system architecture, electronics design, and control software from conception
-            through competition.
-          </p>
-          <p>
-            The ROV was designed to perform a range of underwater tasks specified by the MATE
-            competition brief, including manipulation, inspection, and navigation tasks at depth.
-            The project ran from 2016 to 2019, spanning multiple competition seasons and iterative
-            design improvements.
-          </p>
+        <div class="project-split">
+          <div class="project-body">
+            <p>
+              I was a team captain and a programmer for South Shore Robotics, an underwater ROV team
+              located in Bridgewater, Nova Scotia, for three years. During this time, I was exposed to
+              Python programming, Arduino, Raspberry Pi, Linux, multithreading, and numerous other
+              engineering-related skills. In 2019, we advanced to the International MATE ROV Competition.
+            </p>
+            <p>
+              The team and I constructed an underwater remotely operated vehicle (ROV) designed to meet
+              the needs of the Eastman Company of Kingsport, Tennessee. The company had issued a request
+              for proposals (RFP) for an ROV that could operate in the freshwater environments of Boone
+              Lake, Boone Dam, and the South Fork of the Holston River. Specifically, to complete tasks
+              related to ensuring public safety, maintaining healthy waterways, and preserving local
+              history of the Civil War era.
+            </p>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">The 'S.S. Enterprise' — main ROV photo</div>
+          </div>
         </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">Full ROV overview photo in or out of water</div>
-          <p class="project-img-caption">Completed ROV at competition</p>
+        <div class="project-three-img" style="margin-top:40px;">
+          <div class="img-placeholder">Competition photo 1 (pool venue)</div>
+          <div class="img-placeholder">Competition photo 2 (team at event)</div>
+          <div class="img-placeholder">Competition photo 3 (team poolside)</div>
         </div>
+        <p class="project-img-caption" style="margin-top:14px;">MATE International ROV Competition, 2019</p>
       </div>
     </section>
 
+    <!-- Hardware -->
     <section class="section-white">
       <div class="container">
-        <h2 class="resume-section-title">Electrical Architecture</h2>
-        <div class="project-body">
-          <p>
-            The full system electrical architecture was designed from scratch, covering power
-            distribution, fuse sizing, ESC-driven thruster control, and watertight enclosure
-            wiring. Particular attention was paid to ensuring watertight integrity at all cable
-            penetrations and connector interfaces, as a single leak would result in a complete
-            electrical failure at depth.
-          </p>
-          <p>
-            Power was managed through a central distribution board with appropriately rated fuses
-            protecting each subsystem. The thrusters were controlled by Electronic Speed Controllers
-            (ESCs) interfaced to the main control board, enabling smooth and precise directional
-            control across all six degrees of freedom.
-          </p>
+        <h2 class="resume-section-title">Hardware</h2>
+
+        <!-- Hardware list + buoyancy tubes photo -->
+        <div class="project-split">
+          <div class="project-body">
+            <h3>Hardware Consisted Of:</h3>
+            <ul class="timeline-bullets">
+              <li>Carbon fiber frame</li>
+              <li>BlueRobotics T100 &amp; T200 Thrusters</li>
+              <li>Waterproof linear actuator motor for claw</li>
+              <li>Bilge-pump motor and propeller for mini-ROV</li>
+              <li>Xbox controller, Raspberry Pi 3B+, Adafruit PWM motor servo hat</li>
+              <li>Lights and wide-angle, low-light cameras</li>
+              <li>3D printed claw and thruster enclosures</li>
+              <li>Buoyancy tubes, architecturally buoyant foam, PVC tubes with end caps and an air hose</li>
+              <li>Winch for heavier payloads</li>
+            </ul>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">Buoyancy Tubes</div>
+          </div>
         </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">Electronics enclosure interior / wiring photo</div>
-          <p class="project-img-caption">Internal electronics and wiring harness</p>
+
+        <!-- Main ROV + claw photo -->
+        <div class="project-split" style="margin-top:56px;">
+          <div class="project-body">
+            <h3 style="margin-top:0;">Main ROV</h3>
+            <ul class="timeline-bullets">
+              <li>Pitch, roll, yaw, vertical and forward/backward movement</li>
+              <li>Sinking, rising and neutral buoyancy</li>
+              <li>Strong claw used to lift differently shaped/sized objects and open/close quickly for timely task completion</li>
+              <li>Illuminated path to allow operator to be aware of their surroundings</li>
+              <li>Cameras provided operator with a view of the claw, underside hook, and general surroundings of the ROV via Ethernet and video multiplexer</li>
+            </ul>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">3D Printed Claw</div>
+          </div>
         </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">Power distribution board / schematic</div>
-          <p class="project-img-caption">Power distribution and fuse layout</p>
+
+        <!-- Mini-ROV + photo -->
+        <div class="project-split" style="margin-top:56px;">
+          <div class="project-body">
+            <h3 style="margin-top:0;">Mini-ROV</h3>
+            <ul class="timeline-bullets">
+              <li>Slides out from the bottom of main ROV to help inspect drain pipes for mud and other debris</li>
+              <li>Made as small as possible to give room for other tools</li>
+              <li>Utilizes bilge pump motor with a propeller to create thrust and is in a tricycle formation to smoothly move in the drain pipe</li>
+              <li>Equipped with a light and camera to provide a clear visual</li>
+              <li>A Cat6 cable connects the mini-ROV to the main ROV where power is provided</li>
+            </ul>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">Mini-ROV photo</div>
+          </div>
         </div>
+
       </div>
     </section>
 
+    <!-- Hardware Diagram + Structural Features -->
     <section class="section-grey">
       <div class="container">
-        <h2 class="resume-section-title">Control System and Software</h2>
-        <div class="project-body">
-          <p>
-            The control system ran on a Raspberry Pi 3 as the main computer, with an Atmega328P
-            microcontroller handling low-level hardware interfaces. Python was used for high-level
-            control logic and operator interface communication, while C was used for time-sensitive
-            microcontroller firmware.
-          </p>
-          <p>
-            Multithreading was employed to manage concurrent control of multiple subsystems,
-            including pitch, roll, yaw, forward/backward, and up/down motion simultaneously.
-            Additional actuators included a claw for manipulation tasks, a winch, a linear actuator,
-            and a mini-ROV deployment mechanism.
-          </p>
-          <p>
-            Cameras and LED lighting were integrated for visibility at depth, and buoyancy tubes
-            were used to fine-tune the ROV's neutral buoyancy at operating depth.
-          </p>
-        </div>
+        <h2 class="resume-section-title">Hardware Diagram</h2>
         <div class="project-img-block">
-          <div class="img-placeholder">Control software interface / operator station photo</div>
-          <p class="project-img-caption">Operator control station and software interface</p>
+          <div class="img-placeholder">Hardware Diagram — showing Control Box, Main ROV Watertight Enclosure, and Mini-ROV system diagram</div>
+          <p class="project-img-caption">ROV Hardware Design</p>
         </div>
+
+        <!-- Structural Features + carbon fiber photo -->
+        <div class="project-split" style="margin-top:56px;">
+          <div class="project-body">
+            <h3 style="margin-top:0;">Structural Features</h3>
+            <ul class="timeline-bullets">
+              <li>Ten layers of carbon fiber layered at 45 degree angles ('quasi-isotropic layup') provided a stiff, strong, and light frame, which we CNC milled to our desired shape</li>
+              <li>For weight distribution, motors, cameras, and lights were placed in identical positions on either side of the ROV. A hook was mounted on the underside of the ROV for heavier payloads</li>
+              <li>A tether sleeve was used to keep all of the crucial communication and power lines neatly assembled in one seamless cable. It consisted of an air compressor hose, CAT6 cables, and a power cable</li>
+            </ul>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">Layering carbon fiber at STELIA Ltd in Lunenburg, NS</div>
+          </div>
+        </div>
+
       </div>
     </section>
 
+    <!-- Software -->
     <section class="section-white">
       <div class="container">
-        <h2 class="resume-section-title">Competition Results</h2>
-        <div class="project-body">
-          <p>
-            The ROV qualified for and competed in the MATE International ROV Competition, one of
-            the most prestigious student ROV competitions in the world. Representing South Shore
-            Robotics, the team successfully completed the technical documentation, pilot
-            demonstration, and engineering presentation components of the competition.
-          </p>
+        <h2 class="resume-section-title">Software</h2>
+
+        <!-- Software list + Xbox controller diagram -->
+        <div class="project-split">
+          <div class="project-body">
+            <h3>Software Consisted Of:</h3>
+            <ul class="timeline-bullets">
+              <li>Multithreading
+                <ul class="timeline-bullets" style="margin-top:6px;">
+                  <li>Client socket for the microcontroller on the ROV</li>
+                  <li>Server socket for the surface laptop in Linux environment</li>
+                </ul>
+              </li>
+              <li>Moving using an Xbox controller
+                <ul class="timeline-bullets" style="margin-top:6px;">
+                  <li>Yaw, roll, pitch</li>
+                  <li>Forward/backward thrust</li>
+                  <li>Upward/downward thrust</li>
+                  <li>Micro-ROV forward/backward</li>
+                  <li>Claw open/close</li>
+                  <li>Winch roll up/roll out</li>
+                </ul>
+              </li>
+              <li>Reading temperature sensor</li>
+              <li>Utilizing PWM and motor hats, linear actuator</li>
+            </ul>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">Xbox controller diagram showing button mappings (LT, RT, LB, RB, LX, LY, RX, RY, A, B, X, Y, Back, Start)</div>
+          </div>
         </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">Competition photo / team photo</div>
-          <p class="project-img-caption">MATE International ROV Competition, 2019</p>
+
+        <!-- Software Diagrams -->
+        <div class="project-img-block" style="margin-top:56px;">
+          <div class="img-placeholder">Two software flowcharts side by side: Client File Algorithm (left) and Server File Algorithm (right)</div>
+          <p class="project-img-caption">"Client File Algorithm" (left) and "Server File Algorithm" (right)</p>
         </div>
+
       </div>
     </section>
 
+    <!-- Past Designs -->
     <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Past Designs</h2>
+
+        <!-- MANTA -->
+        <div class="project-split">
+          <div class="project-body">
+            <h3>2018 &mdash; MANTA</h3>
+            <p>
+              MANTA was built in 2018 through MATE for the University of Washington's Applied Physics
+              Laboratory and was designed to locate wreckage underwater, return necessary components to
+              the surface, install and retrieve an ocean bottom seismometer, and install tidal turbines
+              in appropriate environments.
+            </p>
+            <ul class="timeline-bullets">
+              <li>Claw was an iteration of a 3D model we found online</li>
+              <li>Constructed lift bag for recovering heavy debris using ABS piping and plastic bags</li>
+              <li>Carbon fiber frame constructed with the help of STELIA North America Ltd</li>
+              <li>RPi3 at the surface emulated Xbox controller data and sent it to onboard RPi3</li>
+              <li>Onboard RPi3 interpreted controller data via Adafruit servo hat</li>
+              <li>Blue Robotics electronic speed controllers received PWM signals and sent data to T200 thrusters</li>
+              <li>A secondary method of controlling the ROV was available using BlueRobotics thruster commanders and Fathom-E Tether Interfaces</li>
+            </ul>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">Second underwater ROV: 'MANTA' — 3D render</div>
+          </div>
+        </div>
+
+        <!-- AEGIR -->
+        <div class="project-split" style="margin-top:56px;">
+          <div class="project-body">
+            <h3 style="margin-top:0;">2017 &mdash; AEGIR</h3>
+            <p>
+              AEGIR was built for MATE as a solution to the Port of Long Beach's request for an ROV to
+              assist in Hyperloop construction, water and light show maintenance, environmental cleanup,
+              and risk mitigation at the Long Beach waterfront.
+            </p>
+            <ul class="timeline-bullets">
+              <li>Built using a modified MATE Pufferfish Kit which came with controller, bilge motors, PVC mounts and a tether</li>
+              <li>Lego claw operated by a hydraulic system</li>
+              <li>Our facilitator provided a camera made at the MATE Summer Institute for Teachers</li>
+              <li>Pool noodle fragments for buoyancy</li>
+            </ul>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">Team and I with our first underwater ROV: 'AEGIR'</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Tools -->
+    <section class="section-white">
       <div class="container">
         <h2 class="resume-section-title">Tools and Technologies</h2>
         <div class="skills-grid">
           <span class="skill-pill">Python</span>
-          <span class="skill-pill">C</span>
-          <span class="skill-pill">Raspberry Pi 3</span>
-          <span class="skill-pill">Atmega328P</span>
-          <span class="skill-pill">BlueRobotics Thrusters</span>
-          <span class="skill-pill">ESC Motor Control</span>
+          <span class="skill-pill">Arduino</span>
+          <span class="skill-pill">Raspberry Pi 3B+</span>
+          <span class="skill-pill">Linux</span>
           <span class="skill-pill">Multithreading</span>
-          <span class="skill-pill">Linear Actuators</span>
-          <span class="skill-pill">Watertight Enclosures</span>
-          <span class="skill-pill">Power Distribution</span>
-          <span class="skill-pill">Fuse Sizing</span>
-          <span class="skill-pill">Camera Integration</span>
+          <span class="skill-pill">Socket Programming</span>
+          <span class="skill-pill">BlueRobotics T100 &amp; T200 Thrusters</span>
+          <span class="skill-pill">Adafruit PWM Servo Hat</span>
+          <span class="skill-pill">Electronic Speed Controllers</span>
+          <span class="skill-pill">Linear Actuator</span>
+          <span class="skill-pill">Xbox Controller Interface</span>
+          <span class="skill-pill">Carbon Fiber Fabrication</span>
+          <span class="skill-pill">3D Printing</span>
+          <span class="skill-pill">CNC Milling</span>
+          <span class="skill-pill">Video Multiplexer</span>
+          <span class="skill-pill">Cat6 / Tether Design</span>
+          <span class="skill-pill">PWM Motor Control</span>
+          <span class="skill-pill">Fathom-E Tether Interface</span>
         </div>
       </div>
     </section>

@@ -8,6 +8,57 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .project-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      margin-top: 1.2em;
+    }
+    .project-table th {
+      background: var(--cherry);
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+    .project-table td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--dark);
+    }
+    .project-table tr:last-child td {
+      border-bottom: none;
+    }
+    .project-table tr:nth-child(even) td {
+      background: rgba(0,0,0,0.03);
+    }
+    .project-table tfoot td {
+      font-weight: 500;
+      border-top: 2px solid var(--border);
+    }
+    .result-callout {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--cherry);
+      letter-spacing: 0.04em;
+      margin: 1.2em 0 0.2em;
+    }
+    .two-tables {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+      margin-top: 1.4em;
+    }
+    @media (max-width: 768px) {
+      .two-tables { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
@@ -35,6 +86,7 @@
       </div>
     </div>
 
+    <!-- Hero -->
     <section class="project-page-hero">
       <div class="container">
         <span class="eyebrow">Physics</span>
@@ -48,104 +100,250 @@
       </div>
     </section>
 
+    <!-- Intro -->
     <section class="section-grey">
       <div class="container">
-        <h2 class="resume-section-title">Overview</h2>
-        <div class="project-body">
-          <p>
-            Designed and constructed a Michelson interferometer from scratch for International
-            Baccalaureate (IB) Higher Level Physics credit. The project applied the principle of
-            light interference to make a precise optical measurement: determining the refractive
-            index of a sample of crown glass of known thickness.
-          </p>
-          <p>
-            Rather than using a pre-assembled kit, all mechanical and optical components were
-            sourced and arranged independently. A custom wooden stand was designed and manufactured
-            to hold all components in precise alignment, which was critical for producing stable and
-            readable interference fringes.
-          </p>
+        <div class="project-split">
+          <div class="project-body">
+            <p>
+              I created a Michelson's interferometer as my Internal Assessment project for my
+              International Baccalaureate Higher Level Physics credit. I utilized the principle of
+              interference I had learned in class to demonstrate the wave properties of light. My
+              objective was to determine the refractive index of a piece of crown glass with known
+              thickness. Aligning the constructive and deconstructive waves such that I got a circular
+              fringe pattern proved to be a very delicate process which took me weeks to perfect.
+            </p>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">My Michelson's Interferometer — photo of the physical build</div>
+          </div>
         </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">Full interferometer setup photo</div>
-          <p class="project-img-caption">Complete interferometer setup on custom wooden stand</p>
+
+        <div class="project-split" style="margin-top:48px;">
+          <div class="project-body">
+            <p>
+              Interestingly, a large-scale Michelson's interferometer called the Laser Interferometer
+              Gravitational-Wave Observatory (LIGO) was actually used to detect the presence of
+              gravitational waves in 2015 (nearly 100 years after Einstein had predicted them in his
+              General Theory of Relativity). Interferometers are also used in medical imagery and have
+              atmospheric and space applications.
+            </p>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:16/9;">Laser Interferometer Gravitational-wave Observatory (LIGO) — aerial photo showing End-station @ 4km and Mid-station @ 2km</div>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- Background -->
     <section class="section-white">
       <div class="container">
-        <h2 class="resume-section-title">Principle of Operation</h2>
+        <h2 class="resume-section-title">Background</h2>
+
         <div class="project-body">
           <p>
-            A Michelson interferometer works by splitting a single light beam into two paths using
-            a beam splitter. Each path travels to a mirror and is reflected back. The two beams
-            are then recombined, and because they have traveled different optical path lengths,
-            they interfere constructively or destructively to produce a pattern of bright and dark
-            fringes.
-          </p>
-          <p>
-            By introducing a glass sample of known thickness into one arm of the interferometer
-            and counting the resulting fringe shifts, it is possible to calculate the optical path
-            difference introduced by the glass. Combined with the known thickness, this gives the
-            refractive index of the material directly from the interference data.
+            An interferometer works by the principle of interference, which states that when two waves
+            of the same wavelength and amplitude travel through the same medium, their amplitudes
+            combine. Two or more waves constructively interfere (superimpose) if their peaks align,
+            and they deconstructively interfere if a peak and a trough combine.
           </p>
         </div>
         <div class="project-img-block">
-          <div class="img-placeholder">Interference fringe pattern photo</div>
-          <p class="project-img-caption">Interference fringe pattern observed at output</p>
+          <div class="img-placeholder">Diagram showing Constructive Interference (two waves combining into larger wave) and Destructive Interference (two waves cancelling out to flat line)</div>
+        </div>
+
+        <div class="project-split" style="margin-top:48px;">
+          <div class="project-body">
+            <p>
+              A typical interferometer works by shining a light source onto a beam splitter oriented
+              at 45 degrees to the beam, where it divides and produces two beams of equal intensity.
+              One beam hits Mirror 1 and gets reflected back, and the other beam hits Mirror 2 and
+              also gets reflected back. The resulting beam passes straight through the beam splitter
+              and reaches the screen to produce an interference pattern.
+            </p>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">Diagram — Typical configuration of a Michelson's Interferometer (showing Light Source, Half-silvered mirror, Mirror 1, Mirror 2, Observation Screen)</div>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- Design -->
     <section class="section-grey">
       <div class="container">
-        <h2 class="resume-section-title">Mechanical Design and Construction</h2>
+        <h2 class="resume-section-title">Design</h2>
         <div class="project-body">
           <p>
-            The wooden stand was designed to securely mount and independently adjust all optical
-            elements: the green laser pointer source, two flat mirrors, the glass beam splitter,
-            the crown glass sample, a focusing lens, and the digital angle measurement ruler used
-            to set mirror angles precisely.
+            The wavelength of the laser light (&lambda;) was defined by the manufacturer as
+            5.32&times;10<sup>&minus;7</sup> m with an error of &plusmn;0.10&times;10<sup>&minus;7</sup> m.
+            The angle of the glass plate rotation (&theta;) was measured by the digital angle measurement
+            ruler. The fringe shift count (N) was counted by eye. The thickness of the glass plate (t)
+            was measured ten times for accuracy, resulting in an average thickness of
+            1.897&times;10<sup>&minus;3</sup> m.
           </p>
-          <p>
-            Alignment was the most critical challenge. Even small angular deviations in any mirror
-            would shift the fringe pattern or collapse it entirely. The stand was designed with
-            adjustable mounting points to allow fine-tuning of each element independently. Careful
-            attention was paid to the rigidity of the structure to prevent vibration-induced fringe
-            movement during measurement.
+          <p style="margin-top:1em; color:var(--mid); font-size:0.92rem;">
+            Where: <em>n</em> = index of refraction &nbsp;|&nbsp;
+            <em>N</em> = fringe shift count &nbsp;|&nbsp;
+            <em>t</em> = thickness of glass plate &nbsp;|&nbsp;
+            <em>&theta;</em> = angle of glass plate rotation &nbsp;|&nbsp;
+            <em>&lambda;</em> = wavelength of laser light
           </p>
-        </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">Wooden stand construction / component mounting photo</div>
-          <p class="project-img-caption">Custom wooden stand with mounted optical components</p>
-        </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">Close-up of glass sample and beam splitter alignment</div>
-          <p class="project-img-caption">Crown glass sample positioned in the interferometer arm</p>
         </div>
       </div>
     </section>
 
+    <!-- Results -->
     <section class="section-white">
       <div class="container">
         <h2 class="resume-section-title">Results</h2>
         <div class="project-body">
           <p>
-            The experiment successfully produced stable interference fringes and allowed for
-            repeatable fringe-counting measurements. The calculated refractive index of the crown
-            glass sample was consistent with the accepted literature value, validating both the
-            optical alignment and the measurement methodology.
+            My resulting average index of refraction of crown glass was 1.495 &plusmn; 0.008, whereas
+            the actual refractive index of crown glass is between 1.485 and 1.755. This was quite
+            accurate for my purposes.
           </p>
+          <p class="result-callout">n = 1.495 &plusmn; 0.008</p>
+        </div>
+
+        <h3 style="margin-top:2em; margin-bottom:0.2em;">Glass Refractive Index &mdash; Calculated for different interference fringe shift counts</h3>
+        <div style="overflow-x:auto;">
+          <table class="project-table">
+            <thead>
+              <tr>
+                <th>N</th>
+                <th>Average Angle [deg]</th>
+                <th>Average Angle [Rad]</th>
+                <th>Average n by group</th>
+                <th>St. Dev. n</th>
+                <th>Uncertainty of n at 95% confidence</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>80</td><td>14.7</td><td>0.257</td><td>1.505</td><td>0.036</td><td>0.044</td></tr>
+              <tr><td>100</td><td>16.3</td><td>0.285</td><td>1.515</td><td>0.015</td><td>0.018</td></tr>
+              <tr><td>120</td><td>18.1</td><td>0.316</td><td>1.492</td><td>0.011</td><td>0.014</td></tr>
+              <tr><td>140</td><td>19.6</td><td>0.342</td><td>1.486</td><td>0.010</td><td>0.012</td></tr>
+              <tr><td>180</td><td>22.3</td><td>0.389</td><td>1.480</td><td>0.015</td><td>0.019</td></tr>
+              <tr><td>200</td><td>23.2</td><td>0.405</td><td>1.493</td><td>0.015</td><td>0.038</td></tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3"><strong>Average Mean and St. Dev.</strong></td>
+                <td><strong>1.495</strong></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="project-body" style="margin-top:2.4em;">
           <p>
-            The project was submitted as part of the IB Higher Level Physics internal assessment
-            and demonstrated the application of wave optics principles to a real physical measurement
-            challenge.
+            Circular or linear fringes appear on the observation screen, depending on how the mirrors,
+            laser, and glass are aligned. The brighter lines are constructive interference and the
+            darker lines are destructive interference.
           </p>
+        </div>
+        <div class="project-three-img" style="grid-template-columns:1fr 1fr; margin-top:24px;">
+          <div class="img-placeholder" style="aspect-ratio:4/3;">Linear fringe pattern — green laser lines on dark background</div>
+          <div class="img-placeholder" style="aspect-ratio:4/3;">Circular fringe pattern — green laser rings on dark background</div>
         </div>
       </div>
     </section>
 
+    <!-- Additional Measurement Results -->
     <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Additional Measurement Results</h2>
+        <div class="two-tables">
+
+          <div>
+            <h3 style="margin-top:0; margin-bottom:0.4em;">Raw Measurements</h3>
+            <div style="overflow-x:auto;">
+              <table class="project-table">
+                <thead>
+                  <tr>
+                    <th>N</th>
+                    <th>Angle [deg]</th>
+                    <th>Angle [Rad]</th>
+                    <th>Individual n</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>80</td><td>14.7</td><td>0.257</td><td>1.507</td></tr>
+                  <tr><td>80</td><td>14.5</td><td>0.253</td><td>1.529</td></tr>
+                  <tr><td>80</td><td>14.3</td><td>0.250</td><td>1.553</td></tr>
+                  <tr><td>80</td><td>15.1</td><td>0.264</td><td>1.467</td></tr>
+                  <tr><td>80</td><td>15.0</td><td>0.262</td><td>1.477</td></tr>
+                  <tr><td>100</td><td>16.5</td><td>0.288</td><td>1.499</td></tr>
+                  <tr><td>100</td><td>16.2</td><td>0.283</td><td>1.526</td></tr>
+                  <tr><td>100</td><td>16.2</td><td>0.283</td><td>1.528</td></tr>
+                  <tr><td>100</td><td>16.4</td><td>0.286</td><td>1.508</td></tr>
+                  <tr><td>120</td><td>18.0</td><td>0.314</td><td>1.503</td></tr>
+                  <tr><td>120</td><td>18.0</td><td>0.314</td><td>1.503</td></tr>
+                  <tr><td>120</td><td>18.2</td><td>0.318</td><td>1.486</td></tr>
+                  <tr><td>120</td><td>18.1</td><td>0.316</td><td>1.494</td></tr>
+                  <tr><td>120</td><td>18.3</td><td>0.319</td><td>1.478</td></tr>
+                  <tr><td>140</td><td>19.7</td><td>0.344</td><td>1.480</td></tr>
+                  <tr><td>140</td><td>19.5</td><td>0.340</td><td>1.496</td></tr>
+                  <tr><td>140</td><td>19.6</td><td>0.342</td><td>1.488</td></tr>
+                  <tr><td>140</td><td>19.5</td><td>0.340</td><td>1.496</td></tr>
+                  <tr><td>140</td><td>19.8</td><td>0.346</td><td>1.473</td></tr>
+                  <tr><td>180</td><td>22.0</td><td>0.384</td><td>1.499</td></tr>
+                  <tr><td>180</td><td>22.3</td><td>0.389</td><td>1.478</td></tr>
+                  <tr><td>180</td><td>22.1</td><td>0.386</td><td>1.491</td></tr>
+                  <tr><td>180</td><td>22.3</td><td>0.389</td><td>1.478</td></tr>
+                  <tr><td>180</td><td>22.6</td><td>0.394</td><td>1.458</td></tr>
+                  <tr><td>200</td><td>23.1</td><td>0.403</td><td>1.502</td></tr>
+                  <tr><td>200</td><td>23.5</td><td>0.410</td><td>1.475</td></tr>
+                  <tr><td>200</td><td>23.1</td><td>0.403</td><td>1.502</td></tr>
+                </tbody>
+                <tfoot>
+                  <tr><td colspan="4">Measurement Uncertainty at 95% confidence: <strong>0.008</strong></td></tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="margin-top:0; margin-bottom:0.4em;">Glass Plate Thickness Measurements</h3>
+            <div style="overflow-x:auto;">
+              <table class="project-table">
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>Glass plate thickness t [mm]</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>1</td><td>1.90</td></tr>
+                  <tr><td>2</td><td>1.90</td></tr>
+                  <tr><td>3</td><td>1.90</td></tr>
+                  <tr><td>4</td><td>1.90</td></tr>
+                  <tr><td>5</td><td>1.90</td></tr>
+                  <tr><td>6</td><td>1.89</td></tr>
+                  <tr><td>7</td><td>1.89</td></tr>
+                  <tr><td>8</td><td>1.89</td></tr>
+                  <tr><td>9</td><td>1.90</td></tr>
+                  <tr><td>10</td><td>1.90</td></tr>
+                </tbody>
+                <tfoot>
+                  <tr><td>Average:</td><td><strong>1.897</strong></td></tr>
+                  <tr><td>St. Dev.:</td><td>0.005</td></tr>
+                  <tr><td>Measurement Uncertainty:</td><td>0.003</td></tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools -->
+    <section class="section-white">
       <div class="container">
         <h2 class="resume-section-title">Tools and Components</h2>
         <div class="skills-grid">

@@ -35,6 +35,7 @@
       </div>
     </div>
 
+    <!-- Hero -->
     <section class="project-page-hero">
       <div class="container">
         <span class="eyebrow">Robotics</span>
@@ -51,97 +52,221 @@
       </div>
     </section>
 
+    <!-- Intro -->
     <section class="section-grey">
       <div class="container">
-        <h2 class="resume-section-title">Overview</h2>
-        <div class="project-body">
-          <p>
-            Worked closely in a trio to design, build, and program an autonomous robot for a
-            third-year Electrical Engineering course. The robot was tasked with navigating an
-            unknown environment, locating and disarming six simulated mines using LEDs, guiding
-            neutralized mines to a disposal area, and avoiding walls and fake wildlife obstacles.
-          </p>
-          <p>
-            The project spanned mechanical design, circuit design, software development, and systems
-            integration. Each team member contributed across disciplines, with a focus on getting
-            all subsystems working together reliably under time pressure.
-          </p>
-        </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">Robot overview photo</div>
-          <p class="project-img-caption">Completed autonomous robot</p>
+        <div class="project-split">
+          <div class="project-body">
+            <p>
+              My design course team and I built an autonomous robot for the Peter Gregson
+              Competition, where we were challenged to make a robotic mine sweeper for arbitrary
+              field maps. Our robot was capable of obstacle avoidance, disposal and detection of
+              simulated mines using Robot Operating System (ROS), Linux command line, shell
+              scripting, and version control (GIT). On competition day,
+              <em>we earned second place out of 32 teams</em> by deactivating and returning 5 mines
+              to the disposal site, and by hitting no walls in less than ten minutes.
+            </p>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">Mine Sweeper System diagram</div>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- The Rules -->
     <section class="section-white">
       <div class="container">
-        <h2 class="resume-section-title">Navigation and Control</h2>
+        <h2 class="resume-section-title">The Rules</h2>
         <div class="project-body">
-          <p>
-            The robot used a combination of dead reckoning and waypoint navigation to move through
-            the environment. Dead reckoning calculated estimated position from wheel encoder data,
-            while the Robot Operating System (ROS) provided the framework for managing sensor input,
-            navigation logic, and motor control in real time.
-          </p>
-          <p>
-            All software was developed and tested on Linux, with shell scripting used to automate
-            startup sequences and version control handled through Git. The system architecture was
-            designed to be modular, making it possible to update individual subsystems without
-            breaking the overall behavior.
+          <ul class="timeline-bullets" style="margin-top:0;">
+            <li>Robot must be enclosed in a defined perimeter with a pre-determined deployment zone</li>
+            <li>All communication and code implementation must be done through ROS</li>
+            <li>Robot must implement obstacle avoidance to not physically contact wildlife, fences, or mines</li>
+            <li>Robot is to find, deactivate, and dispose of mines in pre-specified and unknown locations to a disposal site</li>
+            <li>Ideally, the procedure should be done in less than ten minutes</li>
+          </ul>
+          <p style="margin-top:1.4em;">
+            Although our robot did not dispose of all six mines, it is capable of doing so. In fact,
+            its failed attempt to secure the last mine was due to a contingency external to the
+            robot's performance where another team inserted an HDMI cord into their computer while
+            our run was still underway.
           </p>
         </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">ROS node graph / software architecture diagram</div>
-          <p class="project-img-caption">ROS node communication diagram</p>
+        <div class="project-three-img">
+          <div class="img-placeholder">Team / robot in action (photo 1)</div>
+          <div class="img-placeholder">Team / robot in action (photo 2)</div>
+          <div class="img-placeholder">Team / robot in action (photo 3)</div>
         </div>
+        <p class="project-img-caption" style="margin-top:14px;">Competition day photos</p>
       </div>
     </section>
 
+    <!-- Hardware -->
     <section class="section-grey">
       <div class="container">
-        <h2 class="resume-section-title">Hardware and Electronics</h2>
-        <div class="project-body">
-          <p>
-            The hardware platform was built around a Raspberry Pi 4 acting as the central processing
-            unit. Motor driver circuits were designed and simulated in LTSpice before being
-            implemented on the physical robot. The chassis and mounting components were designed using
-            Fusion 360 and either 3D printed or cut from available materials.
-          </p>
-          <p>
-            A dedicated battery system was designed to power the motors and the onboard computer
-            independently, ensuring stable voltage supply to the Raspberry Pi during high-current
-            motor events. All wiring was carefully routed and documented to support debugging
-            and modification during testing.
-          </p>
+        <div class="project-split">
+          <div class="project-body">
+            <h2 class="resume-section-title" style="margin-top:0;">Hardware</h2>
+
+            <h3>The Initial Hardware Pieces</h3>
+            <ul class="timeline-bullets">
+              <li>Raspberry Pi 4B</li>
+              <li>2D LiDAR</li>
+              <li>DRV8834 motor driver</li>
+              <li>Wheels, wheel motors and encoders</li>
+              <li>GR-US-101 battery management system</li>
+              <li>Lithium-ion batteries</li>
+            </ul>
+
+            <h3>What We Added</h3>
+            <ul class="timeline-bullets">
+              <li>LED system for deactivating mines</li>
+              <li>Claw mechanism for grabbing mines</li>
+              <li>Mine detection system for detecting mines with unknown locations</li>
+            </ul>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:3/4;">3D render of full robot</div>
+          </div>
         </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">Circuit/electronics close-up photo</div>
-          <p class="project-img-caption">Motor driver circuit and battery system</p>
+
+        <!-- TOF Sensor -->
+        <div class="project-split" style="margin-top:56px;">
+          <div class="project-body">
+            <h3 style="margin-top:0;">The Time of Flight (TOF) Sensor</h3>
+            <ul class="timeline-bullets">
+              <li>Used to trigger the claw to close when a distance measurement was within a specified range (100 mm)</li>
+            </ul>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">Adafruit VL53L0X ToF sensor and 3D printed mount</div>
+            <p class="project-img-caption">Adafruit VL53L0X ToF sensor and 3D printed mount</p>
+          </div>
         </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">CAD model / chassis design in Fusion 360</div>
-          <p class="project-img-caption">Chassis CAD model (Fusion 360)</p>
+
+        <!-- Claw Mechanism -->
+        <div class="project-split" style="margin-top:56px;">
+          <div class="project-body">
+            <h3 style="margin-top:0;">The Claw Mechanism</h3>
+            <ul class="timeline-bullets">
+              <li>Utilized a wide claw area, designed to grab mines at awkward angles, allowing precision during waypoint navigation and the Mine Search mode of operation</li>
+              <li>Contained a 20 kg.cm servo motor powered via the provided 12V lithium-ion batteries</li>
+            </ul>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">3D printed claws and servo mount</div>
+            <p class="project-img-caption">3D printed claws and servo mount</p>
+          </div>
         </div>
+
+        <!-- LED System -->
+        <div class="project-body" style="margin-top:56px;">
+          <h3 style="margin-top:0;">The LED System</h3>
+          <ul class="timeline-bullets">
+            <li>Designed to deactivate mines reliably at all angles</li>
+            <li>Utilizes 12 LEDs operating close to their rated current of 30 mA</li>
+            <li>Contained an N-MOS transistor, switched by an Arduino at a frequency of 4 kHz, while receiving power from the provided 12V lithium-ion batteries</li>
+          </ul>
+        </div>
+
+        <!-- Wheels -->
+        <div class="project-body" style="margin-top:40px;">
+          <h3 style="margin-top:0;">The Wheels</h3>
+          <ul class="timeline-bullets">
+            <li>Upgraded from the provided wheels, allowing more traction</li>
+            <li>With a larger rotational diameter, the robot rested less on the caster wheels</li>
+            <li>Resulted in the robot getting stuck less on uneven floor</li>
+          </ul>
+        </div>
+
       </div>
     </section>
 
+    <!-- Software -->
     <section class="section-white">
+      <div class="container">
+        <div class="project-split">
+          <div class="project-body">
+            <h2 class="resume-section-title" style="margin-top:0;">Software</h2>
+            <p>
+              We used ROS topics to mesh together two source codes which allowed programs to run
+              simultaneously to alternate between dead reckoning and waypoint navigation as required.
+              The software took the form of a state machine, where multiple states had specific
+              functionalities.
+            </p>
+
+            <h3>Modes of Operation</h3>
+            <ul class="timeline-bullets">
+              <li>Mine search</li>
+              <li>Transportation to disposal zone</li>
+              <li>Operation Tricky Corner</li>
+            </ul>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">State machine flowchart diagram</div>
+            <p class="project-img-caption">State machine flowchart</p>
+          </div>
+        </div>
+
+        <!-- Waypoint Navigation -->
+        <div class="project-split" style="margin-top:56px;">
+          <div class="project-body">
+            <h3 style="margin-top:0;">Waypoint Navigation</h3>
+            <p>Responsible for:</p>
+            <ul class="timeline-bullets">
+              <li>Searching for and obtaining mines</li>
+              <li>Transporting mines to the edge of the disposal zone once a mine was secured</li>
+              <li>Moving autonomously and avoiding collisions by using ROS Navigation stack and information from 2D LiDAR and odometry</li>
+              <li>Determining robot's position by using Adaptive Monte Carlo Localization to find probabilistic distribution of all possible robot positions</li>
+            </ul>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">Flowchart: Mine search to Mine disposal decision tree</div>
+            <p class="project-img-caption">Mine search and disposal decision flowchart</p>
+          </div>
+        </div>
+
+        <!-- Dead Reckoning -->
+        <div class="project-body" style="margin-top:56px;">
+          <h3 style="margin-top:0;">Dead Reckoning</h3>
+          <p>Responsible for:</p>
+          <ul class="timeline-bullets">
+            <li>Mine disposal once the disposal zone had been reached via waypoint navigation</li>
+            <li>Entering a troublesome corner within the contest map</li>
+            <li>Controlling linear and angular motion using the ROS topic cmd_vel and the message type Twist(), which is part of the ROS package geometry_msgs</li>
+            <li>Wheel encoders helped to estimate the robot's position via odometry using wheel encoders</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Tools -->
+    <section class="section-grey">
       <div class="container">
         <h2 class="resume-section-title">Tools and Technologies</h2>
         <div class="skills-grid">
-          <span class="skill-pill">Raspberry Pi 4</span>
+          <span class="skill-pill">Raspberry Pi 4B</span>
           <span class="skill-pill">ROS (Robot Operating System)</span>
-          <span class="skill-pill">Python</span>
+          <span class="skill-pill">2D LiDAR</span>
+          <span class="skill-pill">DRV8834 Motor Driver</span>
+          <span class="skill-pill">Adafruit VL53L0X ToF Sensor</span>
+          <span class="skill-pill">Servo Motor (20 kg.cm)</span>
+          <span class="skill-pill">N-MOS Transistor</span>
+          <span class="skill-pill">Arduino</span>
+          <span class="skill-pill">GR-US-101 BMS</span>
+          <span class="skill-pill">Lithium-Ion Batteries</span>
           <span class="skill-pill">LTSpice</span>
           <span class="skill-pill">Fusion 360</span>
+          <span class="skill-pill">Python</span>
           <span class="skill-pill">Linux</span>
           <span class="skill-pill">Shell Scripting</span>
           <span class="skill-pill">Git</span>
-          <span class="skill-pill">Motor Drivers</span>
-          <span class="skill-pill">Wheel Encoders</span>
           <span class="skill-pill">Dead Reckoning</span>
-          <span class="skill-pill">Waypoint Navigation</span>
+          <span class="skill-pill">Monte Carlo Localization</span>
+          <span class="skill-pill">Wheel Encoders</span>
+          <span class="skill-pill">Odometry</span>
         </div>
       </div>
     </section>

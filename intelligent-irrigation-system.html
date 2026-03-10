@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Intelligent Irrigation System — Teodora Milos</title>
+  <title>Smart Irrigation System — Teodora Milos</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -35,132 +35,165 @@
       </div>
     </div>
 
+    <!-- Hero -->
     <section class="project-page-hero">
       <div class="container">
         <span class="eyebrow">Embedded Systems</span>
-        <h1>Novel Intelligent <span class="italic-cherry">Irrigation System</span></h1>
+        <h1>Smart <span class="italic-cherry">Irrigation System</span></h1>
         <div class="project-page-meta">
           <span class="project-page-year">2018</span>
           <span class="skill-pill">Python 3</span>
           <span class="skill-pill">Raspberry Pi 3</span>
-          <span class="skill-pill">Matlab Simulink</span>
-          <span class="skill-pill">I2C</span>
           <span class="skill-pill">ADC</span>
           <span class="skill-pill">GPIO</span>
+          <span class="skill-pill">I2C</span>
+          <span class="skill-pill">Canada-Wide Science Fair</span>
         </div>
       </div>
     </section>
 
+    <!-- Intro -->
     <section class="section-grey">
       <div class="container">
-        <h2 class="resume-section-title">Overview</h2>
         <div class="project-body">
           <p>
-            Created an award-winning smart irrigation system for the Canada-Wide Science Fair.
-            The system was designed to make precision agriculture accessible for any plant culture
-            by automatically managing watering, fertilization, acidity, and labor based on real-time
-            sensor data.
+            I created an 'Intelligent Irrigation System' in 2018, capable of watering, fertigating,
+            and adding acidity control chemicals to crops only at optimal conditions so as to save on
+            resource consumption. My motivation to create the device came about after reading that only
+            one third of the three percent of water on the planet is available to us for consumption
+            — the rest is salt water or freshwater stuck in glaciers. I thought: as time goes on and
+            as our population increases, efficient irrigation methods must be implemented to help avoid
+            water scarcity, hunger, dead crops, and fertilizer runoff. Of course, I also wanted to
+            take this project as a way to evolve my electronics and coding skills. Ultimately, this
+            project led me to compete in the Canada Wide Science Fair, coming home with a bronze medal.
           </p>
-          <p>
-            The project won a National Bronze Medal at the Canada-Wide Science Fair in 2018,
-            competing against the top student science projects from across the country.
-          </p>
-        </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">Full system overview / science fair display photo</div>
-          <p class="project-img-caption">System overview at Canada-Wide Science Fair, 2018</p>
         </div>
       </div>
     </section>
 
+    <!-- Hardware -->
     <section class="section-white">
       <div class="container">
-        <h2 class="resume-section-title">System Objectives</h2>
+        <h2 class="resume-section-title">Hardware</h2>
         <div class="project-body">
-          <p>
-            The system was designed to simultaneously achieve four core agricultural objectives:
-          </p>
-          <ul class="timeline-bullets" style="margin-top: 0;">
-            <li>Conserve water by only irrigating when soil moisture levels indicated a genuine need</li>
-            <li>Reduce fertilizer use through targeted, sensor-triggered nutrient delivery</li>
-            <li>Manage soil and water acidity by monitoring pH and adjusting automatically</li>
-            <li>Minimize labor by automating the full monitoring and response cycle</li>
+          <ul class="timeline-bullets" style="margin-top:0;">
+            <li>Sensor box &amp; Main electronics box</li>
+            <li>Raspberry Pi 3</li>
+            <li>Electromagnetic solenoid relays</li>
+            <li>GPIO expansion board</li>
+            <li>ADS1015 12-bit 4 channel Analog to Digital Converter</li>
+            <li>DS18B20 digital temperature sensor</li>
+            <li>BMP280 barometric pressure sensor</li>
+            <li>Copper pole analog moisture sensor</li>
+            <li>Aluminum pole analog pH sensor</li>
+            <li>Signal amplifiers</li>
+            <li>Photovoltaic cell</li>
           </ul>
-          <p style="margin-top: 1.1em;">
-            All objectives were validated through controlled testing across multiple plant species
-            and growth conditions, demonstrating consistent performance improvements over manual
-            irrigation methods.
-          </p>
         </div>
       </div>
     </section>
 
+    <!-- Software -->
     <section class="section-grey">
       <div class="container">
-        <h2 class="resume-section-title">Sensor Array and Data Acquisition</h2>
-        <div class="project-body">
-          <p>
-            The system incorporated a multi-sensor array capable of monitoring five environmental
-            parameters simultaneously: temperature, barometric pressure, soil moisture, sunlight
-            intensity, and pH levels. Each sensor communicated via I2C, simplifying the wiring
-            and allowing sensors to share a common bus.
-          </p>
-          <p>
-            Analog sensors were connected through analog-to-digital converters (ADC) to provide
-            digital readings to the Raspberry Pi. GPIO expansion boards extended the available
-            input/output capacity to accommodate the full sensor suite and actuator outputs.
-          </p>
-        </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">Sensor array / wiring close-up photo</div>
-          <p class="project-img-caption">Sensor array and I2C wiring</p>
+        <h2 class="resume-section-title">Software</h2>
+        <div class="project-split">
+          <div class="project-body">
+            <p>
+              Code was written in Python using Python IDLE 3 as an interface. It used five parameters
+              to tell when to optimally water, fertigate and add an acidity chemical: sunlight, soil
+              moisture, pH, barometric pressure and temperature. The set of optimal environmental
+              conditions can be changed based on the environment itself, and plant needs. This allows
+              the intelligent irrigation system to be applied to any type of plant, anywhere in the world.
+            </p>
+
+            <h3>Waters when the following factors are met:</h3>
+            <ol class="timeline-bullets">
+              <li>Time of day is optimal for most plant cultures (mornings or evenings)</li>
+              <li>Sunlight is not at peak daily intensity (causing plant pores to close and inefficient absorption of water and nutrients)</li>
+              <li>Soil temperature is appropriate</li>
+              <li>Barometric pressure is not dropping at a rate that hints at likely rainfall</li>
+            </ol>
+
+            <h3>Fertigating when:</h3>
+            <ol class="timeline-bullets">
+              <li>The day of the week is the same as pre-defined</li>
+              <li>Fertilizer has not been recently added today</li>
+            </ol>
+
+            <h3>Adding calcium carbonate (CaCO3) when:</h3>
+            <ol class="timeline-bullets">
+              <li>The pH value of the soil is met (based on the plant)</li>
+            </ol>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:3/4;">Software flowchart — decision tree showing: Start &rarr; Barometric pressure drop rate &amp; time OK? &rarr; Time of day OK? &rarr; Temperature OK? &rarr; Soil Dryness OK? &rarr; Sunlight OK? &rarr; Open water valve &rarr; Watering timer? &rarr; Acidity OK? &rarr; Correct day? &rarr; Fertilizer applied previously? &rarr; Open fertigation valve &rarr; Fertigation timer OK? &rarr; Close fertigation valve &rarr; Delay &rarr; Close water valve</div>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- Collecting Data -->
     <section class="section-white">
       <div class="container">
-        <h2 class="resume-section-title">Control Logic and Software</h2>
+        <h2 class="resume-section-title">Collecting Data</h2>
         <div class="project-body">
           <p>
-            The control software was written in Python 3 running on a Raspberry Pi 3. The system
-            continuously polled all sensors and evaluated readings against configurable thresholds
-            for each plant profile. When a threshold was crossed, the system triggered the
-            appropriate response through relays controlling pumps and solenoid valves.
-          </p>
-          <p>
-            Matlab Simulink was used during the design phase to model the system dynamics and
-            validate control logic before deployment on hardware. This simulation-first approach
-            caught several edge cases early and reduced the physical debugging time significantly.
-          </p>
-          <p>
-            Amplifiers were used to boost sensor signals where necessary to ensure accurate ADC
-            readings across the full measurement range.
+            Certain measurements had to be collected for calibration purposes, namely pH and barometric
+            pressure. Collecting barometric pressure data over time was used as a way to tell whether
+            or not it was going to rain, so as to avoid overwatering. It was found that the rate of
+            pressure drop was about 1.5 hPa per hour if it was going to rain. The graph on the bottom
+            right is a more detailed version of the rather fast pressure drop in the middle graph.
+            Using litmus paper, I calibrated the pH parameter and obtained readings from the aluminum
+            pole.
           </p>
         </div>
-        <div class="project-img-block">
-          <div class="img-placeholder">Simulink model screenshot or software interface</div>
-          <p class="project-img-caption">Matlab Simulink control model</p>
+        <div class="project-three-img" style="margin-top:32px;">
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">Calibration Curve for pH Measurement (graph)</div>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">Rate of Change of Barometric Pressure vs Time (graph)</div>
+          </div>
+          <div>
+            <div class="img-placeholder" style="width:100%; aspect-ratio:4/3;">Drop in Barometric Pressure vs Time During Typical Rainfall (graph)</div>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- Future Development -->
     <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Future Development</h2>
+        <div class="project-body">
+          <ul class="timeline-bullets" style="margin-top:0;">
+            <li>Waterproofing</li>
+            <li>Developing a HMI/GUI (application or a website) to allow the user to track their crops and make any necessary changes</li>
+            <li>Add solar panels instead of an electrical power supply</li>
+            <li>Creating a PCB</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools -->
+    <section class="section-white">
       <div class="container">
         <h2 class="resume-section-title">Tools and Technologies</h2>
         <div class="skills-grid">
           <span class="skill-pill">Python 3</span>
           <span class="skill-pill">Raspberry Pi 3</span>
-          <span class="skill-pill">Matlab Simulink</span>
+          <span class="skill-pill">GPIO Expansion Board</span>
+          <span class="skill-pill">ADS1015 ADC</span>
+          <span class="skill-pill">DS18B20 Temperature Sensor</span>
+          <span class="skill-pill">BMP280 Barometric Sensor</span>
+          <span class="skill-pill">Analog Moisture Sensor</span>
+          <span class="skill-pill">Analog pH Sensor</span>
+          <span class="skill-pill">Electromagnetic Solenoid Relays</span>
+          <span class="skill-pill">Signal Amplifiers</span>
+          <span class="skill-pill">Photovoltaic Cell</span>
           <span class="skill-pill">I2C Communication</span>
-          <span class="skill-pill">Analog to Digital Converters</span>
-          <span class="skill-pill">GPIO Expansion</span>
-          <span class="skill-pill">Relays</span>
-          <span class="skill-pill">Amplifiers</span>
-          <span class="skill-pill">pH Sensors</span>
-          <span class="skill-pill">Moisture Sensors</span>
-          <span class="skill-pill">Barometric Pressure Sensors</span>
-          <span class="skill-pill">Temperature Sensors</span>
         </div>
       </div>
     </section>
