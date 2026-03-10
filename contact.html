@@ -29,7 +29,6 @@
 
   <main>
 
-    <!-- Heading (white) -->
     <section class="section-white">
       <div class="container">
         <span class="eyebrow">Say Hello</span>
@@ -37,19 +36,16 @@
       </div>
     </section>
 
-    <!-- Contact layout (grey) -->
     <section class="section-grey">
       <div class="container">
         <div class="contact-layout">
 
-          <!-- Left: Info -->
           <div class="contact-info">
             <p>
               I am always open to new opportunities, collaborations, or simply
               a good conversation about electrical engineering and design.
               Feel free to reach out through any of the channels below.
             </p>
-
             <div class="contact-details">
 
               <div class="contact-item">
@@ -62,18 +58,14 @@
               <div class="contact-item">
                 <span class="contact-label">LinkedIn</span>
                 <span class="contact-value">
-                  <a href="https://linkedin.com/in/teodoramilos" target="_blank" rel="noopener">
-                    linkedin.com/in/teodoramilos
-                  </a>
+                  <a href="https://linkedin.com/in/teodoramilos" target="_blank" rel="noopener">linkedin.com/in/teodoramilos</a>
                 </span>
               </div>
 
               <div class="contact-item">
                 <span class="contact-label">GitHub</span>
                 <span class="contact-value">
-                  <a href="https://github.com/teodoramilos" target="_blank" rel="noopener">
-                    github.com/teodoramilos
-                  </a>
+                  <a href="https://github.com/teodoramilos" target="_blank" rel="noopener">github.com/teodoramilos</a>
                 </span>
               </div>
 
@@ -85,7 +77,6 @@
             </div>
           </div>
 
-          <!-- Right: Form -->
           <div>
             <form id="contact-form" novalidate>
 
@@ -133,7 +124,6 @@
   </footer>
 
   <script>
-    // Nav toggle
     const toggle   = document.querySelector('.nav-toggle');
     const navLinks = document.querySelector('.nav-links');
     toggle.addEventListener('click', () => {
@@ -141,7 +131,6 @@
       toggle.setAttribute('aria-expanded', open);
     });
 
-    // Form validation
     const form         = document.getElementById('contact-form');
     const successMsg   = document.getElementById('success-msg');
     const nameInput    = document.getElementById('name');
@@ -150,16 +139,11 @@
     const nameError    = document.getElementById('name-error');
     const emailError   = document.getElementById('email-error');
     const messageError = document.getElementById('message-error');
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex   = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     function clearErrors() {
-      [nameInput, emailInput, messageInput].forEach(el => {
-        el.classList.remove('error', 'shake');
-      });
-      [nameError, emailError, messageError].forEach(el => {
-        el.textContent = '';
-      });
+      [nameInput, emailInput, messageInput].forEach(el => el.classList.remove('error', 'shake'));
+      [nameError, emailError, messageError].forEach(el => { el.textContent = ''; });
     }
 
     function setError(input, errorEl, msg) {
@@ -173,14 +157,12 @@
     form.addEventListener('submit', e => {
       e.preventDefault();
       clearErrors();
-
       let valid = true;
 
       if (!nameInput.value.trim()) {
         setError(nameInput, nameError, 'Please enter your name.');
         valid = false;
       }
-
       if (!emailInput.value.trim()) {
         setError(emailInput, emailError, 'Please enter your email address.');
         valid = false;
@@ -188,7 +170,6 @@
         setError(emailInput, emailError, 'Please enter a valid email address.');
         valid = false;
       }
-
       if (!messageInput.value.trim()) {
         setError(messageInput, messageError, 'Please write a message.');
         valid = false;

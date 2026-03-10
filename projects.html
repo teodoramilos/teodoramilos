@@ -29,7 +29,6 @@
 
   <main>
 
-    <!-- Heading (grey) -->
     <section class="section-grey">
       <div class="container">
         <span class="eyebrow">Portfolio</span>
@@ -37,7 +36,6 @@
       </div>
     </section>
 
-    <!-- Grid (white) -->
     <section class="section-white">
       <div class="container">
         <div class="projects-grid">
@@ -116,7 +114,6 @@
 
   </main>
 
-  <!-- Modal -->
   <div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-box">
       <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
@@ -143,7 +140,6 @@
   </footer>
 
   <script>
-    // Nav toggle
     const toggle   = document.querySelector('.nav-toggle');
     const navLinks = document.querySelector('.nav-links');
     toggle.addEventListener('click', () => {
@@ -151,7 +147,6 @@
       toggle.setAttribute('aria-expanded', open);
     });
 
-    // Modal
     const modal      = document.getElementById('modal');
     const modalClose = document.getElementById('modal-close');
     const modalTitle = document.getElementById('modal-title');
@@ -163,8 +158,7 @@
       modalTitle.textContent = card.dataset.title;
       modalDesc.textContent  = card.dataset.desc;
       modalTag.textContent   = card.dataset.category;
-
-      modalMeta.innerHTML = '';
+      modalMeta.innerHTML    = '';
 
       const year = document.createElement('span');
       year.className   = 'modal-year';

@@ -654,16 +654,6 @@ p:last-child {
   flex-wrap: wrap;
 }
 
-.resume-body {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-}
-
-.resume-section-wrap {
-  padding: 72px 0;
-}
-
 .resume-section-title {
   font-family: var(--font-display);
   font-style: italic;
