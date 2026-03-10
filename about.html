@@ -17,6 +17,24 @@
       aspect-ratio: 3 / 4;
     }
   </style>
+  <script>
+    const canvas = document.createElement('canvas');
+    canvas.width = 64;
+    canvas.height = 64;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#FFF4EB';
+    ctx.fillRect(0, 0, 64, 64);
+    ctx.fillStyle = '#86000E';
+    ctx.font = 'bold 36px Georgia, serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('TM', 32, 32);
+    const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = canvas.toDataURL();
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
 </head>
 <body>
 
