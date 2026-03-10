@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Teodora Milos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="site-nav">
+    <div class="container">
+      <a href="index.html" class="nav-logo">TM</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main>
+
+    <!-- Page heading -->
+    <div class="page-hero">
+      <div class="container">
+        <span class="eyebrow">About Me</span>
+        <h1>Meet <span class="italic-cherry">Teodora</span></h1>
+      </div>
+    </div>
+
+    <!-- Intro -->
+    <section class="section" style="padding-bottom: 0;">
+      <div class="container">
+        <div class="about-intro">
+          <div class="about-intro-text">
+            <p>
+              I'm an electrical engineer with a sharp eye for detail and an even sharper sense
+              of purpose. Currently transitioning into electrical design engineering, I'm drawn
+              to the intersection of technical precision and thoughtful, functional design —
+              where circuits become systems and blueprints become reality.
+            </p>
+            <p>
+              I hold a degree in Electrical Engineering and have spent time working across
+              power systems and technical environments that taught me to think clearly under
+              pressure. I bring the same rigour to everything I do — on the job, at the gym,
+              or in the middle of a concert crowd.
+            </p>
+            <p>
+              Right now, I'm building the next chapter: one CAD drawing, one design project,
+              and one connection at a time.
+            </p>
+          </div>
+          <div class="img-placeholder about-photo-placeholder">
+            Photo coming soon
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Life Outside the Lab -->
+    <section class="life-outside">
+      <div class="container">
+        <div class="section-label">
+          <span class="eyebrow">Life Outside the Lab</span>
+          <h2>Beyond the Blueprints</h2>
+        </div>
+        <div class="hobby-grid">
+
+          <div class="hobby-card">
+            <div class="img-placeholder hobby-img">Photo coming soon</div>
+            <div class="hobby-body">
+              <h3>Live Music &amp; Concerts</h3>
+              <p>There's nothing quite like live music — the energy, the crowd, the way a song hits
+              differently at full volume. Concerts are my reset button.</p>
+            </div>
+          </div>
+
+          <div class="hobby-card">
+            <div class="img-placeholder hobby-img">Photo coming soon</div>
+            <div class="hobby-body">
+              <h3>Food &amp; Travel</h3>
+              <p>Exploring new places through food is my favourite way to travel. Give me a local
+              restaurant, a new city, and good company — that's the formula.</p>
+            </div>
+          </div>
+
+          <div class="hobby-card">
+            <div class="img-placeholder hobby-img">Photo coming soon</div>
+            <div class="hobby-body">
+              <h3>Fitness &amp; the Gym</h3>
+              <p>Consistent training taught me discipline that carries into everything else I do.
+              The gym is where I sharpen my focus as much as my strength.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Pull Quote -->
+    <section class="about-quote">
+      <div class="container">
+        <blockquote>
+          I'm building a career where precision meets vision.
+        </blockquote>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <span class="footer-copy">&copy; 2025 Teodora Milos</span>
+      <div class="footer-links">
+        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const links  = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => {
+      const isOpen = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen);
+    });
+  </script>
+</body>
+</html>

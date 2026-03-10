@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Teodora Milos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="site-nav">
+    <div class="container">
+      <a href="index.html" class="nav-logo">TM</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main>
+
+    <div class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Let's Connect</span>
+        <h1>Get in <span class="italic-cherry">Touch</span></h1>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="contact-layout">
+
+        <!-- Left: Info -->
+        <div class="contact-info">
+          <p>I'm always open to new opportunities, collaborations, or simply a good conversation about electrical design. Feel free to reach out.</p>
+
+          <div class="contact-details">
+
+            <div class="contact-item">
+              <span class="contact-label">Email</span>
+              <span class="contact-value">
+                <a href="mailto:hello@teodoramilos.com">hello@teodoramilos.com</a>
+              </span>
+            </div>
+
+            <div class="contact-item">
+              <span class="contact-label">LinkedIn</span>
+              <span class="contact-value">
+                <a href="https://linkedin.com/in/teodoramilos" target="_blank" rel="noopener">linkedin.com/in/teodoramilos</a>
+              </span>
+            </div>
+
+            <div class="contact-item">
+              <span class="contact-label">GitHub</span>
+              <span class="contact-value">
+                <a href="https://github.com/teodoramilos" target="_blank" rel="noopener">github.com/teodoramilos</a>
+              </span>
+            </div>
+
+            <div class="contact-item">
+              <span class="contact-label">Location</span>
+              <span class="contact-value">Australia</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="contact-form-wrap">
+
+          <form id="contact-form" novalidate>
+
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name" />
+              <span class="field-error" id="name-error"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" autocomplete="email" />
+              <span class="field-error" id="email-error"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="What's on your mind?"></textarea>
+              <span class="field-error" id="message-error"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Send Message</button>
+
+          </form>
+
+          <div class="success-msg" id="success-msg">
+            Thank you for reaching out — I'll be in touch soon.
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <span class="footer-copy">&copy; 2025 Teodora Milos</span>
+      <div class="footer-links">
+        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    const toggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Contact form validation
+    const form       = document.getElementById('contact-form');
+    const successMsg = document.getElementById('success-msg');
+
+    const nameInput    = document.getElementById('name');
+    const emailInput   = document.getElementById('email');
+    const messageInput = document.getElementById('message');
+    const nameError    = document.getElementById('name-error');
+    const emailError   = document.getElementById('email-error');
+    const messageError = document.getElementById('message-error');
+
+    function clearErrors() {
+      [nameInput, emailInput, messageInput].forEach(el => el.classList.remove('error', 'shake'));
+      [nameError, emailError, messageError].forEach(el => el.textContent = '');
+    }
+
+    function setError(input, errorEl, msg) {
+      input.classList.add('error');
+      errorEl.textContent = msg;
+      // Trigger shake — remove then re-add so it fires again on repeated submit
+      input.classList.remove('shake');
+      void input.offsetWidth; // reflow
+      input.classList.add('shake');
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      clearErrors();
+
+      let valid = true;
+
+      if (!nameInput.value.trim()) {
+        setError(nameInput, nameError, 'Please enter your name.');
+        valid = false;
+      }
+
+      if (!emailInput.value.trim()) {
+        setError(emailInput, emailError, 'Please enter your email.');
+        valid = false;
+      } else if (!emailRegex.test(emailInput.value.trim())) {
+        setError(emailInput, emailError, 'Please enter a valid email address.');
+        valid = false;
+      }
+
+      if (!messageInput.value.trim()) {
+        setError(messageInput, messageError, 'Please write a message.');
+        valid = false;
+      }
+
+      if (valid) {
+        form.style.display = 'none';
+        successMsg.classList.add('visible');
+      }
+    });
+  </script>
+</body>
+</html>
