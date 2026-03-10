@@ -749,6 +749,81 @@ p:last-child {
   gap: 12px;
 }
 
+/* Bullet lists within timeline items */
+.timeline-bullets {
+  list-style: none;
+  margin-top: 12px;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeline-bullets li {
+  font-size: 1rem;
+  line-height: 1.72;
+  color: var(--mid);
+  padding-left: 20px;
+  position: relative;
+}
+
+.timeline-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--blush);
+}
+
+/* Simple list for certifications, awards, volunteering */
+.simple-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.simple-list li {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--dark);
+  padding-left: 20px;
+  position: relative;
+}
+
+.simple-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--cherry);
+}
+
+.simple-list li strong {
+  font-weight: 500;
+}
+
+/* Side-by-side resume subsections */
+.resume-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .resume-two-col {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
 /* ============================================================
    14. CONTACT PAGE
    ============================================================ */
