@@ -85,7 +85,7 @@ p:last-child {
 .eyebrow {
   display: block;
   font-family: var(--font-body);
-  font-size: 0.88rem;
+  font-size: 1.02rem;
   font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -316,7 +316,7 @@ p:last-child {
 .home-eyebrow {
   display: block;
   font-family: var(--font-body);
-  font-size: 0.88rem;
+  font-size: 1.02rem;
   font-weight: 400;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -326,7 +326,7 @@ p:last-child {
 
 .home-name {
   font-family: var(--font-display);
-  font-size: clamp(5rem, 14vw, 11rem);
+  font-size: clamp(3.8rem, 10.5vw, 8.5rem);
   font-weight: 600;
   line-height: 0.95;
   margin-bottom: 3rem;
@@ -1142,7 +1142,7 @@ p:last-child {
   }
 
   .home-name {
-    font-size: clamp(4rem, 18vw, 7rem);
+    font-size: clamp(3rem, 14vw, 5.5rem);
   }
 
   .site-footer .container {
