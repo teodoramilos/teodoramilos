@@ -59,9 +59,11 @@
         <div class="project-page-meta">
           <span class="project-page-year">2022</span>
           <span class="skill-pill">Verilog</span>
-          <span class="skill-pill">Quartus</span>
+          <span class="skill-pill">Quartus Prime</span>
+          <span class="skill-pill">ModelSim</span>
           <span class="skill-pill">FPGA</span>
           <span class="skill-pill">7-Segment Display</span>
+          <span class="skill-pill">LFSR</span>
         </div>
       </div>
     </section>
@@ -71,15 +73,15 @@
         <h2 class="resume-section-title">Overview</h2>
         <div class="project-body">
           <p>
-            Designed and implemented a fully functional Craps dice game in Verilog using the
-            Quartus design environment. The project covered the full RTL design flow: from
-            architectural planning and HDL coding through simulation, verification, and final
-            integration onto a physical FPGA development board.
+            A fully functional Craps dice game implemented in Verilog and synthesized onto an
+            Intel FPGA development board. The player presses a roll button to roll two dice, and
+            the game follows standard Craps rules: roll a 7 or 11 to win instantly, roll a 2, 3,
+            or 12 to lose instantly, or establish any other number as your point and keep rolling
+            until you hit your point (win) or roll a 7 (lose).
           </p>
           <p>
-            The game correctly implements the rules of Craps, managing all game state transitions
-            through a verified finite state machine (FSM) and displaying results in real time on
-            the physical board's 7-segment display and LED indicators.
+            Results are displayed in real time on two 7-segment displays showing each die value,
+            with a green LED indicating a win and a red LED indicating a loss.
           </p>
         </div>
         <div class="project-img-block">
@@ -91,25 +93,20 @@
 
     <section class="section-white">
       <div class="container">
-        <h2 class="resume-section-title">RTL Architecture</h2>
+        <h2 class="resume-section-title">Module Architecture</h2>
         <div class="project-body">
           <p>
-            The design was structured as a complete RTL data path with a separate FSM controller.
-            The data path included the following components, each implemented as a distinct
-            Verilog module:
+            The design is structured as six distinct Verilog modules, each responsible for a
+            specific function, connected together through a top-level file:
           </p>
           <ul class="timeline-bullets" style="margin-top: 0;">
-            <li>Pseudo-random dice counters to simulate two fair six-sided dice rolls</li>
-            <li>An adder to compute the total of both dice values</li>
-            <li>A comparator to evaluate game outcomes against win, lose, and point conditions</li>
-            <li>A point register to store and hold the established point value across game rounds</li>
-            <li>Test logic for simulation verification of all data path components</li>
+            <li><strong>DiceGame.v</strong> — top-level module that instantiates and connects all components</li>
+            <li><strong>FSM.v</strong> — finite state machine controller managing four game states: init, reroll, win, and lose</li>
+            <li><strong>TestLogic.v</strong> — combinational logic that evaluates each roll against Craps rules and determines the outcome</li>
+            <li><strong>counters.v</strong> — 16-bit Linear Feedback Shift Register (LFSR) for pseudo-random dice generation, producing values 1–6 for each die independently</li>
+            <li><strong>Adder.v</strong> — adds the two 3-bit die values into a 4-bit sum for evaluation</li>
+            <li><strong>bcd7seg.v</strong> — BCD to 7-segment display decoder driving the physical display output</li>
           </ul>
-          <p style="margin-top: 1.1em;">
-            The FSM controller managed all game state transitions, including come-out roll, point
-            phase, win, and lose states, and coordinated the data path components appropriately
-            in each state.
-          </p>
         </div>
         <div class="project-img-block">
           <div class="img-placeholder">RTL block diagram / FSM state diagram</div>
@@ -123,10 +120,10 @@
         <h2 class="resume-section-title">Simulation and Verification</h2>
         <div class="project-body">
           <p>
-            Each module was individually simulated and verified using Quartus waveform simulation
-            before integration. Test vectors were written to cover all corner cases in the Craps
-            game logic, including immediate wins, immediate losses, point establishment, and
-            subsequent point resolution.
+            Each module was individually simulated in ModelSim before integration. Testbenches
+            were written to cover all Craps rule outcomes: immediate wins (7, 11), immediate
+            losses (2, 3, 12), point establishment, and subsequent point resolution in both the
+            win and lose directions.
           </p>
           <p>
             The complete integrated design was verified end-to-end in simulation before being
@@ -134,8 +131,8 @@
           </p>
         </div>
         <div class="project-img-block">
-          <div class="img-placeholder">Quartus simulation waveform screenshot</div>
-          <p class="project-img-caption">Quartus simulation waveforms showing game state transitions</p>
+          <div class="img-placeholder">ModelSim simulation waveform screenshot</div>
+          <p class="project-img-caption">ModelSim simulation waveforms showing game state transitions</p>
         </div>
       </div>
     </section>
@@ -145,18 +142,20 @@
         <h2 class="resume-section-title">FPGA Integration</h2>
         <div class="project-body">
           <p>
-            After simulation, the design was synthesized and programmed onto an FPGA development
-            board. Push-button inputs were connected as the dice roll trigger, with debounce
-            logic implemented in Verilog to prevent contact bounce from causing spurious inputs.
+            After simulation, the design was synthesized in Quartus Prime and programmed onto an
+            Intel FPGA development board. A push button serves as the roll trigger, with the LFSR
+            continuously running so that the exact clock cycle at which the button is pressed
+            determines the dice outcome — producing effectively random results from the player's
+            perspective.
           </p>
           <p>
-            The 7-segment display was driven to show the current dice values, and LEDs were used
-            to indicate the current game state and outcome (win or lose).
+            The two 7-segment displays show the current value of each die, and dedicated LEDs
+            light green on a win and red on a loss.
           </p>
         </div>
         <div class="project-img-block">
-          <div class="img-placeholder">Close-up of FPGA board push buttons and LED indicators</div>
-          <p class="project-img-caption">Debounced push-button inputs and LED game state indicators</p>
+          <div class="img-placeholder">FPGA board showing 7-segment displays and LED indicators</div>
+          <p class="project-img-caption">7-segment display output and win/loss LED indicators on the FPGA board</p>
         </div>
       </div>
     </section>
@@ -166,14 +165,14 @@
         <h2 class="resume-section-title">Tools and Technologies</h2>
         <div class="skills-grid">
           <span class="skill-pill">Verilog HDL</span>
-          <span class="skill-pill">Quartus</span>
-          <span class="skill-pill">FPGA</span>
+          <span class="skill-pill">Quartus Prime</span>
+          <span class="skill-pill">ModelSim</span>
+          <span class="skill-pill">Intel FPGA</span>
           <span class="skill-pill">RTL Design</span>
           <span class="skill-pill">Finite State Machine</span>
+          <span class="skill-pill">LFSR</span>
           <span class="skill-pill">7-Segment Display</span>
-          <span class="skill-pill">LED Indicators</span>
-          <span class="skill-pill">Push-Button Debounce</span>
-          <span class="skill-pill">Waveform Simulation</span>
+          <span class="skill-pill">BCD Decoding</span>
           <span class="skill-pill">Hardware Synthesis</span>
         </div>
       </div>
