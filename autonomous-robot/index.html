@@ -84,8 +84,8 @@
               to the disposal site, and by hitting no walls in less than ten minutes.
             </p>
           </div>
-          <div style="display:flex; justify-content:center; align-items:flex-start;">
-            <img src="../images/projects/robot.jpg" alt="Autonomous robot" style="width:100%; display:block; mix-blend-mode:multiply;" />
+          <div>
+            <img src="../images/projects/map.png" alt="Mine sweeper competition field map and system diagram" style="width:100%; display:block; mix-blend-mode:multiply;" />
           </div>
         </div>
       </div>
@@ -143,35 +143,37 @@
               <li>Mine detection system for detecting mines with unknown locations</li>
             </ul>
           </div>
-          <div></div>
+          <div>
+            <img src="../images/projects/robot.jpg" alt="Autonomous robot" style="width:100%; display:block; mix-blend-mode:multiply;" />
+          </div>
         </div>
 
         <!-- TOF Sensor -->
         <div class="project-split" style="margin-top:56px;">
+          <div>
+            <img src="../images/projects/tof.png" alt="Adafruit VL53L0X ToF sensor and 3D printed mount" style="width:100%; display:block;" />
+            <p class="project-img-caption">Adafruit VL53L0X ToF sensor and 3D printed mount</p>
+          </div>
           <div class="project-body">
             <h3 style="margin-top:0;">The Time of Flight (TOF) Sensor</h3>
             <ul class="timeline-bullets">
               <li>Used to trigger the claw to close when a distance measurement was within a specified range (100 mm)</li>
             </ul>
           </div>
-          <div>
-            <img src="../images/projects/tof.png" alt="Adafruit VL53L0X ToF sensor and 3D printed mount" style="width:100%; display:block;" />
-            <p class="project-img-caption">Adafruit VL53L0X ToF sensor and 3D printed mount</p>
-          </div>
         </div>
 
         <!-- Claw Mechanism -->
         <div class="project-split" style="margin-top:56px;">
+          <div>
+            <img src="../images/projects/claw.png" alt="3D printed claw mechanism and servo motor mount" style="width:100%; display:block;" />
+            <p class="project-img-caption">3D printed claws and servo mount</p>
+          </div>
           <div class="project-body">
             <h3 style="margin-top:0;">The Claw Mechanism</h3>
             <ul class="timeline-bullets">
               <li>Utilized a wide claw area, designed to grab mines at awkward angles, allowing precision during waypoint navigation and the Mine Search mode of operation</li>
               <li>Contained a 20 kg.cm servo motor powered via the provided 12V lithium-ion batteries</li>
             </ul>
-          </div>
-          <div>
-            <img src="../images/projects/claw.png" alt="3D printed claw mechanism and servo motor mount" style="width:100%; display:block;" />
-            <p class="project-img-caption">3D printed claws and servo mount</p>
           </div>
         </div>
 
@@ -217,17 +219,8 @@
               <li>Transportation to disposal zone</li>
               <li>Operation Tricky Corner</li>
             </ul>
-          </div>
-          <div>
-            <img src="../images/projects/autorobotflow.png" alt="State machine flowchart showing modes of operation" style="width:100%; display:block;" />
-            <p class="project-img-caption">State machine flowchart</p>
-          </div>
-        </div>
 
-        <!-- Waypoint Navigation -->
-        <div class="project-split" style="margin-top:56px;">
-          <div class="project-body">
-            <h3 style="margin-top:0;">Waypoint Navigation</h3>
+            <h3>Waypoint Navigation</h3>
             <p>Responsible for:</p>
             <ul class="timeline-bullets">
               <li>Searching for and obtaining mines</li>
@@ -235,25 +228,21 @@
               <li>Moving autonomously and avoiding collisions by using ROS Navigation stack and information from 2D LiDAR and odometry</li>
               <li>Determining robot's position by using Adaptive Monte Carlo Localization to find probabilistic distribution of all possible robot positions</li>
             </ul>
+
+            <h3>Dead Reckoning</h3>
+            <p>Responsible for:</p>
+            <ul class="timeline-bullets">
+              <li>Mine disposal once the disposal zone had been reached via waypoint navigation</li>
+              <li>Entering a troublesome corner within the contest map</li>
+              <li>Controlling linear and angular motion using the ROS topic cmd_vel and the message type Twist(), which is part of the ROS package geometry_msgs</li>
+              <li>Wheel encoders helped to estimate the robot's position via odometry using wheel encoders</li>
+            </ul>
           </div>
           <div>
-            <img src="../images/projects/map1.png" alt="Mine search to mine disposal decision tree flowchart" style="width:100%; display:block;" />
-            <p class="project-img-caption">Mine search and disposal decision flowchart</p>
+            <img src="../images/projects/autorobotflow.png" alt="State machine flowchart showing modes of operation" style="width:100%; display:block;" />
+            <p class="project-img-caption">State machine flowchart</p>
           </div>
         </div>
-
-        <!-- Dead Reckoning -->
-        <div class="project-body" style="margin-top:56px;">
-          <h3 style="margin-top:0;">Dead Reckoning</h3>
-          <p>Responsible for:</p>
-          <ul class="timeline-bullets">
-            <li>Mine disposal once the disposal zone had been reached via waypoint navigation</li>
-            <li>Entering a troublesome corner within the contest map</li>
-            <li>Controlling linear and angular motion using the ROS topic cmd_vel and the message type Twist(), which is part of the ROS package geometry_msgs</li>
-            <li>Wheel encoders helped to estimate the robot's position via odometry using wheel encoders</li>
-          </ul>
-        </div>
-
       </div>
     </section>
 
