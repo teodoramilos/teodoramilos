@@ -878,6 +878,7 @@ p:last-child {
 
   .project-three-img {
     grid-template-columns: 1fr;
+    max-width: 100% !important;
   }
 }
 
