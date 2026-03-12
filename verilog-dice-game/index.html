@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Verilog FPGA Dice Game — Teodora Milos</title>
+  <title>Verilog FPGA Dice Game  Teodora Milos</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -100,12 +100,12 @@
             specific function, connected together through a top-level file:
           </p>
           <ul class="timeline-bullets" style="margin-top: 0;">
-            <li><strong>DiceGame.v</strong> — top-level module that instantiates and connects all components</li>
-            <li><strong>FSM.v</strong> — finite state machine controller managing four game states: init, reroll, win, and lose</li>
-            <li><strong>TestLogic.v</strong> — combinational logic that evaluates each roll against Craps rules and determines the outcome</li>
-            <li><strong>counters.v</strong> — 16-bit Linear Feedback Shift Register (LFSR) for pseudo-random dice generation, producing values 1–6 for each die independently</li>
-            <li><strong>Adder.v</strong> — adds the two 3-bit die values into a 4-bit sum for evaluation</li>
-            <li><strong>bcd7seg.v</strong> — BCD to 7-segment display decoder driving the physical display output</li>
+            <li><strong>DiceGame.v</strong>  top-level module that instantiates and connects all components</li>
+            <li><strong>FSM.v</strong>  finite state machine controller managing four game states: init, reroll, win, and lose</li>
+            <li><strong>TestLogic.v</strong>  combinational logic that evaluates each roll against Craps rules and determines the outcome</li>
+            <li><strong>counters.v</strong>  16-bit Linear Feedback Shift Register (LFSR) for pseudo-random dice generation, producing values 16 for each die independently</li>
+            <li><strong>Adder.v</strong>  adds the two 3-bit die values into a 4-bit sum for evaluation</li>
+            <li><strong>bcd7seg.v</strong>  BCD to 7-segment display decoder driving the physical display output</li>
           </ul>
         </div>
         <div class="project-img-block">
@@ -145,7 +145,7 @@
             After simulation, the design was synthesized in Quartus Prime and programmed onto an
             Intel FPGA development board. A push button serves as the roll trigger, with the LFSR
             continuously running so that the exact clock cycle at which the button is pressed
-            determines the dice outcome — producing effectively random results from the player's
+            determines the dice outcome  producing effectively random results from the player's
             perspective.
           </p>
           <p>
