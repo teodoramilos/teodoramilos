@@ -100,16 +100,18 @@
       <div class="container">
         <h2 class="resume-section-title">PCB Design</h2>
         <div class="project-body">
-          <ul class="timeline-bullets" style="margin-top:0;">
-            <li>4-layer FR4, 1 oz copper</li>
-            <li>Layer 1: signals and components</li>
-            <li>Layer 2: GND plane</li>
-            <li>Layer 3: power plane</li>
-            <li>Layer 4: signals and components</li>
-            <li>Followed JLCPCB design rules from the start of layout</li>
-            <li>Used an IPC-2221 trace width calculator to size power traces for current and acceptable temperature rise</li>
-            <li>Final DRC: 0 errors</li>
-          </ul>
+          <p>
+            The board is a 4-layer FR4 design with 1 oz copper. Layer 1 carries signals and
+            components on the top side, layer 2 is a solid GND plane, layer 3 is a power plane,
+            and layer 4 carries signals and components on the bottom side. I followed JLCPCB design
+            rules from the very start of layout rather than as a final check, which kept the
+            routing clean and avoided late-stage DRC surprises.
+          </p>
+          <p>
+            Power traces were sized using an IPC-2221 trace width calculator, targeting both
+            adequate current capacity and an acceptable temperature rise under load. The final DRC
+            came back with 0 errors.
+          </p>
         </div>
 
         <div class="project-three-img" style="grid-template-columns:1fr 1fr; margin-top:40px; max-width:80%; margin-left:auto; margin-right:auto;">
@@ -201,7 +203,7 @@
     </section>
 
     <!-- Manufacturing & Next Steps -->
-    <section class="section-grey">
+    <section class="section-white">
       <div class="container">
         <h2 class="resume-section-title">Manufacturing &amp; Next Steps</h2>
         <div class="project-body">
