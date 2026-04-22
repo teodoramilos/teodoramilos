@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bluetooth RC Car Interface PCB  Teodora Milos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <script>
+    const canvas = document.createElement('canvas');
+    canvas.width = 64;
+    canvas.height = 64;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#FFF4EB';
+    ctx.fillRect(0, 0, 64, 64);
+    ctx.fillStyle = '#86000E';
+    ctx.font = 'bold 36px Georgia, serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('TM', 32, 32);
+    const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = canvas.toDataURL();
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="container">
+      <a href="/" class="nav-logo">TM</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/projects/" class="active">Projects</a></li>
+        <li><a href="/resume/">Resume</a></li>
+        <li><a href="/about/">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="project-back">
+      <div class="container">
+        <a href="/projects/">&larr; Back to Projects</a>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="project-page-hero">
+      <div class="container">
+        <span class="eyebrow">PCB Design</span>
+        <h1>Bluetooth RC Car <span class="italic-cherry">Interface PCB</span></h1>
+        <div class="project-page-meta">
+          <span class="project-page-year">2025</span><!-- YEAR: update if needed -->
+          <span class="skill-pill">ESP32</span>
+          <span class="skill-pill">KiCad</span>
+          <span class="skill-pill">DRV8833</span>
+          <span class="skill-pill">Bluepad32</span>
+          <span class="skill-pill">LiPo</span>
+          <span class="skill-pill">JLCPCB</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Overview</h2>
+        <div class="project-split">
+          <div class="project-body">
+            <p>
+              A compact ESP32-based board that receives PS4/PS5 controller input over Bluetooth
+              Classic and drives two DC motors plus an optional servo for an RC vehicle. Powered by
+              a 2S LiPo (7.4 V nominal) in the field, with USB-C as an alternate bench supply.
+              Designed to fit a 3D-printed Tonka-style chassis.
+            </p>
+            <p>
+              This was a self-directed hardware project built to deepen my PCB and embedded systems
+              design skills end-to-end: from requirements and component selection through schematic
+              capture, layout, DRC, Gerber export, and ordering from JLCPCB.
+            </p>
+          </div>
+          <div style="text-align:center;">
+            <img src="../images/projects/rc-pcb-front.png" alt="3D render of the PS4/5 to RC Car PCB, front view" style="width:100%; max-width:400px; display:block; margin:0 auto; mix-blend-mode:multiply;" />
+            <p class="project-img-caption">PCB front view (3D render)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Requirements -->
+    <section class="section-white">
+      <div class="container">
+        <h2 class="resume-section-title">Requirements I Defined</h2>
+        <div class="project-body">
+          <ul class="timeline-bullets" style="margin-top:0;">
+            <li>Bluetooth Classic input from a PS4/PS5 DualShock controller</li>
+            <li>Drive two DC motors and a steering mechanism</li>
+            <li>Run from a 2S LiPo in the field or USB-C on the bench</li>
+            <li>Low BOM cost via LCSC parts and JLCPCB fabrication</li>
+            <li>Fit a 3D-printed Tonka-style chassis</li>
+            <li>Expansion headers for future add-ons (IMU, extra GPIO)</li>
+            <li>Reliable enough for repeated use</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Component Selection -->
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Component Selection</h2>
+        <div class="project-body">
+
+          <h3>ESP-WROOM-32</h3>
+          <p>
+            Bluetooth Classic support, dual core, Arduino IDE compatible, well-documented, available
+            on LCSC, and cheap. Chosen over the WROVER (larger footprint), SOLO-1 (single core),
+            and PICO-F4 (smaller but harder to route).
+          </p>
+
+          <h3>RT6254 Buck Converter (7.4 V &rarr; 5 V)</h3>
+          <p>
+            Synchronous buck, met the input voltage range, 5 V at 4 A output, available on LCSC at
+            a good price. Chosen over the LM2596 for its synchronous switching and better
+            efficiency. Trade-offs: small footprint and tighter PCB routing required around the
+            inductor.
+          </p>
+
+          <h3>AMS1117 LDO (5 V &rarr; 3.3 V)</h3>
+          <p>
+            Standard part from the ESP32 dev kit reference design. Trade-offs: 1.4 V dropout, runs
+            warm under load, larger package than alternatives.
+          </p>
+
+          <h3>TPS2117 Power Mux</h3>
+          <p>
+            Solves the design challenge of having both USB-C 5 V and the buck's 5 V rail present
+            simultaneously. Routes USB power to the ESP32 and USB-to-UART chip when plugged in, and
+            falls back to the buck when unplugged. Motors always run from the buck rail and are
+            unaffected by mux state.
+          </p>
+
+          <h3>USB-C Connector</h3>
+          <p>
+            Reversible, industry standard, up to 3 A at 5 V. Trade-offs: requires CC pull-down
+            resistors, more pins to route, ESD protection more critical, and slightly more expensive
+            than micro-USB.
+          </p>
+
+          <h3>CP2102 USB-to-UART</h3>
+          <p>
+            Enables direct USB programming with an auto-reset/auto-boot circuit (DTR/RTS toggling
+            EN and IO0), so no manual button presses are needed on each upload. Trade-off: QFN-28
+            package requires hot air or reflow for assembly.
+          </p>
+
+          <h3>DRV8833 Dual H-Bridge Motor Driver</h3>
+          <p>
+            Within the motor supply voltage range, 1.5 A per channel, fault reporting, sleep mode,
+            available on LCSC, within budget. Chosen over the L298N (large, approximately 2 V
+            H-bridge voltage drop, runs hot) and the MX1508 / L9110S (no fault reporting or sleep
+            mode, less reputable vendors).
+          </p>
+
+          <h3>2S LiPo Battery (7.4 V nominal)</h3>
+          <p>
+            Rechargeable, compact, high C-rating for motor inrush and stall current, easy to
+            connect. 1S (3.7 V) is too low for the 5 V rail headroom; 3S (11.1 V) is higher than
+            needed. Chosen over alkaline AAs (non-rechargeable, high internal resistance) and NiMH
+            (heavier, more cells required).
+          </p>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Drive & Steering -->
+    <section class="section-white">
+      <div class="container">
+        <h2 class="resume-section-title">Drive &amp; Steering</h2>
+        <div class="project-body">
+          <p>
+            Originally prototyped with two DC motors and a servo for steering on a breadboard.
+            Switched to two DC motors with a passive leg/skid for steering to reduce mechanical
+            complexity and keep the focus on PCB and schematic correctness. Servo steering is wired
+            up and electrically functional, left as a future enhancement.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PCB Design -->
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">PCB Design</h2>
+        <div class="project-body">
+          <ul class="timeline-bullets" style="margin-top:0;">
+            <li>4-layer FR4, 1 oz copper</li>
+            <li>Layer 1: signals and components</li>
+            <li>Layer 2: GND plane</li>
+            <li>Layer 3: power plane</li>
+            <li>Layer 4: signals and components</li>
+            <li>Followed JLCPCB design rules from the start of layout</li>
+            <li>Used an IPC-2221 trace width calculator to size power traces for current and acceptable temperature rise</li>
+            <li>Final DRC: 0 errors</li>
+          </ul>
+        </div>
+
+        <div class="project-three-img" style="grid-template-columns:1fr 1fr; margin-top:40px; max-width:80%; margin-left:auto; margin-right:auto;">
+          <div>
+            <img src="../images/projects/rc-pcb-front.png" alt="3D render of the PS4/5 to RC Car PCB, front view" style="width:100%; display:block; mix-blend-mode:multiply;" />
+            <p class="project-img-caption">Front view</p>
+          </div>
+          <div>
+            <img src="../images/projects/rc-pcb-back.png" alt="3D render of the PS4/5 to RC Car PCB, back view" style="width:100%; display:block; mix-blend-mode:multiply;" />
+            <p class="project-img-caption">Back view</p>
+          </div>
+        </div>
+
+        <div class="project-img-block" style="margin-top:48px;">
+          <img src="../images/projects/rc-pcb-schematic.png" alt="Full schematic of the PS4/5 to RC Car interface board" style="width:100%; display:block; mix-blend-mode:multiply;" />
+          <p class="project-img-caption">Full schematic</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Power Budget -->
+    <section class="section-white">
+      <div class="container">
+        <h2 class="resume-section-title">Power Budget</h2>
+        <div class="project-body">
+          <p>
+            2S LiPo (7.4 V, 1000 mAh) feeds the RT6254 buck, which produces the 5 V rail. The
+            ESP32 draws approximately 1.2 W and the DC motors draw approximately 2 W typical (up to
+            approximately 5 W at stall). Normal operating draw is roughly 3.2 W, giving over an
+            hour of runtime from the 1000 mAh pack, which is sufficient for the intended use case.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Manufacturing & Next Steps -->
+    <section class="section-grey">
+      <div class="container">
+        <h2 class="resume-section-title">Manufacturing &amp; Next Steps</h2>
+        <div class="project-body">
+          <p>Gerbers exported and verified, board ordered from JLCPCB.</p>
+          <h3>Bring-Up Plan</h3>
+          <ul class="timeline-bullets">
+            <li>Reflow assembly of the populated board</li>
+            <li>Bench bring-up and power rail validation</li>
+            <li>Signal integrity check with an oscilloscope</li>
+            <li>Thermal characterisation of the buck, LDO, and motor driver under load using a thermal camera</li>
+            <li>Firmware bring-up over USB/UART</li>
+          </ul>
+          <h3>Future Enhancements</h3>
+          <ul class="timeline-bullets">
+            <li>Servo steering via the existing wired output</li>
+            <li>IMU integration over the expansion header</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools -->
+    <section class="section-white">
+      <div class="container">
+        <h2 class="resume-section-title">Tools and Technologies</h2>
+        <div class="skills-grid">
+          <span class="skill-pill">ESP-WROOM-32</span>
+          <span class="skill-pill">KiCad</span>
+          <span class="skill-pill">Bluepad32</span>
+          <span class="skill-pill">DRV8833</span>
+          <span class="skill-pill">RT6254 Buck Converter</span>
+          <span class="skill-pill">AMS1117 LDO</span>
+          <span class="skill-pill">TPS2117 Power Mux</span>
+          <span class="skill-pill">CP2102 USB-to-UART</span>
+          <span class="skill-pill">USB-C</span>
+          <span class="skill-pill">2S LiPo</span>
+          <span class="skill-pill">JLCPCB</span>
+          <span class="skill-pill">LCSC</span>
+          <span class="skill-pill">IPC-2221</span>
+          <span class="skill-pill">Arduino IDE</span>
+          <span class="skill-pill">4-Layer PCB</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span class="footer-copy">&copy; 2025 Teodora Milos</span>
+      <div class="footer-links">
+        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const links  = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+  </script>
+</body>
+</html>
