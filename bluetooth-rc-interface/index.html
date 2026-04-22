@@ -88,28 +88,46 @@
             </p>
           </div>
           <div style="text-align:center;">
-            <img src="../images/projects/rc-pcb-front.png" alt="3D render of the PS4/5 to RC Car PCB, front view" style="width:100%; max-width:400px; display:block; margin:0 auto; mix-blend-mode:multiply;" />
-            <p class="project-img-caption">PCB front view (3D render)</p>
+            <img src="../images/projects/rc-pcb-front-angle.png" alt="3D render of the PS4/5 to RC Car PCB, angled view" style="width:100%; max-width:520px; display:block; margin:0 auto; mix-blend-mode:multiply;" />
+            <p class="project-img-caption">PCB angled view (3D render)</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Requirements -->
+    <!-- PCB Design -->
     <section class="section-white">
       <div class="container">
-        <h2 class="resume-section-title">Requirements I Defined</h2>
+        <h2 class="resume-section-title">PCB Design</h2>
         <div class="project-body">
           <ul class="timeline-bullets" style="margin-top:0;">
-            <li>Bluetooth Classic input from a PS4/PS5 DualShock controller</li>
-            <li>Drive two DC motors and a steering mechanism</li>
-            <li>Run from a 2S LiPo in the field or USB-C on the bench</li>
-            <li>Low BOM cost via LCSC parts and JLCPCB fabrication</li>
-            <li>Fit a 3D-printed Tonka-style chassis</li>
-            <li>Expansion headers for future add-ons (IMU, extra GPIO)</li>
-            <li>Reliable enough for repeated use</li>
+            <li>4-layer FR4, 1 oz copper</li>
+            <li>Layer 1: signals and components</li>
+            <li>Layer 2: GND plane</li>
+            <li>Layer 3: power plane</li>
+            <li>Layer 4: signals and components</li>
+            <li>Followed JLCPCB design rules from the start of layout</li>
+            <li>Used an IPC-2221 trace width calculator to size power traces for current and acceptable temperature rise</li>
+            <li>Final DRC: 0 errors</li>
           </ul>
         </div>
+
+        <div class="project-three-img" style="grid-template-columns:1fr 1fr; margin-top:40px; max-width:80%; margin-left:auto; margin-right:auto;">
+          <div>
+            <img src="../images/projects/rc-pcb-front.png" alt="3D render of the PS4/5 to RC Car PCB, front view" style="width:100%; display:block; mix-blend-mode:multiply;" />
+            <p class="project-img-caption">Front view</p>
+          </div>
+          <div>
+            <img src="../images/projects/rc-pcb-back.png" alt="3D render of the PS4/5 to RC Car PCB, back view" style="width:100%; display:block; mix-blend-mode:multiply;" />
+            <p class="project-img-caption">Back view</p>
+          </div>
+        </div>
+
+        <div class="project-img-block" style="margin-top:48px;">
+          <img src="../images/projects/rc-pcb-schematic.png" alt="Full schematic of the PS4/5 to RC Car interface board" style="width:100%; display:block; mix-blend-mode:multiply;" />
+          <p class="project-img-caption">Full schematic</p>
+        </div>
+
       </div>
     </section>
 
@@ -178,72 +196,6 @@
             (heavier, more cells required).
           </p>
 
-        </div>
-      </div>
-    </section>
-
-    <!-- Drive & Steering -->
-    <section class="section-white">
-      <div class="container">
-        <h2 class="resume-section-title">Drive &amp; Steering</h2>
-        <div class="project-body">
-          <p>
-            Originally prototyped with two DC motors and a servo for steering on a breadboard.
-            Switched to two DC motors with a passive leg/skid for steering to reduce mechanical
-            complexity and keep the focus on PCB and schematic correctness. Servo steering is wired
-            up and electrically functional, left as a future enhancement.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- PCB Design -->
-    <section class="section-grey">
-      <div class="container">
-        <h2 class="resume-section-title">PCB Design</h2>
-        <div class="project-body">
-          <ul class="timeline-bullets" style="margin-top:0;">
-            <li>4-layer FR4, 1 oz copper</li>
-            <li>Layer 1: signals and components</li>
-            <li>Layer 2: GND plane</li>
-            <li>Layer 3: power plane</li>
-            <li>Layer 4: signals and components</li>
-            <li>Followed JLCPCB design rules from the start of layout</li>
-            <li>Used an IPC-2221 trace width calculator to size power traces for current and acceptable temperature rise</li>
-            <li>Final DRC: 0 errors</li>
-          </ul>
-        </div>
-
-        <div class="project-three-img" style="grid-template-columns:1fr 1fr; margin-top:40px; max-width:80%; margin-left:auto; margin-right:auto;">
-          <div>
-            <img src="../images/projects/rc-pcb-front.png" alt="3D render of the PS4/5 to RC Car PCB, front view" style="width:100%; display:block; mix-blend-mode:multiply;" />
-            <p class="project-img-caption">Front view</p>
-          </div>
-          <div>
-            <img src="../images/projects/rc-pcb-back.png" alt="3D render of the PS4/5 to RC Car PCB, back view" style="width:100%; display:block; mix-blend-mode:multiply;" />
-            <p class="project-img-caption">Back view</p>
-          </div>
-        </div>
-
-        <div class="project-img-block" style="margin-top:48px;">
-          <img src="../images/projects/rc-pcb-schematic.png" alt="Full schematic of the PS4/5 to RC Car interface board" style="width:100%; display:block; mix-blend-mode:multiply;" />
-          <p class="project-img-caption">Full schematic</p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Power Budget -->
-    <section class="section-white">
-      <div class="container">
-        <h2 class="resume-section-title">Power Budget</h2>
-        <div class="project-body">
-          <p>
-            2S LiPo (7.4 V, 1000 mAh) feeds the RT6254 buck, which produces the 5 V rail. The
-            ESP32 draws approximately 1.2 W and the DC motors draw approximately 2 W typical (up to
-            approximately 5 W at stall). Normal operating draw is roughly 3.2 W, giving over an
-            hour of runtime from the 1000 mAh pack, which is sufficient for the intended use case.
-          </p>
         </div>
       </div>
     </section>
