@@ -1,0 +1,2 @@
+export const SUPABASE_URL  = 'https://nspjxblzoymgcaxbngft.supabase.co';
+export const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5zcGp4Ymx6b3ltZ2NheGJuZ2Z0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4MjQ5NTEsImV4cCI6MjA5NzQwMDk1MX0.ToLJTbiVIKhZyxIuvRa6RNzcsialgppybUno69kNboA';
