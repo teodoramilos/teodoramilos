@@ -295,9 +295,14 @@
   </div>
   <div class="two">
     <div class="field"><label>Daily steps</label><input id="inSteps" type="number" value="10000" /></div>
-    <div class="field"><label>Daily calories</label><input id="inKcal" type="number" placeholder="optional" /></div>
+    <div class="field"><label>Daily calories</label><input id="inKcal" type="number" value="1800" /></div>
   </div>
-  <div class="sub" style="margin:-6px 0 16px">Start defaults to next Monday.</div>
+  <div class="two">
+    <div class="field"><label>Protein (g)</label><input id="inProtein" type="number" value="119" /></div>
+    <div class="field"><label>Carbs (g)</label><input id="inCarbs" type="number" placeholder="optional" /></div>
+  </div>
+  <div class="field"><label>Fat (g)</label><input id="inFat" type="number" placeholder="optional" /></div>
+  <div class="sub" style="margin:-6px 0 16px">Calorie target starts at 1,800 (week 1) — you'll get a prompt to step it down in weeks 2 and 3. Start date defaults to next Monday.</div>
   <button class="begin" onclick="beginChallenge()">Begin challenge</button>
 </div>
 
@@ -358,7 +363,10 @@
 
     <!-- NUTRITION -->
     <section class="screen" id="nutrition">
-      <div class="sec-label">Today's food</div>
+      <div id="rampPrompt"></div>
+      <div class="sec-label">Targets<button class="chip" id="targetsEditBtn" style="flex:none;padding:5px 14px;margin-left:8px" onclick="toggleTargetEdit()">Edit</button></div>
+      <div class="card-b" id="targetsCard"></div>
+      <div class="sec-label" style="margin-top:18px">Today's food</div>
       <div class="daytotal">
         <div><div class="dl">Calories</div><div class="dn" id="kcalTotal">0</div></div>
         <div class="macros" id="macroTotal">P 0g · C 0g · F 0g</div>
@@ -405,6 +413,7 @@
         <div class="d" id="nextDate">Sunday</div>
         <div class="w">Enter the numbers, reflect together, then save. This is when the week resets.</div>
       </div>
+      <div id="weightFlag"></div>
       <div class="sec-label">This week</div>
       <div class="stat" id="weekStats"></div>
       <div class="card-b" id="weekDays" style="margin-top:10px;padding:6px 16px"></div>
@@ -489,11 +498,11 @@
 <script type="module">
 import {
   signIn, signOut, getSession, getProfile,
-  getChallenge, upsertChallenge,
+  getChallenge, getAnyChallenge, upsertChallenge,
   getDailyLog, upsertDailyLog,
-  getFoodItems, insertFoodItem, deleteFoodItem, updateFoodItem,
+  getFoodItems, getFoodItemsForDate, insertFoodItem, deleteFoodItem, updateFoodItem,
   getWeekSessions, insertWorkoutSession, getLiftHistory,
-  getCheckins, insertCheckin, getLatestCheckin,
+  getCheckins, getAllCheckins, insertCheckin, getLatestCheckin,
   upsertCoachNote, getCoachNote,
   exportAllData, getAllAthleteData,
   getAllWorkoutSessions, getAllFoodItemsHistory, getAllDailyLogsHistory,
@@ -597,7 +606,7 @@ async function bootApp(user) {
     rb.textContent = 'You';
   }
 
-  challenge = await getChallenge(user.id);
+  challenge = currentProfile.role === 'coach' ? await getAnyChallenge() : await getChallenge(user.id);
   if (!challenge && currentProfile.role === 'athlete') {
     document.getElementById('intakeWrap').style.display = 'block';
     return;
@@ -608,6 +617,7 @@ async function bootApp(user) {
   if (currentProfile.role === 'coach') {
     setupCoachNav();
     await loadCoachView();
+    await loadCheckins();
   } else {
     await loadAll();
   }
@@ -655,7 +665,10 @@ window.beginChallenge = async function() {
     start_date: start,
     length_days: len,
     step_goal: +document.getElementById('inSteps').value || 10000,
-    kcal_goal: +document.getElementById('inKcal').value || 0,
+    kcal_goal: +document.getElementById('inKcal').value || 1800,
+    protein_goal: +document.getElementById('inProtein').value || 119,
+    carbs_goal: +document.getElementById('inCarbs').value || null,
+    fat_goal: +document.getElementById('inFat').value || null,
   };
   await upsertChallenge(currentUser.id, fields);
   challenge = await getChallenge(currentUser.id);
@@ -693,7 +706,7 @@ async function loadWeekSessions() {
 }
 
 async function loadCheckins() {
-  checkins = await getCheckins(currentUser.id);
+  checkins = currentProfile.role === 'coach' ? await getAllCheckins() : await getCheckins(currentUser.id);
   if (checkins.length) currentCheckinId = checkins[checkins.length - 1].id;
 }
 
@@ -880,7 +893,7 @@ function renderSession() {
   S.w.ex.forEach((_, i) => dots += `<div class="pd ${i < S.idx ? 'done' : i === S.idx ? 'cur' : ''}"></div>`);
   let rows = '<div class="colhead"><span></span><span>Load kg</span><span>Reps</span><span></span></div>';
   logs.forEach((s, i) => {
-    rows += `<div class="setrow"><span class="sn">${i+1}</span><input type="number" placeholder="–" value="${s.load}" oninput="S.logs[${S.idx}][${i}].load=this.value"><input type="number" placeholder="${e.reps}" value="${s.reps}" oninput="S.logs[${S.idx}][${i}].reps=this.value"><div class="setcheck ${s.done ? 'done' : ''}" onclick="toggleSet(${i})"><svg viewBox="0 0 24 24"><polyline points="4,12 10,18 20,6"/></svg></div></div>`;
+    rows += `<div class="setrow"><span class="sn">${i+1}</span><input type="number" placeholder="–" value="${s.load}" oninput="updateSetField(${i},'load',this.value)"><input type="number" placeholder="${e.reps}" value="${s.reps}" oninput="updateSetField(${i},'reps',this.value)"><div class="setcheck ${s.done ? 'done' : ''}" onclick="toggleSet(${i})"><svg viewBox="0 0 24 24"><polyline points="4,12 10,18 20,6"/></svg></div></div>`;
   });
   const lastEx = S.idx === S.w.ex.length - 1;
   v.innerHTML = `<button class="back" onclick="quitSession()">← End workout</button>
@@ -888,18 +901,42 @@ function renderSession() {
     <div class="sec-label" style="margin-top:0">Exercise ${S.idx+1} of ${S.w.ex.length}</div>
     <div class="ex" style="margin-bottom:14px"><div class="en"><span>${e.n}</span><span style="font-size:12px;color:var(--ink-soft);font-weight:500">${e.sets}×${e.reps}</span></div><div class="em">Tempo ${e.tempo} · Rest ${e.restL}${e.note ? ' · ' + e.note : ''}</div></div>
     ${rows}
-    <div class="navbtns">${S.idx > 0 ? '<button onclick="S.idx--;renderSession()">Previous</button>' : ''}<button class="prim" onclick="${lastEx ? 'reviewSession()' : 'S.idx++;renderSession()'}">` +
+    <div class="navbtns">${S.idx > 0 ? '<button onclick="prevExercise()">Previous</button>' : ''}<button class="prim" onclick="${lastEx ? 'reviewSession()' : 'nextExercise()'}">` +
     (lastEx ? 'Finish workout ✓' : 'Next exercise →') + '</button></div>';
 }
 window.renderSession = renderSession;
 
+// Inline onclick/oninput attributes run outside the module's scope, so they
+// can only see window-assigned functions — they can't reach the module-scoped
+// `S` directly. These wrappers are what make set edits and exercise nav work.
+window.updateSetField = function(i, field, value) {
+  S.logs[S.idx][i][field] = value;
+};
+
+window.prevExercise = function() {
+  if (S.idx > 0) { S.idx--; renderSession(); }
+};
+
+window.nextExercise = function() {
+  if (S.idx < S.w.ex.length - 1) { S.idx++; renderSession(); }
+};
+
+window.backToSets = function() {
+  S.idx = S.w.ex.length - 1;
+  renderSession();
+};
+
+window.updateSessionNote = function(value) {
+  S.note = value;
+};
+
 window.reviewSession = function() {
   const v = document.getElementById('woView');
-  v.innerHTML = `<button class="back" onclick="S.idx=S.w.ex.length-1;renderSession()">← Back to sets</button>
+  v.innerHTML = `<button class="back" onclick="backToSets()">← Back to sets</button>
     <div class="sec-label" style="margin-top:6px">${S.w.title} · nice work</div>
     <div class="card-b" style="margin-bottom:14px">
       <div class="q" style="margin-top:0">Anything to note about this workout?</div>
-      <textarea class="r" id="sessionNote" rows="3" placeholder="How did it feel? Anything for your coach to know…" oninput="S.note=this.value">${S.note || ''}</textarea>
+      <textarea class="r" id="sessionNote" rows="3" placeholder="How did it feel? Anything for your coach to know…" oninput="updateSessionNote(this.value)">${S.note || ''}</textarea>
     </div>
     <button class="startbtn" onclick="finishSession()">Submit workout ✓</button>`;
 };
@@ -977,6 +1014,7 @@ function emojiFor(n) { const s = n.toLowerCase(); for (const kv of EMOJI_MAP) if
 
 function renderMeals() {
   const wrap = document.getElementById('mealList'); wrap.innerHTML = '';
+  const isCoach = currentProfile && currentProfile.role === 'coach';
   let tk = 0, tp = 0, tc = 0, tf = 0;
   MEAL_NAMES.forEach((mealName, mi) => {
     const items = foodItems.filter(it => it.meal === mealName);
@@ -988,21 +1026,20 @@ function renderMeals() {
         <span class="fe">${it.emoji || emojiFor(it.name)}</span>
         <span class="fn">${it.name}</span>
         <span class="fm">${it.kcal} kcal · ${it.protein}/${it.carbs}/${it.fat}</span>
-        <button class="cheatbtn ${it.cheat ? 'on' : ''}" title="Mark as cheat meal" onclick="toggleCheat('${it.id}')">🔥</button>
-        <button class="del" onclick="delFood('${it.id}')">×</button>
+        ${isCoach ? '' : `<button class="cheatbtn ${it.cheat ? 'on' : ''}" title="Mark as cheat meal" onclick="toggleCheat('${it.id}')">🔥</button><button class="del" onclick="delFood('${it.id}')">×</button>`}
       </div>`;
     });
     wrap.innerHTML += `<div class="meal">
       <div class="mh"><div class="mn">${mealName}</div><div class="mc">${mk} kcal</div></div>
       ${itemsHtml}
-      <div class="foodadd">
+      ${isCoach ? '' : `<div class="foodadd">
         <input class="nm" id="f${mi}n" placeholder="What did you eat?">
         <input id="f${mi}k" type="number" placeholder="kcal">
         <input id="f${mi}p" type="number" placeholder="P">
         <input id="f${mi}c" type="number" placeholder="C">
         <input id="f${mi}f" type="number" placeholder="F">
         <button onclick="addFood('${mealName}',${mi})">+</button>
-      </div>
+      </div>`}
     </div>`;
   });
   document.getElementById('kcalTotal').textContent = tk;
@@ -1037,6 +1074,118 @@ window.toggleCheat = async function(id) {
   await updateFoodItem(id, { cheat: it.cheat });
   renderMeals();
   if (it.cheat) toast('🔥 Cheat meal — 80/20, balance is the point.');
+};
+
+// ─────────────────────────── Macro targets & ramp ─────────────────────────────
+async function openNutrition() {
+  // The athlete keeps foodItems in sync locally; the coach has no other load path for it.
+  if (currentProfile.role === 'coach') foodItems = await getFoodItemsForDate(todayDate);
+  renderMeals();
+  renderTargetsCard();
+  renderRampPrompt();
+}
+
+let targetsEditing = false;
+
+window.toggleTargetEdit = function() {
+  targetsEditing = !targetsEditing;
+  renderTargetsCard();
+};
+
+function barRow(label, value, goal, unit, color, marginTop) {
+  const pct = goal ? Math.min(value / goal, 1) * 100 : 0;
+  const valText = goal ? `${value.toLocaleString()}${unit} / ${goal.toLocaleString()}${unit}` : `${value.toLocaleString()}${unit} (no target set)`;
+  return `<div class="barhead" style="margin-top:${marginTop}"><span class="bl">${label}</span><span class="bv" style="font-size:15px">${valText}</span></div><div class="bar"><div style="width:${pct}%;background:${color}"></div></div>`;
+}
+
+function renderTargetsCard() {
+  const c = document.getElementById('targetsCard');
+  if (!c) return;
+  const isCoach = currentProfile && currentProfile.role === 'coach';
+  document.getElementById('targetsEditBtn').style.display = isCoach ? 'none' : '';
+  if (!challenge) { c.innerHTML = '<div class="sub">Set up your challenge first.</div>'; return; }
+
+  if (targetsEditing && !isCoach) {
+    c.innerHTML = `
+      <div class="two">
+        <div class="field"><label>Calories</label><input id="tgKcal" type="number" value="${challenge.kcal_goal || ''}"></div>
+        <div class="field"><label>Protein (g)</label><input id="tgProtein" type="number" value="${challenge.protein_goal || ''}"></div>
+      </div>
+      <div class="two">
+        <div class="field"><label>Carbs (g)</label><input id="tgCarbs" type="number" value="${challenge.carbs_goal || ''}"></div>
+        <div class="field"><label>Fat (g)</label><input id="tgFat" type="number" value="${challenge.fat_goal || ''}"></div>
+      </div>
+      <button class="begin" style="margin-top:4px" onclick="saveTargets()">Save targets</button>
+    `;
+    return;
+  }
+
+  const tk = foodItems.reduce((s, f) => s + (f.kcal || 0), 0);
+  const tp = foodItems.reduce((s, f) => s + (f.protein || 0), 0);
+  const tc = foodItems.reduce((s, f) => s + (f.carbs || 0), 0);
+  const tf = foodItems.reduce((s, f) => s + (f.fat || 0), 0);
+  c.innerHTML =
+    barRow('Calories', tk, challenge.kcal_goal, '', 'var(--plum)', '0') +
+    barRow('Protein', tp, challenge.protein_goal, 'g', 'var(--apricot)', '14px') +
+    barRow('Carbs', tc, challenge.carbs_goal, 'g', 'var(--moss)', '14px') +
+    barRow('Fat', tf, challenge.fat_goal, 'g', 'var(--blue)', '14px');
+}
+
+window.saveTargets = async function() {
+  const fields = {
+    kcal_goal: +document.getElementById('tgKcal').value || null,
+    protein_goal: +document.getElementById('tgProtein').value || null,
+    carbs_goal: +document.getElementById('tgCarbs').value || null,
+    fat_goal: +document.getElementById('tgFat').value || null,
+  };
+  await upsertChallenge(currentUser.id, fields);
+  Object.assign(challenge, fields);
+  targetsEditing = false;
+  renderTargetsCard();
+  toast('Targets saved.');
+};
+
+// Suggested (never automatic) calorie step-downs. You confirm or dismiss each one;
+// dismissing just hides it for that week without changing anything.
+const RAMP_WEEK_KCAL = { 2: 1650, 3: 1550 };
+
+function renderRampPrompt() {
+  const slot = document.getElementById('rampPrompt');
+  if (!slot) return;
+  slot.innerHTML = '';
+  if (!challenge || (currentProfile && currentProfile.role === 'coach')) return;
+  const s = statusNow();
+  if (s.state !== 'active') return;
+  const week = Math.ceil(s.day / 7);
+  const suggested = RAMP_WEEK_KCAL[week];
+  if (!suggested) return;
+  const key = `fitness_ramp_handled_week${week}`;
+  if (localStorage.getItem(key)) return;
+  if (challenge.kcal_goal === suggested) { localStorage.setItem(key, '1'); return; }
+
+  slot.innerHTML = `<div class="hero pre" style="margin-bottom:14px">
+    <div class="k">Week ${week}</div>
+    <div class="big">Ready to step down to ${suggested.toLocaleString()}?</div>
+    <div class="g">Your calorie target is currently ${challenge.kcal_goal ? challenge.kcal_goal.toLocaleString() : '—'}. This is just the suggested next step from your original plan — you decide.</div>
+    <div style="display:flex;gap:8px;margin-top:13px">
+      <button class="pv" style="margin-top:0;flex:1" onclick="confirmRampStep(${week},${suggested})">Step down to ${suggested}</button>
+      <button class="pv" style="margin-top:0;flex:1;background:rgba(255,255,255,.12)" onclick="dismissRampPrompt(${week})">Not now</button>
+    </div>
+  </div>`;
+}
+
+window.confirmRampStep = async function(week, value) {
+  await upsertChallenge(currentUser.id, { kcal_goal: value });
+  challenge.kcal_goal = value;
+  localStorage.setItem(`fitness_ramp_handled_week${week}`, '1');
+  renderRampPrompt();
+  renderTargetsCard();
+  toast(`Calorie target stepped down to ${value}.`);
+};
+
+window.dismissRampPrompt = function(week) {
+  localStorage.setItem(`fitness_ramp_handled_week${week}`, '1');
+  renderRampPrompt();
 };
 
 // ─────────────────────────── Progress ─────────────────────────────────────────
@@ -1137,6 +1286,21 @@ function renderCheckinInputs() {
   document.getElementById('nextDate').textContent = fmtD(nd);
 }
 
+function renderWeightTrendFlag() {
+  const slot = document.getElementById('weightFlag');
+  if (!slot) return;
+  slot.innerHTML = '';
+  const withWeight = checkins.filter(c => c.weight != null);
+  if (withWeight.length < 3) return;
+  const last3 = withWeight.slice(-3);
+  const netChange = last3[2].weight - last3[0].weight; // negative = lost weight over the 3 check-ins
+  if (netChange >= -1) {
+    slot.innerHTML = `<div class="card-b" style="border-color:var(--apricot);background:var(--apricot-soft);margin-bottom:14px">
+      <div style="font-size:13.5px;line-height:1.5">Your weight's held steady for ~3 weeks — you and Ethan might revisit your calorie target.</div>
+    </div>`;
+  }
+}
+
 async function renderWeekSummary() {
   const data = await getWeekSummary();
   paintWeekSummary(data);
@@ -1223,9 +1387,9 @@ window.saveCheckin = async function() {
 
 // ─────────────────────────── Coach view ───────────────────────────────────────
 function setupCoachNav() {
-  // Replace athlete nav with coach-oriented nav
+  // Replace athlete nav with coach-oriented nav. Nutrition stays visible (read-only)
+  // so the coach can see targets + logged-vs-target macros.
   document.getElementById('navToday').style.display = 'none';
-  document.getElementById('navNutrition').style.display = 'none';
   // Repurpose the Workouts tab into a full read-only history (workouts + food) for the coach
   const wBtn = document.getElementById('navWorkouts');
   wBtn.querySelector('.navlabel').textContent = 'History';
@@ -1400,9 +1564,9 @@ window.go = function(id, el) {
   document.querySelector('.body').scrollTop = 0;
   if (id === 'today') { renderHero(); renderHeader(); }
   if (id === 'workouts') renderWorkoutList();
-  if (id === 'nutrition') renderMeals();
+  if (id === 'nutrition') openNutrition();
   if (id === 'progress') { buildGrid(); renderBars(); renderWeight(); renderMeasures(); renderLifts(); }
-  if (id === 'checkin') { renderCheckinInputs(); renderWeekSummary(); }
+  if (id === 'checkin') { renderCheckinInputs(); renderWeekSummary(); renderWeightTrendFlag(); }
   if (id === 'coachHistory') renderCoachHistory();
   if (id === 'chat') renderChat();
 };

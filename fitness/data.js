@@ -38,6 +38,17 @@ export async function getChallenge(userId) {
   return data;
 }
 
+export async function getAnyChallenge() {
+  // For the coach: reads the single athlete's challenge row (RLS read is open to any authenticated user).
+  const { data } = await supabase
+    .from('challenge')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  return data;
+}
+
 export async function upsertChallenge(userId, fields) {
   const existing = await getChallenge(userId);
   if (existing) {
@@ -88,6 +99,17 @@ export async function insertFoodItem(userId, date, item) {
     .single();
   if (error) throw error;
   return data;
+}
+
+export async function getFoodItemsForDate(date) {
+  // For the coach: reads the athlete's food for a date without a user_id filter (RLS read is open).
+  const { data, error } = await supabase
+    .from('food_items')
+    .select('*')
+    .eq('log_date', date)
+    .order('created_at', { ascending: true });
+  if (error) throw error;
+  return data || [];
 }
 
 export async function deleteFoodItem(id) {
@@ -183,6 +205,17 @@ export async function insertCheckin(userId, fields) {
     .single();
   if (error) throw error;
   return data;
+}
+
+export async function getAllCheckins() {
+  // For the coach: reads all of the athlete's check-ins (RLS read is open to any authenticated user).
+  const { data, error } = await supabase
+    .from('checkins')
+    .select('*, coach_notes(*)')
+    .order('checkin_date', { ascending: true })
+    .limit(100);
+  if (error) throw error;
+  return data || [];
 }
 
 export async function getLatestCheckin(userId) {
