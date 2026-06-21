@@ -1098,6 +1098,19 @@ function barRow(label, value, goal, unit, color, marginTop) {
   return `<div class="barhead" style="margin-top:${marginTop}"><span class="bl">${label}</span><span class="bv" style="font-size:15px">${valText}</span></div><div class="bar"><div style="width:${pct}%;background:${color}"></div></div>`;
 }
 
+// Same ring component used by the steps ring on the Today tab (.ring SVG, r=15.5,
+// circumference 97.4) — reused here so the calorie ring looks identical, just a
+// different id/color so it doesn't collide with #stepRing.
+function ringSVG(id, value, goal, color) {
+  const circumference = 97.4;
+  const pct = goal ? Math.min(value / goal, 1) : 0;
+  const offset = (circumference * (1 - pct)).toFixed(1);
+  return `<svg class="ring" viewBox="0 0 36 36">
+    <circle cx="18" cy="18" r="15.5" fill="none" stroke="var(--line)" stroke-width="3"/>
+    <circle id="${id}" cx="18" cy="18" r="15.5" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" stroke-dasharray="97.4" stroke-dashoffset="${offset}" transform="rotate(-90 18 18)" style="transition:.5s"/>
+  </svg>`;
+}
+
 function renderTargetsCard() {
   const c = document.getElementById('targetsCard');
   if (!c) return;
@@ -1124,9 +1137,17 @@ function renderTargetsCard() {
   const tp = foodItems.reduce((s, f) => s + (f.protein || 0), 0);
   const tc = foodItems.reduce((s, f) => s + (f.carbs || 0), 0);
   const tf = foodItems.reduce((s, f) => s + (f.fat || 0), 0);
-  c.innerHTML =
-    barRow('Calories', tk, challenge.kcal_goal, '', 'var(--plum)', '0') +
-    barRow('Protein', tp, challenge.protein_goal, 'g', 'var(--apricot)', '14px') +
+  const kcalSub = challenge.kcal_goal ? `/ ${challenge.kcal_goal.toLocaleString()} cal` : 'No calorie target set';
+  c.innerHTML = `
+    <div class="steps">
+      <div>
+        <div class="stepinput">${tk.toLocaleString()}</div>
+        <div class="sub">${kcalSub}</div>
+      </div>
+      ${ringSVG('kcalRing', tk, challenge.kcal_goal || 0, 'var(--plum)')}
+    </div>
+  ` +
+    barRow('Protein', tp, challenge.protein_goal, 'g', 'var(--apricot)', '16px') +
     barRow('Carbs', tc, challenge.carbs_goal, 'g', 'var(--moss)', '14px') +
     barRow('Fat', tf, challenge.fat_goal, 'g', 'var(--blue)', '14px');
 }
@@ -1138,7 +1159,13 @@ window.saveTargets = async function() {
     carbs_goal: +document.getElementById('tgCarbs').value || null,
     fat_goal: +document.getElementById('tgFat').value || null,
   };
-  await upsertChallenge(currentUser.id, fields);
+  try {
+    await upsertChallenge(currentUser.id, fields);
+  } catch (e) {
+    console.error('saveTargets failed', e);
+    toast('Could not save targets — ' + (e.message || 'unknown error') + '. Has migration 003 been run?');
+    return;
+  }
   Object.assign(challenge, fields);
   targetsEditing = false;
   renderTargetsCard();
