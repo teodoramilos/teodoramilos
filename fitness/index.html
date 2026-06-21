@@ -75,6 +75,7 @@
     .step-btns { display: flex; gap: 8px; margin-top: 13px; }
     .chip { flex: 1; border: 1px solid var(--line); background: var(--card); border-radius: 12px; padding: 9px 0; font-size: 13px; font-weight: 500; color: var(--ink); cursor: pointer; transition: .15s; font-family: inherit; }
     .chip:hover { border-color: var(--plum); color: var(--plum); }
+    .chip.sel { border-color: var(--plum); background: var(--plum-soft); color: var(--plum); }
 
     /* ── Habits / wins ── */
     .habit { display: flex; align-items: center; gap: 12px; padding: 12px 4px; border-bottom: 1px solid var(--line); cursor: pointer; }
@@ -408,6 +409,17 @@
       <div class="sec-label" style="margin-top:18px">Recent check-ins</div>
       <div id="coachReflects"></div>
     </section>
+
+    <!-- COACH HISTORY (full workout + food log, read-only) -->
+    <section class="screen" id="coachHistory">
+      <div class="sec-label">Full history</div>
+      <div class="step-btns" style="margin-bottom:14px">
+        <button class="chip sel" id="histTabWorkouts" onclick="showHistTab('workouts')">Workouts</button>
+        <button class="chip" id="histTabFood" onclick="showHistTab('food')">Food</button>
+      </div>
+      <div id="histWorkoutsList"></div>
+      <div id="histFoodList" style="display:none"></div>
+    </section>
   </div>
 
   <div class="rest" id="restBar">
@@ -420,7 +432,7 @@
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Today
     </button>
     <button onclick="go('workouts',this)" id="navWorkouts">
-      <svg viewBox="0 0 24 24"><path d="M3 12h2m14 0h2M6.5 9.5v5M17.5 9.5v5M6.5 12h11"/></svg>Workouts
+      <svg viewBox="0 0 24 24"><path d="M3 12h2m14 0h2M6.5 9.5v5M17.5 9.5v5M6.5 12h11"/></svg><span class="navlabel">Workouts</span>
     </button>
     <button onclick="go('nutrition',this)" id="navNutrition">
       <svg viewBox="0 0 24 24"><path d="M6 3v8a3 3 0 0 0 6 0V3M9 3v18M18 3c-1.5 1-2 3-2 6s.5 4 2 4v8"/></svg>Nutrition
@@ -447,6 +459,7 @@ import {
   getCheckins, insertCheckin, getLatestCheckin,
   upsertCoachNote, getCoachNote,
   exportAllData, getAllAthleteData,
+  getAllWorkoutSessions, getAllFoodItemsHistory,
 } from './data.js';
 import { supabase } from './supabase.js';
 
@@ -496,11 +509,35 @@ window.addEventListener('load', async () => {
 
 // Reload today's data when tab regains focus after midnight
 document.addEventListener('visibilitychange', () => {
-  if (!document.hidden && currentUser) {
+  if (!document.hidden && currentUser && currentProfile && currentProfile.role !== 'coach') {
     const newDate = localDateStr();
-    if (newDate !== todayDate) { todayDate = newDate; loadTodayData(); }
+    if (newDate !== todayDate) {
+      todayDate = newDate;
+      rolloverToNewDay();
+    }
   }
 });
+
+async function rolloverToNewDay() {
+  // Reset in-memory state to defaults first so yesterday's values don't
+  // linger on screen while the new day's (empty) row loads.
+  steps = 0;
+  mood = null;
+  wins = [
+    { t: 'No added sugar', d: false },
+    { t: 'No caffeine', d: false },
+    { t: 'Ate within calorie target', d: false },
+  ];
+  document.getElementById('stepInput').value = 0;
+  document.querySelectorAll('.mood').forEach(m => m.classList.remove('sel'));
+
+  await Promise.all([loadTodayData(), loadFoodItems(), loadWeekSessions()]);
+  renderHeader();
+  renderHero();
+  renderWins();
+  paintRing();
+  renderMeals();
+}
 
 async function bootApp(user) {
   currentUser = user;
@@ -783,7 +820,7 @@ window.openWorkout = function(id) {
 // ─────────────────────────── Session tracking ─────────────────────────────────
 window.startSession = function(id) {
   const w = WORKOUTS.find(x => x.id === id);
-  S = { w, idx: 0, logs: w.ex.map(e => Array.from({ length: e.sets }, () => ({ load: '', reps: '', done: false }))) };
+  S = { w, idx: 0, note: '', logs: w.ex.map(e => Array.from({ length: e.sets }, () => ({ load: '', reps: '', done: false }))) };
   renderSession();
 };
 
@@ -801,10 +838,21 @@ function renderSession() {
     <div class="sec-label" style="margin-top:0">Exercise ${S.idx+1} of ${S.w.ex.length}</div>
     <div class="ex" style="margin-bottom:14px"><div class="en"><span>${e.n}</span><span style="font-size:12px;color:var(--ink-soft);font-weight:500">${e.sets}×${e.reps}</span></div><div class="em">Tempo ${e.tempo} · Rest ${e.restL}${e.note ? ' · ' + e.note : ''}</div></div>
     ${rows}
-    <div class="navbtns">${S.idx > 0 ? '<button onclick="S.idx--;renderSession()">Previous</button>' : ''}<button class="prim" onclick="${lastEx ? 'finishSession()' : 'S.idx++;renderSession()'}">` +
+    <div class="navbtns">${S.idx > 0 ? '<button onclick="S.idx--;renderSession()">Previous</button>' : ''}<button class="prim" onclick="${lastEx ? 'reviewSession()' : 'S.idx++;renderSession()'}">` +
     (lastEx ? 'Finish workout ✓' : 'Next exercise →') + '</button></div>';
 }
 window.renderSession = renderSession;
+
+window.reviewSession = function() {
+  const v = document.getElementById('woView');
+  v.innerHTML = `<button class="back" onclick="S.idx=S.w.ex.length-1;renderSession()">← Back to sets</button>
+    <div class="sec-label" style="margin-top:6px">${S.w.title} · nice work</div>
+    <div class="card-b" style="margin-bottom:14px">
+      <div class="q" style="margin-top:0">Anything to note about this workout?</div>
+      <textarea class="r" id="sessionNote" rows="3" placeholder="How did it feel? Anything for your coach to know…" oninput="S.note=this.value">${S.note || ''}</textarea>
+    </div>
+    <button class="startbtn" onclick="finishSession()">Submit workout ✓</button>`;
+};
 
 window.toggleSet = function(i) {
   const s = S.logs[S.idx][i]; s.done = !s.done;
@@ -841,6 +889,7 @@ window.finishSession = async function() {
     session_date: todayDate,
     completion,
     sets: allSets,
+    note: S.note || null,
   });
   weekSessions[S.w.id] = session;
   // Update local lift histories from this session
@@ -1068,6 +1117,10 @@ function setupCoachNav() {
   // Replace athlete nav with coach-oriented nav
   document.getElementById('navToday').style.display = 'none';
   document.getElementById('navNutrition').style.display = 'none';
+  // Repurpose the Workouts tab into a full read-only history (workouts + food) for the coach
+  const wBtn = document.getElementById('navWorkouts');
+  wBtn.querySelector('.navlabel').textContent = 'History';
+  wBtn.onclick = () => go('coachHistory', wBtn);
   // Default to coach view
   go('coachView', document.getElementById('navCheckin'));
 }
@@ -1102,6 +1155,67 @@ function renderCoachStats(data) {
   });
 }
 
+// ─────────────────────────── Coach: full history ──────────────────────────────
+let historyLoaded = false;
+let allWorkoutSessions = [];
+let allFoodHistory = [];
+
+async function renderCoachHistory() {
+  if (!historyLoaded) {
+    [allWorkoutSessions, allFoodHistory] = await Promise.all([getAllWorkoutSessions(), getAllFoodItemsHistory()]);
+    historyLoaded = true;
+  }
+  paintWorkoutHistory();
+  paintFoodHistory();
+}
+
+window.showHistTab = function(tab) {
+  document.getElementById('histTabWorkouts').classList.toggle('sel', tab === 'workouts');
+  document.getElementById('histTabFood').classList.toggle('sel', tab === 'food');
+  document.getElementById('histWorkoutsList').style.display = tab === 'workouts' ? 'block' : 'none';
+  document.getElementById('histFoodList').style.display = tab === 'food' ? 'block' : 'none';
+};
+
+function paintWorkoutHistory() {
+  const c = document.getElementById('histWorkoutsList'); c.innerHTML = '';
+  if (!allWorkoutSessions.length) { c.innerHTML = '<div class="sub" style="padding:10px 0">No workouts logged yet.</div>'; return; }
+  allWorkoutSessions.forEach(s => {
+    const sets = Array.isArray(s.sets) ? s.sets : [];
+    const byEx = {};
+    sets.forEach(st => { (byEx[st.exercise] = byEx[st.exercise] || []).push(st); });
+    let setsHtml = '';
+    Object.entries(byEx).forEach(([exName, exSets]) => {
+      const line = exSets.map(st => `${st.load || '–'}kg×${st.reps || '–'}${st.done ? '' : ' (skipped)'}`).join(', ');
+      setsHtml += `<div style="font-size:12.5px;margin-top:4px"><strong>${exName}:</strong> ${line}</div>`;
+    });
+    c.innerHTML += `<div class="card-b" style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:500">${s.workout_title || s.workout_id}</div>
+        <div class="sub">${fmtD(dOnly(s.session_date))}</div>
+      </div>
+      <div class="sub">${Math.round((s.completion || 0) * 100)}% completed</div>
+      ${setsHtml}
+      ${s.note ? `<div style="margin-top:8px;font-size:13px;color:var(--plum)">💬 ${s.note}</div>` : ''}
+    </div>`;
+  });
+}
+
+function paintFoodHistory() {
+  const c = document.getElementById('histFoodList'); c.innerHTML = '';
+  if (!allFoodHistory.length) { c.innerHTML = '<div class="sub" style="padding:10px 0">No food logged yet.</div>'; return; }
+  const byDate = {};
+  allFoodHistory.forEach(f => { (byDate[f.log_date] = byDate[f.log_date] || []).push(f); });
+  Object.keys(byDate).sort().reverse().forEach(date => {
+    const items = byDate[date];
+    const dayKcal = items.reduce((sum, i) => sum + (i.kcal || 0), 0);
+    let rows = '';
+    items.forEach(it => {
+      rows += `<div class="fooditem ${it.cheat ? 'cheat' : ''}"><span class="fe">${it.emoji || '🍽️'}</span><span class="fn">${it.meal}: ${it.name}</span><span class="fm">${it.kcal} kcal</span></div>`;
+    });
+    c.innerHTML += `<div class="meal"><div class="mh"><div class="mn">${fmtD(dOnly(date))}</div><div class="mc">${dayKcal} kcal</div></div>${rows}</div>`;
+  });
+}
+
 // ─────────────────────────── Navigation ───────────────────────────────────────
 window.go = function(id, el) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1114,6 +1228,7 @@ window.go = function(id, el) {
   if (id === 'nutrition') renderMeals();
   if (id === 'progress') { buildGrid(); renderBars(); renderWeight(); renderMeasures(); renderLifts(); }
   if (id === 'checkin') renderCheckinInputs();
+  if (id === 'coachHistory') renderCoachHistory();
 };
 
 // ─────────────────────────── Export ───────────────────────────────────────────

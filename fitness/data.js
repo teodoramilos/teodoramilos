@@ -113,7 +113,8 @@ export async function getWeekSessions(userId, sinceDate) {
 }
 
 export async function insertWorkoutSession(userId, session) {
-  // TODO: trigger coach notification here (e.g. Supabase Edge Function on workout_sessions insert)
+  // Coach email notification is handled server-side: see supabase/functions/notify-coach,
+  // wired to a Database Webhook on INSERT to workout_sessions (setup: fitness/migrations/002_notify_coach_setup.md).
   const { data, error } = await supabase
     .from('workout_sessions')
     .insert({ user_id: userId, ...session })
@@ -208,6 +209,28 @@ export async function exportAllData(userId) {
     sessions: sessions.data || [],
     food: food.data || [],
   };
+}
+
+// ── Full history (read policies are open to any authenticated user; RLS still
+//    restricts writes to your own rows) ─────────────────────────────────────────
+export async function getAllWorkoutSessions() {
+  const { data, error } = await supabase
+    .from('workout_sessions')
+    .select('*')
+    .order('session_date', { ascending: false })
+    .limit(500);
+  if (error) throw error;
+  return data || [];
+}
+
+export async function getAllFoodItemsHistory() {
+  const { data, error } = await supabase
+    .from('food_items')
+    .select('*')
+    .order('log_date', { ascending: false })
+    .limit(1000);
+  if (error) throw error;
+  return data || [];
 }
 
 // ── Coach: read all athlete data (no user_id filter — RLS lets coach see all rows) ──
