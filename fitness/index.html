@@ -230,9 +230,28 @@
 
     /* ── Nav ── */
     nav.nav { display: flex; border-top: 1px solid var(--line); background: var(--card); }
-    nav.nav button { flex: 1; border: none; background: none; padding: 11px 0 14px; cursor: pointer; font-family: inherit; color: var(--ink-soft); display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; transition: .15s; }
+    nav.nav button { flex: 1; border: none; background: none; padding: 11px 0 14px; cursor: pointer; font-family: inherit; color: var(--ink-soft); display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; transition: .15s; position: relative; }
     nav.nav button.active { color: var(--plum); }
     nav.nav svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.7; }
+    .navdot { position: absolute; top: 6px; right: 50%; transform: translateX(13px); width: 8px; height: 8px; border-radius: 50%; background: var(--apricot); display: none; }
+
+    /* ── Chat ── */
+    .chatlist { display: flex; flex-direction: column; gap: 8px; padding-bottom: 10px; }
+    .msg { max-width: 80%; padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.4; }
+    .msg.mine { background: var(--plum); color: #fff; align-self: flex-end; }
+    .msg.theirs { background: #fff; border: 1px solid var(--line); align-self: flex-start; }
+    .msg.summary { background: var(--moss-soft); border: 1px solid var(--moss); align-self: stretch; font-size: 13px; white-space: pre-wrap; }
+    .msg .ts { font-size: 10px; opacity: .6; margin-top: 4px; display: block; }
+    .chatinput { display: flex; gap: 8px; position: sticky; bottom: 0; background: var(--card); padding: 8px 0 2px; }
+    .chatinput input { flex: 1; border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; font-family: inherit; font-size: 14px; background: #fff; }
+    .chatinput input:focus { outline: none; border-color: var(--plum); }
+    .chatinput button { border: none; background: var(--plum); color: #fff; border-radius: 12px; padding: 0 16px; font-weight: 600; cursor: pointer; }
+
+    /* ── Weekly summary (Check-in tab) ── */
+    .weekrow { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 2px; border-bottom: 1px solid var(--line); font-size: 12.5px; gap: 10px; }
+    .weekrow:last-child { border-bottom: none; }
+    .weekrow .wd2 { font-weight: 600; white-space: nowrap; }
+    .weekrow .wstats { color: var(--ink-soft); text-align: right; }
 
     /* ── Toast / confetti ── */
     .toast { position: absolute; left: 50%; bottom: 90px; transform: translate(-50%, 20px); background: var(--ink); color: #fff; padding: 13px 18px; border-radius: 14px; font-size: 13.5px; font-weight: 500; max-width: 300px; text-align: center; opacity: 0; pointer-events: none; transition: .35s cubic-bezier(.2,.9,.3,1.3); z-index: 50; box-shadow: 0 12px 30px -10px rgba(43,38,34,.5); }
@@ -386,6 +405,9 @@
         <div class="d" id="nextDate">Sunday</div>
         <div class="w">Enter the numbers, reflect together, then save. This is when the week resets.</div>
       </div>
+      <div class="sec-label">This week</div>
+      <div class="stat" id="weekStats"></div>
+      <div class="card-b" id="weekDays" style="margin-top:10px;padding:6px 16px"></div>
       <div class="sec-label">This week's numbers</div>
       <div class="card-b" id="checkinInputs" style="padding:6px 16px"></div>
       <div class="q">What went well this week?</div>
@@ -416,9 +438,21 @@
       <div class="step-btns" style="margin-bottom:14px">
         <button class="chip sel" id="histTabWorkouts" onclick="showHistTab('workouts')">Workouts</button>
         <button class="chip" id="histTabFood" onclick="showHistTab('food')">Food</button>
+        <button class="chip" id="histTabDays" onclick="showHistTab('days')">Days</button>
       </div>
       <div id="histWorkoutsList"></div>
       <div id="histFoodList" style="display:none"></div>
+      <div id="histDaysList" style="display:none"></div>
+    </section>
+
+    <!-- CHAT -->
+    <section class="screen" id="chat">
+      <div class="sec-label">Messages</div>
+      <div id="chatMessages" class="chatlist"></div>
+      <div class="chatinput">
+        <input id="chatInput" placeholder="Message…" onkeydown="if(event.key==='Enter')sendChat()" />
+        <button onclick="sendChat()">Send</button>
+      </div>
     </section>
   </div>
 
@@ -443,6 +477,9 @@
     <button onclick="go('checkin',this)" id="navCheckin">
       <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2.5"/><path d="M8 12h8M8 8h8M8 16h5"/></svg>Check-in
     </button>
+    <button onclick="go('chat',this)" id="navChat">
+      <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-1.2 4.4L21 20l-4.3-1.1a8.4 8.4 0 1 1 4.3-7.4z"/></svg><span class="navlabel">Chat</span><span class="navdot" id="chatUnreadDot"></span>
+    </button>
   </nav>
 
   <div class="confetti" id="confetti"></div>
@@ -459,7 +496,8 @@ import {
   getCheckins, insertCheckin, getLatestCheckin,
   upsertCoachNote, getCoachNote,
   exportAllData, getAllAthleteData,
-  getAllWorkoutSessions, getAllFoodItemsHistory,
+  getAllWorkoutSessions, getAllFoodItemsHistory, getAllDailyLogsHistory,
+  getWeekSummary, getMessages, sendMessage, getLatestMessageTime,
 } from './data.js';
 import { supabase } from './supabase.js';
 
@@ -471,11 +509,15 @@ let challenge = null;
 let todayDate = localDateStr();
 let steps = 0;
 let mood = null;
-let wins = [
-  { t: 'No added sugar', d: false },
-  { t: 'No caffeine', d: false },
-  { t: 'Ate within calorie target', d: false },
-];
+function defaultWins() {
+  return [
+    { t: 'Take creatine', d: false },
+    { t: 'Drink 3L of water', d: false },
+    { t: 'No caffeine', d: false },
+    { t: 'No sugar', d: false },
+  ];
+}
+let wins = defaultWins();
 let foodItems = []; // array of DB rows
 let weekSessions = {}; // { workout_id: session_row }
 let checkins = [];
@@ -484,6 +526,7 @@ let currentCheckinId = null; // latest checkin id for coach notes
 let S = null; // active workout session
 let restTimer = null;
 let dbSaveTimer = null;
+let previewMode = false; // lets you open the full Today tab before the challenge's start_date
 
 // ─────────────────────────── Date helpers ─────────────────────────────────────
 function localDateStr(d = new Date()) {
@@ -509,11 +552,14 @@ window.addEventListener('load', async () => {
 
 // Reload today's data when tab regains focus after midnight
 document.addEventListener('visibilitychange', () => {
-  if (!document.hidden && currentUser && currentProfile && currentProfile.role !== 'coach') {
-    const newDate = localDateStr();
-    if (newDate !== todayDate) {
-      todayDate = newDate;
-      rolloverToNewDay();
+  if (!document.hidden && currentUser) {
+    checkUnreadChat();
+    if (currentProfile && currentProfile.role !== 'coach') {
+      const newDate = localDateStr();
+      if (newDate !== todayDate) {
+        todayDate = newDate;
+        rolloverToNewDay();
+      }
     }
   }
 });
@@ -523,11 +569,7 @@ async function rolloverToNewDay() {
   // linger on screen while the new day's (empty) row loads.
   steps = 0;
   mood = null;
-  wins = [
-    { t: 'No added sugar', d: false },
-    { t: 'No caffeine', d: false },
-    { t: 'Ate within calorie target', d: false },
-  ];
+  wins = defaultWins();
   document.getElementById('stepInput').value = 0;
   document.querySelectorAll('.mood').forEach(m => m.classList.remove('sel'));
 
@@ -569,6 +611,7 @@ async function bootApp(user) {
   } else {
     await loadAll();
   }
+  checkUnreadChat();
 }
 
 async function loadAll() {
@@ -674,6 +717,7 @@ async function persistDaily() {
 // ─────────────────────────── Header & hero ────────────────────────────────────
 function statusNow() {
   if (!challenge) return { state: 'pre', days: 0 };
+  if (previewMode) return { state: 'active', day: 1 };
   const now = dOnly(todayDate);
   const start = dOnly(challenge.start_date);
   const end = new Date(start.getTime() + (challenge.length_days - 1) * MS);
@@ -682,11 +726,17 @@ function statusNow() {
   return { state: 'active', day: Math.floor((now - start) / MS) + 1 };
 }
 
+window.enablePreview = function() {
+  previewMode = true;
+  renderHeader();
+  renderHero();
+};
+
 function renderHeader() {
   if (!challenge) return;
   const s = statusNow();
   document.getElementById('hdrMeta').textContent =
-    s.state === 'active' ? `Day ${s.day} of ${challenge.length_days} · ${fmtD(new Date())}` :
+    s.state === 'active' ? `Day ${s.day} of ${challenge.length_days} · ${fmtD(new Date())}${previewMode ? ' · Preview' : ''}` :
     s.state === 'pre' ? `Starts ${fmtD(dOnly(challenge.start_date))}` :
     'Challenge complete';
 }
@@ -697,7 +747,7 @@ function renderHero() {
   if (s.state === 'active') { slot.innerHTML = ''; log.style.display = 'block'; return; }
   log.style.display = 'none';
   if (s.state === 'pre') {
-    slot.innerHTML = `<div class="hero pre"><div class="k">Get ready</div><div class="big">Starts in ${s.days} day${s.days !== 1 ? 's' : ''}</div><div class="g">${challenge.goal || ''}<br>Kicks off ${fmtD(dOnly(challenge.start_date))}.</div></div>`;
+    slot.innerHTML = `<div class="hero pre"><div class="k">Get ready</div><div class="big">Starts in ${s.days} day${s.days !== 1 ? 's' : ''}</div><div class="g">${challenge.goal || ''}<br>Kicks off ${fmtD(dOnly(challenge.start_date))}.</div><button class="pv" onclick="enablePreview()">▶ Preview as Day 1</button></div>`;
   } else {
     const weightLog = checkins.map(c => c.weight).filter(Boolean);
     const change = weightLog.length >= 2 ? (weightLog[0] - weightLog[weightLog.length-1]).toFixed(1) : 0;
@@ -903,7 +953,7 @@ window.finishSession = async function() {
   if (!wins.find(w => /lift/i.test(w.t))) wins.push({ t: 'Lifted ' + S.w.title, d: true });
   S = null;
   renderWins();
-  celebrate('Workout logged & sent to your coach. 💪');
+  celebrate('Workout logged & posted to chat. 💪');
   renderWorkoutList();
 };
 
@@ -1069,8 +1119,13 @@ function renderCheckinInputs() {
   });
   document.getElementById('checkinInputs').innerHTML = h;
 
+  const isCoach = currentProfile && currentProfile.role === 'coach';
+  // Body data (weight/measurements) is the athlete's to write; coach can only read it here.
+  document.querySelectorAll('#checkinInputs input').forEach(inp => inp.disabled = isCoach);
+  document.querySelector('#checkin .savebtn').textContent = isCoach ? 'Save note' : 'Save check-in & reset week';
+
   // Coach note box: visible to coach only
-  if (currentProfile && currentProfile.role === 'coach') {
+  if (isCoach) {
     document.getElementById('coachNoteBox').classList.add('reveal');
     document.getElementById('ciCoach').disabled = false;
   } else {
@@ -1082,7 +1137,67 @@ function renderCheckinInputs() {
   document.getElementById('nextDate').textContent = fmtD(nd);
 }
 
+async function renderWeekSummary() {
+  const data = await getWeekSummary();
+  paintWeekSummary(data);
+}
+
+function paintWeekSummary(data) {
+  const { dates, logs, food, sessions, recentCheckins } = data;
+  const logByDate = {}; logs.forEach(l => logByDate[l.log_date] = l);
+  const foodByDate = {}; food.forEach(f => (foodByDate[f.log_date] = foodByDate[f.log_date] || []).push(f));
+  const sessByDate = {}; sessions.forEach(s => (sessByDate[s.session_date] = sessByDate[s.session_date] || []).push(s));
+
+  let totalSteps = 0, totalKcal = 0;
+  let rowsHtml = '';
+  dates.forEach(date => {
+    const log = logByDate[date];
+    const steps = log ? (log.steps || 0) : 0;
+    totalSteps += steps;
+    const dayFood = foodByDate[date] || [];
+    const kcal = dayFood.reduce((sum, f) => sum + (f.kcal || 0), 0);
+    totalKcal += kcal;
+    const daySessions = sessByDate[date] || [];
+    const wins = log && Array.isArray(log.wins) ? log.wins : [];
+    const habitsDone = wins.filter(w => w.d).length;
+    rowsHtml += `<div class="weekrow">
+      <span class="wd2">${fmtD(dOnly(date))}</span>
+      <span class="wstats">${steps.toLocaleString()} steps · ${kcal} kcal · ${daySessions.length} workout${daySessions.length === 1 ? '' : 's'} · ${habitsDone}/${wins.length} habits</span>
+    </div>`;
+  });
+
+  const avgSteps = Math.round(totalSteps / dates.length);
+  const avgKcal = Math.round(totalKcal / dates.length);
+  const totalCheat = food.filter(f => f.cheat).length;
+  let weightChange = '—';
+  if (recentCheckins.length >= 2 && recentCheckins[0].weight && recentCheckins[1].weight) {
+    const diff = (recentCheckins[0].weight - recentCheckins[1].weight).toFixed(1);
+    weightChange = (diff <= 0 ? '▼ ' : '▲ ') + Math.abs(diff) + ' lb';
+  }
+
+  document.getElementById('weekStats').innerHTML = `
+    <div class="statc"><div class="sl">Avg daily steps</div><div class="sv">${avgSteps.toLocaleString()}</div></div>
+    <div class="statc"><div class="sl">Avg daily calories</div><div class="sv">${avgKcal}</div></div>
+    <div class="statc"><div class="sl">Workouts this week</div><div class="sv">${sessions.length}</div></div>
+    <div class="statc"><div class="sl">Cheat meals</div><div class="sv">${totalCheat}</div></div>
+    <div class="statc" style="grid-column:1/-1"><div class="sl">Weight change vs last check-in</div><div class="sv">${weightChange}</div></div>
+  `;
+  document.getElementById('weekDays').innerHTML = rowsHtml;
+}
+
 window.saveCheckin = async function() {
+  // The coach can only attach a note to the latest existing check-in — body
+  // data (weight/measurements) and resetting the week are the athlete's to write.
+  if (currentProfile.role === 'coach') {
+    const coachNote = document.getElementById('ciCoach').value.trim();
+    if (coachNote && currentCheckinId) {
+      await upsertCoachNote(currentCheckinId, currentUser.id, coachNote);
+      document.getElementById('ciCoach').value = '';
+      celebrate('Note saved.');
+    }
+    return;
+  }
+
   const w = +document.getElementById('ciW').value;
   const measurements = {};
   MEASURE_KEYS.forEach((key, i) => { const v = +document.getElementById(`ciM${i}`).value; if (v) measurements[key] = v; });
@@ -1095,12 +1210,6 @@ window.saveCheckin = async function() {
   };
   const row = await insertCheckin(currentUser.id, fields);
   currentCheckinId = row.id;
-
-  // Save coach note if coach
-  const coachNote = document.getElementById('ciCoach').value.trim();
-  if (coachNote && currentProfile.role === 'coach') {
-    await upsertCoachNote(row.id, currentUser.id, coachNote);
-  }
 
   // Reset week: clear weekSessions (new week's query will come back empty)
   weekSessions = {};
@@ -1159,21 +1268,27 @@ function renderCoachStats(data) {
 let historyLoaded = false;
 let allWorkoutSessions = [];
 let allFoodHistory = [];
+let allDailyLogsHistory = [];
 
 async function renderCoachHistory() {
   if (!historyLoaded) {
-    [allWorkoutSessions, allFoodHistory] = await Promise.all([getAllWorkoutSessions(), getAllFoodItemsHistory()]);
+    [allWorkoutSessions, allFoodHistory, allDailyLogsHistory] = await Promise.all([
+      getAllWorkoutSessions(), getAllFoodItemsHistory(), getAllDailyLogsHistory(),
+    ]);
     historyLoaded = true;
   }
   paintWorkoutHistory();
   paintFoodHistory();
+  paintDaysHistory();
 }
 
 window.showHistTab = function(tab) {
   document.getElementById('histTabWorkouts').classList.toggle('sel', tab === 'workouts');
   document.getElementById('histTabFood').classList.toggle('sel', tab === 'food');
+  document.getElementById('histTabDays').classList.toggle('sel', tab === 'days');
   document.getElementById('histWorkoutsList').style.display = tab === 'workouts' ? 'block' : 'none';
   document.getElementById('histFoodList').style.display = tab === 'food' ? 'block' : 'none';
+  document.getElementById('histDaysList').style.display = tab === 'days' ? 'block' : 'none';
 };
 
 function paintWorkoutHistory() {
@@ -1216,6 +1331,66 @@ function paintFoodHistory() {
   });
 }
 
+function paintDaysHistory() {
+  const c = document.getElementById('histDaysList'); c.innerHTML = '';
+  if (!allDailyLogsHistory.length) { c.innerHTML = '<div class="sub" style="padding:10px 0">No daily logs yet.</div>'; return; }
+  allDailyLogsHistory.forEach(d => {
+    const winsArr = Array.isArray(d.wins) ? d.wins : [];
+    const winsHtml = winsArr.map(w => `<div style="font-size:12.5px;margin-top:3px">${w.d ? '✓' : '○'} ${w.t}</div>`).join('');
+    c.innerHTML += `<div class="card-b" style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:500">${fmtD(dOnly(d.log_date))}</div>
+        <div class="sub">${(d.steps || 0).toLocaleString()} steps${d.mood ? ' · ' + d.mood : ''}</div>
+      </div>
+      ${winsHtml}
+    </div>`;
+  });
+}
+
+// ─────────────────────────── Chat ─────────────────────────────────────────────
+const CHAT_SEEN_KEY = 'fitness_chat_last_seen';
+let chatMessages = [];
+
+function escapeHtml(s) {
+  const div = document.createElement('div');
+  div.textContent = s;
+  return div.innerHTML;
+}
+
+async function checkUnreadChat() {
+  const latest = await getLatestMessageTime();
+  const seen = localStorage.getItem(CHAT_SEEN_KEY);
+  const dot = document.getElementById('chatUnreadDot');
+  dot.style.display = (latest && (!seen || new Date(latest) > new Date(seen))) ? 'block' : 'none';
+}
+
+async function renderChat() {
+  chatMessages = await getMessages();
+  paintChat();
+  localStorage.setItem(CHAT_SEEN_KEY, new Date().toISOString());
+  document.getElementById('chatUnreadDot').style.display = 'none';
+}
+
+function paintChat() {
+  const list = document.getElementById('chatMessages'); list.innerHTML = '';
+  chatMessages.forEach(m => {
+    const mine = currentUser && m.sender_id === currentUser.id;
+    const cls = m.kind === 'workout_summary' ? 'summary' : (mine ? 'mine' : 'theirs');
+    const time = new Date(m.created_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+    list.innerHTML += `<div class="msg ${cls}">${escapeHtml(m.body).replace(/\n/g, '<br>')}<span class="ts">${time}</span></div>`;
+  });
+  list.scrollTop = list.scrollHeight;
+}
+
+window.sendChat = async function() {
+  const inp = document.getElementById('chatInput');
+  const body = inp.value.trim(); if (!body) return;
+  inp.value = '';
+  const row = await sendMessage(currentUser.id, body, 'chat');
+  chatMessages.push(row);
+  paintChat();
+};
+
 // ─────────────────────────── Navigation ───────────────────────────────────────
 window.go = function(id, el) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1227,8 +1402,9 @@ window.go = function(id, el) {
   if (id === 'workouts') renderWorkoutList();
   if (id === 'nutrition') renderMeals();
   if (id === 'progress') { buildGrid(); renderBars(); renderWeight(); renderMeasures(); renderLifts(); }
-  if (id === 'checkin') renderCheckinInputs();
+  if (id === 'checkin') { renderCheckinInputs(); renderWeekSummary(); }
   if (id === 'coachHistory') renderCoachHistory();
+  if (id === 'chat') renderChat();
 };
 
 // ─────────────────────────── Export ───────────────────────────────────────────
