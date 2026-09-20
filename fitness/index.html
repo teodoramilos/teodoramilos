@@ -295,14 +295,14 @@
   </div>
   <div class="two">
     <div class="field"><label>Daily steps</label><input id="inSteps" type="number" value="10000" /></div>
-    <div class="field"><label>Daily calories</label><input id="inKcal" type="number" value="1800" /></div>
+    <div class="field"><label>Daily calories</label><input id="inKcal" type="number" value="1850" /></div>
   </div>
   <div class="two">
     <div class="field"><label>Protein (g)</label><input id="inProtein" type="number" value="119" /></div>
     <div class="field"><label>Carbs (g)</label><input id="inCarbs" type="number" placeholder="optional" /></div>
   </div>
   <div class="field"><label>Fat (g)</label><input id="inFat" type="number" placeholder="optional" /></div>
-  <div class="sub" style="margin:-6px 0 16px">Calorie target starts at 1,800 (week 1) — you'll get a prompt to step it down in weeks 2 and 3. Start date defaults to next Monday.</div>
+  <div class="sub" style="margin:-6px 0 16px">Week 1 calorie target is 1,850 — you'll get a prompt at week 2 to step down to 1,700 for the rest of the challenge.</div>
   <button class="begin" onclick="beginChallenge()">Begin challenge</button>
 </div>
 
@@ -658,6 +658,8 @@ window.doSignOut = async function() {
 
 // ─────────────────────────── Challenge intake ─────────────────────────────────
 window.beginChallenge = async function() {
+  // Clear any prior ramp-handled flags so the week-2 step-down prompt fires fresh
+  for (let w = 1; w <= 13; w++) localStorage.removeItem(`fitness_ramp_handled_week${w}`);
   const start = document.getElementById('inStart').value || nextMonday().toISOString().slice(0,10);
   const len = +document.getElementById('inLen').value || 90;
   const fields = {
@@ -745,6 +747,15 @@ window.enablePreview = function() {
   renderHero();
 };
 
+window.showNewChallengeIntake = function() {
+  const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+  document.getElementById('inStart').value = localDateStr(tomorrow);
+  document.getElementById('inLen').value = '90';
+  document.getElementById('inKcal').value = '1850';
+  document.getElementById('appWrap').style.display = 'none';
+  document.getElementById('intakeWrap').style.display = 'block';
+};
+
 function renderHeader() {
   if (!challenge) return;
   const s = statusNow();
@@ -764,7 +775,7 @@ function renderHero() {
   } else {
     const weightLog = checkins.map(c => c.weight).filter(Boolean);
     const change = weightLog.length >= 2 ? (weightLog[0] - weightLog[weightLog.length-1]).toFixed(1) : 0;
-    slot.innerHTML = `<div class="hero done"><div class="k">You did it</div><div class="big">90 days, complete 🎉</div><div class="g">${change > 0 ? change + ' lb down.' : 'Amazing work.'}</div></div>`;
+    slot.innerHTML = `<div class="hero done"><div class="k">You did it</div><div class="big">90 days, complete 🎉</div><div class="g">${change > 0 ? change + ' lb down.' : 'Amazing work.'}</div><button class="pv" onclick="showNewChallengeIntake()">▶ Start new challenge</button></div>`;
   }
 }
 
@@ -1174,7 +1185,7 @@ window.saveTargets = async function() {
 
 // Suggested (never automatic) calorie step-downs. You confirm or dismiss each one;
 // dismissing just hides it for that week without changing anything.
-const RAMP_WEEK_KCAL = { 2: 1650, 3: 1550 };
+const RAMP_WEEK_KCAL = { 2: 1700 };
 
 function renderRampPrompt() {
   const slot = document.getElementById('rampPrompt');
