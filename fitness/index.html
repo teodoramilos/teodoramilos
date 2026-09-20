@@ -303,7 +303,10 @@
     <div class="field"><label>Protein (g)</label><input id="inProtein" type="number" value="119" /></div>
     <div class="field"><label>Carbs (g)</label><input id="inCarbs" type="number" placeholder="optional" /></div>
   </div>
-  <div class="field"><label>Fat (g)</label><input id="inFat" type="number" placeholder="optional" /></div>
+  <div class="two">
+    <div class="field"><label>Fat (g)</label><input id="inFat" type="number" placeholder="optional" /></div>
+    <div class="field"><label>Starting weight (lb)</label><input id="inStartW" type="number" value="140" /></div>
+  </div>
   <div class="sub" style="margin:-6px 0 16px">Week 1 calorie target is 1,850 — you'll get a prompt at week 2 to step down to 1,700 for the rest of the challenge.</div>
   <button class="begin" onclick="beginChallenge()">Begin challenge</button>
 </div>
@@ -673,6 +676,7 @@ window.beginChallenge = async function() {
     protein_goal: +document.getElementById('inProtein').value || 119,
     carbs_goal: +document.getElementById('inCarbs').value || null,
     fat_goal: +document.getElementById('inFat').value || null,
+    starting_weight: +document.getElementById('inStartW').value || null,
   };
   await upsertChallenge(currentUser.id, fields);
   challenge = await getChallenge(currentUser.id);
@@ -753,6 +757,7 @@ window.showNewChallengeIntake = function() {
   document.getElementById('inStart').value = localDateStr();
   document.getElementById('inLen').value = '90';
   document.getElementById('inKcal').value = '1850';
+  document.getElementById('inStartW').value = '140';
   document.getElementById('appWrap').style.display = 'none';
   document.getElementById('intakeWrap').style.display = 'block';
 };
@@ -774,8 +779,10 @@ function renderHero() {
   if (s.state === 'pre') {
     slot.innerHTML = `<div class="hero pre"><div class="k">Get ready</div><div class="big">Starts in ${s.days} day${s.days !== 1 ? 's' : ''}</div><div class="g">${challenge.goal || ''}<br>Kicks off ${fmtD(dOnly(challenge.start_date))}.</div><button class="pv" onclick="enablePreview()">▶ Preview as Day 1</button></div>`;
   } else {
-    const weightLog = checkins.map(c => c.weight).filter(Boolean);
-    const change = weightLog.length >= 2 ? (weightLog[0] - weightLog[weightLog.length-1]).toFixed(1) : 0;
+    const checkInWeights = checkins.map(c => c.weight).filter(Boolean);
+    const baseline = (challenge && challenge.starting_weight) || (checkInWeights.length ? checkInWeights[0] : null);
+    const finalWeight = checkInWeights[checkInWeights.length - 1];
+    const change = baseline && finalWeight ? (baseline - finalWeight).toFixed(1) : 0;
     slot.innerHTML = `<div class="hero done"><div class="k">You did it</div><div class="big">90 days, complete 🎉</div><div class="g">${change > 0 ? change + ' lb down.' : 'Amazing work.'}</div><button class="pv" onclick="showNewChallengeIntake()">▶ Start new challenge</button></div>`;
   }
 }
@@ -1185,6 +1192,7 @@ function renderTargetsCard() {
         <div class="field"><label>Carbs (g)</label><input id="tgCarbs" type="number" value="${challenge.carbs_goal || ''}"></div>
         <div class="field"><label>Fat (g)</label><input id="tgFat" type="number" value="${challenge.fat_goal || ''}"></div>
       </div>
+      <div class="field"><label>Starting weight (lb)</label><input id="tgStartW" type="number" value="${challenge.starting_weight || ''}"></div>
       <button class="begin" style="margin-top:4px" onclick="saveTargets()">Save targets</button>
     `;
     return;
@@ -1215,12 +1223,13 @@ window.saveTargets = async function() {
     protein_goal: +document.getElementById('tgProtein').value || null,
     carbs_goal: +document.getElementById('tgCarbs').value || null,
     fat_goal: +document.getElementById('tgFat').value || null,
+    starting_weight: +document.getElementById('tgStartW').value || null,
   };
   try {
     await upsertChallenge(currentUser.id, fields);
   } catch (e) {
     console.error('saveTargets failed', e);
-    toast('Could not save targets — ' + (e.message || 'unknown error') + '. Has migration 003 been run?');
+    toast('Could not save targets — ' + (e.message || 'unknown error') + '. Have migrations 003 and 004 been run?');
     return;
   }
   Object.assign(challenge, fields);
@@ -1304,18 +1313,34 @@ function renderBars() {
 }
 
 function renderWeight() {
-  const weightLog = checkins.map(c => c.weight).filter(Boolean);
-  if (!weightLog.length) { document.getElementById('wLatest').textContent = '—'; document.getElementById('wChange').textContent = ''; document.getElementById('wChart').innerHTML = ''; return; }
-  const mn = Math.min(...weightLog), mx = Math.max(...weightLog), w = 300, h = 110, pad = 14;
-  const x = i => pad + i / (weightLog.length - 1) * (w - 2 * pad);
-  const y = v => pad + (mx === mn ? h / 2 : (mx - v) / (mx - mn) * (h - 2 * pad));
-  const pts = weightLog.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
-  const dots = weightLog.map((v, i) => `<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="3.2" fill="var(--plum)"/>`).join('');
-  document.getElementById('wChart').innerHTML = `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}"><text x="2" y="14" font-size="10" fill="var(--ink-soft)">${mx.toFixed(1)}</text><text x="2" y="${h-4}" font-size="10" fill="var(--ink-soft)">${mn.toFixed(1)}</text><polyline fill="none" stroke="var(--plum)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${pts}"/>${dots}</svg>`;
-  const latest = weightLog[weightLog.length - 1];
-  const diff = (latest - weightLog[0]).toFixed(1);
-  document.getElementById('wLatest').textContent = latest.toFixed(1) + ' lb';
-  document.getElementById('wChange').textContent = (diff <= 0 ? '▼ ' : '▲ ') + Math.abs(diff) + ' lb since day 1';
+  const sw = challenge && challenge.starting_weight ? +challenge.starting_weight : null;
+  const checkInWeights = checkins.map(c => c.weight).filter(Boolean);
+  // Prepend starting_weight so it anchors the chart at day 0
+  const weightLog = sw ? [sw, ...checkInWeights] : checkInWeights;
+  if (!weightLog.length) {
+    document.getElementById('wLatest').textContent = '—';
+    document.getElementById('wChange').textContent = '';
+    document.getElementById('wChart').innerHTML = '';
+    return;
+  }
+  const latest = checkInWeights.length ? checkInWeights[checkInWeights.length - 1] : sw;
+  document.getElementById('wLatest').textContent = latest.toFixed(1) + ' lb' + (checkInWeights.length ? '' : ' (start)');
+  if (weightLog.length >= 2) {
+    const mn = Math.min(...weightLog), mx = Math.max(...weightLog), w = 300, h = 110, pad = 14;
+    const xF = i => pad + i / (weightLog.length - 1) * (w - 2 * pad);
+    const yF = v => pad + (mx === mn ? h / 2 : (mx - v) / (mx - mn) * (h - 2 * pad));
+    const pts = weightLog.map((v, i) => `${xF(i).toFixed(1)},${yF(v).toFixed(1)}`).join(' ');
+    const dots = weightLog.map((v, i) => `<circle cx="${xF(i).toFixed(1)}" cy="${yF(v).toFixed(1)}" r="3.2" fill="var(--plum)"/>`).join('');
+    document.getElementById('wChart').innerHTML = `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}"><text x="2" y="14" font-size="10" fill="var(--ink-soft)">${mx.toFixed(1)}</text><text x="2" y="${h-4}" font-size="10" fill="var(--ink-soft)">${mn.toFixed(1)}</text><polyline fill="none" stroke="var(--plum)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="${pts}"/>${dots}</svg>`;
+  } else {
+    document.getElementById('wChart').innerHTML = '';
+  }
+  if (checkInWeights.length) {
+    const diff = (latest - weightLog[0]).toFixed(1);
+    document.getElementById('wChange').textContent = (diff <= 0 ? '▼ ' : '▲ ') + Math.abs(diff) + ' lb since start';
+  } else {
+    document.getElementById('wChange').textContent = '';
+  }
 }
 
 const MEASURE_KEYS = ['Waist','Hips','Thigh','Stomach','Upper arm','Chest'];
