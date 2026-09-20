@@ -748,8 +748,7 @@ window.enablePreview = function() {
 };
 
 window.showNewChallengeIntake = function() {
-  const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
-  document.getElementById('inStart').value = localDateStr(tomorrow);
+  document.getElementById('inStart').value = localDateStr();
   document.getElementById('inLen').value = '90';
   document.getElementById('inKcal').value = '1850';
   document.getElementById('appWrap').style.display = 'none';
