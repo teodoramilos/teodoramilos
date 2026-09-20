@@ -111,6 +111,8 @@
     .tag { display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; margin-bottom: 2px; }
     .tag.lower { background: var(--plum-soft); color: var(--plum); }
     .tag.upper { background: #5b6e8418; color: var(--blue); }
+    .tag.ot { background: var(--apricot-soft); color: var(--apricot); }
+    .tag.optional { background: var(--moss-soft); color: var(--moss); }
     .back { border: none; background: none; color: var(--plum); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; padding: 6px 0; }
 
     /* ── Exercise detail ── */
@@ -828,22 +830,9 @@ window.pickMood = function(el) {
 
 // ─────────────────────────── Workout data ─────────────────────────────────────
 const WORKOUTS = [
-  { id: 'ham', title: 'Hamstring & Glute', day: 'Monday', type: 'lower', ex: [
-    { n: 'Hip Thrust', sets: 4, reps: '8–12', tempo: '2-1-2-1', rest: 120, restL: '90–120s', note: 'Smith machine preferred', hist: [] },
-    { n: 'B-stance hip thrust (L)', sets: 3, reps: '10–12', tempo: '3-1-1-1', rest: 90, restL: '90s', note: 'Smith machine preferred', hist: [] },
-    { n: 'B-stance hip thrust (R)', sets: 3, reps: '10–12', tempo: '3-1-1-1', rest: 90, restL: '90s', note: 'Smith machine preferred', hist: [] },
-    { n: 'RDL', sets: 4, reps: '8–12', tempo: '3-1-1-1', rest: 90, restL: '90s', note: 'Can do 40 but need wrist straps', hist: [] },
-    { n: 'Leg curl', sets: 3, reps: '12–15', tempo: '2-1-1-1', rest: 90, restL: '60–90s', note: 'Seated', hist: [] },
-    { n: 'Leg extension', sets: 3, reps: '10–12', tempo: '2-1-2-1', rest: 90, restL: '60–90s', note: 'Seated', hist: [] },
-  ]},
-  { id: 'upper', title: 'Upper Body', day: 'Wednesday', type: 'upper', ex: [
-    { n: 'Bench Press', sets: 4, reps: '6–10', tempo: '3-1-1-1', rest: 120, restL: '90–120s', note: '', hist: [] },
-    { n: 'Shoulder Press', sets: 3, reps: '8–12', tempo: '2-1-2-1', rest: 90, restL: '60–90s', note: '', hist: [] },
-    { n: 'DB Row (R)', sets: 4, reps: '8–12', tempo: '2-1-1-1', rest: 90, restL: '60–90s', note: '', hist: [] },
-    { n: 'DB Row (L)', sets: 4, reps: '8–12', tempo: '2-1-1-1', rest: 90, restL: '60–90s', note: '', hist: [] },
-    { n: 'Tricep cable pulldown', sets: 3, reps: '10–12', tempo: '2-1-2-1', rest: 60, restL: '45–60s', note: 'T-bar (flat)', hist: [] },
-  ]},
-  { id: 'quad', title: 'Quad & Glute', day: 'Friday', type: 'lower', ex: [
+  { id: 'ot1', title: 'Orange Theory', day: 'Session 1', type: 'ot', ex: [] },
+  { id: 'ot2', title: 'Orange Theory', day: 'Session 2', type: 'ot', ex: [] },
+  { id: 'quad', title: 'Quad & Glute', day: 'Optional gym', type: 'lower', optional: true, ex: [
     { n: 'Leg Press', sets: 4, reps: '8–15', tempo: '3-1-1-1', rest: 120, restL: '90–120s', note: '', hist: [] },
     { n: 'Bulgarian split squat (L)', sets: 3, reps: '12–15', tempo: '2-1-2-1', rest: 60, restL: '45–60s', note: 'With deficit · L feels awkward', hist: [] },
     { n: 'Bulgarian split squat (R)', sets: 3, reps: '12–15', tempo: '2-1-2-1', rest: 60, restL: '45–60s', note: 'With deficit', hist: [] },
@@ -862,21 +851,47 @@ function sparkSVG(hist) {
 // ─────────────────────────── Workout list ─────────────────────────────────────
 function renderWorkoutList() {
   const v = document.getElementById('woView');
-  const done = Object.keys(weekSessions).length;
-  let h = `<div class="sec-label">This week · ${done}/3 done</div>`;
+  const otDone = WORKOUTS.filter(w => w.type === 'ot' && weekSessions[w.id]).length;
+  let h = `<div class="sec-label">This week · ${otDone}/2 OT done</div>`;
   WORKOUTS.forEach(w => {
     const sess = weekSessions[w.id];
-    h += `<div class="wcard ${sess ? 'done' : ''}" onclick="openWorkout('${w.id}')">
-      <div>
-        <span class="tag ${w.type}">${w.type} body</span>
-        <div class="wt">${w.title}</div>
-        <div class="wd">${w.day} · ${w.ex.length} exercises${sess ? ' · ' + Math.round((sess.completion||0)*100) + '% completed' : ''}</div>
-      </div>
-      ${sess ? '<div class="check"><svg viewBox="0 0 24 24"><polyline points="4,12 10,18 20,6"/></svg></div>' : '<span class="arrow">→</span>'}
-    </div>`;
+    if (w.type === 'ot') {
+      h += `<div class="wcard ${sess ? 'done' : ''}" ${sess ? '' : `onclick="logOTSession('${w.id}')"`}>
+        <div>
+          <span class="tag ot">cardio</span>
+          <div class="wt">${w.title}</div>
+          <div class="wd">${w.day}${sess ? ' · logged ✓' : ' · tap to log'}</div>
+        </div>
+        ${sess ? '<div class="check"><svg viewBox="0 0 24 24"><polyline points="4,12 10,18 20,6"/></svg></div>' : '<span class="arrow">+</span>'}
+      </div>`;
+    } else {
+      h += `<div class="wcard ${sess ? 'done' : ''}" onclick="openWorkout('${w.id}')">
+        <div>
+          <span class="tag ${w.optional ? 'optional' : 'lower'}">${w.optional ? 'optional' : 'lower body'}</span>
+          <div class="wt">${w.title}</div>
+          <div class="wd">${w.day} · ${w.ex.length} exercises${sess ? ' · ' + Math.round((sess.completion||0)*100) + '% completed' : ''}</div>
+        </div>
+        ${sess ? '<div class="check"><svg viewBox="0 0 24 24"><polyline points="4,12 10,18 20,6"/></svg></div>' : '<span class="arrow">→</span>'}
+      </div>`;
+    }
   });
   v.innerHTML = h;
 }
+
+window.logOTSession = async function(id) {
+  const w = WORKOUTS.find(x => x.id === id);
+  const sess = await insertWorkoutSession(currentUser.id, {
+    workout_id: id,
+    workout_title: `${w.title} — ${w.day}`,
+    session_date: todayDate,
+    sets: [],
+    completion: 1,
+    note: '',
+  });
+  weekSessions[id] = sess;
+  renderWorkoutList();
+  toast('OT session logged ✓');
+};
 
 window.openWorkout = function(id) {
   const w = WORKOUTS.find(x => x.id === id), v = document.getElementById('woView');
